@@ -1,5 +1,5 @@
 <template>
-  <div class="node">
+  <div class="node" v-on:click="openNodeDetails">
     <h3>{{ node.title }}</h3>
     <span class="ip">{{ node.ip }}</span>
     <span class="status" v-bind:class="statusClass">{{ node.status }}</span>
@@ -18,6 +18,11 @@ export default {
         online: this.node.status === 'online',
         offline: this.node.status !== 'online'
       }
+    }
+  },
+  methods: {
+    openNodeDetails: function () {
+      this.$router.push('node/' + this.node.id)
     }
   }
 }

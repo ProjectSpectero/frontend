@@ -15,7 +15,7 @@
 import Node from './dashboard/Node.vue'
 
 export default {
-  name: 'Dashboard',
+  name: 'dashboard',
   metaInfo: {
     title: 'Dashboard'
   },
