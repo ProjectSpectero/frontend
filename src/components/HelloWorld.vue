@@ -23,6 +23,9 @@
 <script>
 export default {
   name: 'HelloWorld',
+  metaInfo: {
+    title: 'Dashboard'
+  },
   data () {
     return {
       msg: 'Welcome to Your Vue.js App'
