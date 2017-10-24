@@ -11,26 +11,28 @@
 <script>
 export default {
   name: 'nodeDetails',
-  metaInfo: {
-    title: 'Node Details'
+  metaInfo () {
+    return {
+      title: this.id + ' - Node Details'
+    }
   },
   data () {
     return {
-      id: null
+      id: null // Gets initialized by loadNodeDetails() in created()
     }
   },
   methods: {
     // Loads node details from an id - this will be re-run
     // if a URL change is made to update the component.
-    loadNodeDetails: function (id) {
+    initialize: function (id) {
       this.id = id
     }
   },
   created: function () {
-    this.loadNodeDetails(this.$route.params.id)
+    this.initialize(this.$route.params.id)
   },
   beforeRouteUpdate (to, from, next) {
-    this.loadNodeDetails(to.params.id)
+    this.initialize(to.params.id)
     next()
   }
 }

@@ -14,7 +14,7 @@ export default {
   name: 'app',
   metaInfo: {
     title: 'Spectero',
-    titleTemplate: 'Spectero | %s'
+    titleTemplate: '%s | Spectero'
   }
 }
 </script>
