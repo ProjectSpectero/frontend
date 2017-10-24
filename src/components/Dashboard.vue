@@ -12,6 +12,7 @@
 </template>
 
 <script>
+import axios from 'axios'
 import Node from './dashboard/Node.vue'
 
 export default {
@@ -21,33 +22,23 @@ export default {
   },
   data () {
     return {
-      nodes: [
-        {
-          id: 1,
-          title: 'dxbpi1',
-          ip: '94.202.105.172',
-          status: 'offline'
-        },
-        {
-          id: 2,
-          title: 'seapi1',
-          ip: '50.47.111.48',
-          status: 'online'
-        },
-        {
-          id: 3,
-          title: 'seapi2',
-          ip: '67.170.105.255',
-          status: 'online'
-        },
-        {
-          id: 4,
-          title: 'seapi3',
-          ip: '67.170.105.255',
-          status: 'online'
-        }
-      ]
+      nodes: null
     }
+  },
+  methods: {
+    getNodes: function () {
+      axios.get(`http://localhost:3000/nodes`)
+      .then(response => {
+        console.log(response.data)
+        this.nodes = response.data.result.nodes
+      })
+      .catch(e => {
+        console.log(`Axios error`, e)
+      })
+    }
+  },
+  created: function () {
+    this.getNodes()
   },
   components: {
     Node
