@@ -73,4 +73,13 @@ p:last-child {
   content: '';
   display: table;
 }
+.errorMessage {
+  padding: 14px;
+  background: red;
+  color: #fff;
+  border-radius: 4px;
+  display: block;
+  margin: 8px 0;
+  font-weight: bold;
+}
 </style>

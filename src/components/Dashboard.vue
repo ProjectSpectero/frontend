@@ -5,7 +5,14 @@
       <h2>Nodes</h2>
       <p>This is a general overview of all your server nodes. Click on any node to see more details.</p>
       <div class="clearfix">
-        <Node v-for="node in nodes" v-bind:node="node" v-bind:key="node.id" />
+        <template v-if="!nodesLoadError">
+          <Node v-for="node in nodes" v-bind:node="node" v-bind:key="node.id" />
+        </template>
+        <template v-else>
+          <div class="errorMessage">
+            Error loading nodes
+          </div>
+        </template>
       </div>
     </section>
   </div>
@@ -22,18 +29,19 @@ export default {
   },
   data () {
     return {
-      nodes: null
+      nodes: null,
+      nodesLoadError: false
     }
   },
   methods: {
     getNodes: function () {
       axios.get(`http://localhost:3000/nodes`)
       .then(response => {
-        console.log(response.data)
-        this.nodes = response.data.result.nodes
+        this.nodes = response.data.data.nodes
       })
       .catch(e => {
-        console.log(`Axios error`, e)
+        // console.log(`Axios error`, e)
+        this.nodesLoadError = true
       })
     }
   },
