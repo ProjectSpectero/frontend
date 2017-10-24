@@ -16,8 +16,22 @@ export default {
   },
   data () {
     return {
-      id: this.$route.params.id
+      id: null
     }
+  },
+  methods: {
+    // Loads node details from an id - this will be re-run
+    // if a URL change is made to update the component.
+    loadNodeDetails: function (id) {
+      this.id = id
+    }
+  },
+  created: function () {
+    this.loadNodeDetails(this.$route.params.id)
+  },
+  beforeRouteUpdate (to, from, next) {
+    this.loadNodeDetails(to.params.id)
+    next()
   }
 }
 </script>
