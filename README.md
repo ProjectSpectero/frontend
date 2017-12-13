@@ -1,6 +1,6 @@
 # spectero-frontend
 
-> Frontend for Spectero panel.
+> Spectero frontend panel
 
 ## Build Setup
 
