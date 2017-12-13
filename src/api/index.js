@@ -2,7 +2,7 @@
 
 import axios from 'axios'
 
-let endpoint = 'http://' + process.env.NODE_ENDPOINT ? process.env.NODE_ENDPOINT : 'localhost' + process.env.NODE_PORT ? ':' + process.env.NODE_PORT : ''
+let endpoint = `${process.env.DAEMON_HTTPS ? 'https://' : 'http://'}${process.env.DAEMON_ENDPOINT ? process.env.DAEMON_ENDPOINT : 'localhost'}${process.env.DAEMON_PORT ? ':' + process.env.DAEMON_PORT : ''}`
 
 const HTTP = axios.create({
   baseURL: endpoint,
@@ -24,7 +24,7 @@ export default {
    * TODO: add promise to API call to allow for .then() for code that needs to always run (ie: re-enabling login form)
    */
   login: function (options, success, fail) {
-    HTTP.post(`http://${endpoint}/v1/auth`, {
+    HTTP.post(`${endpoint}/v1/auth`, {
       authKey: options.authKey,
       password: options.password
     })
