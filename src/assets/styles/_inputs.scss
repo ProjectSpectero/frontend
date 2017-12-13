@@ -1,0 +1,56 @@
+label {
+  display: inline-block;
+  font-size: 14px;
+  color: #fff;
+  opacity: 0.5;
+  margin-bottom: 10px;
+  line-height: 14px;
+  cursor: pointer;
+}
+input[type="text"], input[type="password"] {
+  width: 100%;
+  display: block;
+  padding: 14px;
+  font: 14px/100% $font-main;
+  color: #fff;
+  background: rgba(0,0,0,0.15);
+  border: 1px solid rgba(255,255,255,0.1);
+  border-radius: 4px;
+
+  margin-bottom: 20px;
+
+  transition: all 0.1s ease-out;
+
+  &:focus {
+    border-color: rgba(255,255,255,0.2);
+    background: rgba(0,0,0,0.25);
+  }
+  &:disabled {
+    border-color: rgba(255,255,255,0.1);
+    color: rgba(255,255,255,0.4);
+    cursor: not-allowed;
+  }
+}
+button {
+  padding: 15px 40px;
+  display: inline-block;
+  font: 15px/100% $font-main;
+  cursor: pointer;
+  font-weight: bold;
+  color: $color-main;
+  background: rgba(0,0,0,0);
+  border: 2px solid $color-main;
+  border-radius: 4px;
+
+  transition: all 0.1s ease-out;
+
+  &:hover {
+    background: rgba($color-main, 0.05);
+  }
+  &:disabled {
+    color: #fff;
+    border-color: #fff;
+    opacity: 0.3;
+    cursor: not-allowed;
+  }
+}
