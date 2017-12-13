@@ -1,0 +1,66 @@
+/* eslint-disable */ // TODO: remove
+
+import axios from 'axios'
+
+let endpoint = 'http://' + process.env.NODE_ENDPOINT ? process.env.NODE_ENDPOINT : 'localhost' + process.env.NODE_PORT ? ':' + process.env.NODE_PORT : ''
+
+const HTTP = axios.create({
+  baseURL: endpoint,
+  headers: {
+    // Authorization: `Bearer {token}`
+  }
+})
+
+export default {
+  
+  /**
+   * Login
+   * 
+   * options:  array of authorization options (authKey, password)
+   * success:  callback function for successful login
+   * fail:     callback function for failed login
+   * 
+   * TODO: add authorization header and route redirect to /dashboard on successful login
+   * TODO: add promise to API call to allow for .then() for code that needs to always run (ie: re-enabling login form)
+   */
+  login: function (options, success, fail) {
+    HTTP.post(`http://${endpoint}/v1/auth`, {
+      authKey: options.authKey,
+      password: options.password
+    })
+    .then(r => {
+      let response = r.data
+
+      // Login successful
+      if (response.message === 'JWT_TOKEN_ISSUED') {
+        return success()
+      }
+
+      // 200 status code, but not JWT_TOKEN_ISSUED message
+      return fail(`Unknown error occurred.`)
+    })
+    .catch(e => {
+      if (e.response === undefined) {
+        return fail(`Unknown error occurred.`)
+      }
+
+      let response = e.response.data
+      let error = null
+
+      switch (response.errors[0]) {
+        case 'MISSING_BODY':
+          error = `Missing username or password.`
+          break
+        case 'USER_NOT_FOUND':
+        case 'MISSING_OR_INVALID_PASSWORD':
+        case 'AUTHENTICATION_FAILED':
+          error = `Invalid username or password.`
+          break
+        default:
+          error = `Unknown error occurred.`
+      }
+
+      return fail(error)
+    })
+  }
+}

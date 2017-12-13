@@ -1,0 +1,129 @@
+<template>
+  <article :class="user.status">
+    <section class="info">
+      <div class="avatar">{{ initials }}</div>
+      <div class="text">
+        <h2>{{ user.name }}</h2>
+        <span class="email">{{ user.email }}</span>
+      </div>
+    </section>
+    <section class="active">{{ user.data.active }}</section>
+    <section class="vpn">{{ user.data.vpn }}</section>
+    <section class="proxy">{{ user.data.proxy }}</section>
+    <section class="dataRecv">{{ user.data.dataRecv }}</section>
+    <section class="dataSent">{{ user.data.dataSent }}</section>
+    <section class="actions">
+      ACTIONS
+    </section>
+  </article>
+</template>
+
+<script>
+  /* eslint-disable */ // TODO: remove
+
+  export default {
+    name: 'user-item',
+    props: ['user'],
+    data: function () {
+      return {
+        // loginUsername: null,
+        // loginPassword: null,
+        // loginError: null,
+        // disableForm: false
+      }
+    },
+    computed: {
+      initials () {
+        let name = this.user.name
+        let initials = name.match(/\b\w/g) || []
+        initials = ((initials.shift() || '') + (initials.pop() || '')).toUpperCase()
+        return initials
+      }
+    }
+  }
+</script>
+
+<style lang="scss" scoped>
+
+// @import '../assets/styles/components/_users.scss';
+
+article {
+  // width: 100%;
+  // padding: 14px;
+  // display: flex;
+  // flex-direction: row;
+  // flex-wrap: nowrap;
+  // align-items: center;
+  // justify-content: center;
+
+  background: rgba(0,0,0,0.2);
+  
+  // section {
+    
+  // }
+  .info {
+    
+    // background: red;
+    
+    display: flex;
+    align-items: center;
+
+    .avatar {
+      width: 40px;
+      height: 40px;
+      display: flex;
+      flex-wrap: nowrap;
+      align-items: center;
+      justify-content: center;
+      float: left;
+      color: #fff;
+      font-weight: bold;
+      font-size: 16px;
+      text-align: center;
+      background: #3855F2;
+      border-radius: 100%;
+    }
+    .text {
+      margin-left: 14px;
+    }
+    h2 {
+      display: block;
+      font-size: 16px;
+      line-height: 100%;
+
+      // background: blue;
+
+      padding-right: 2px;
+
+      &::after {
+        content: '';
+        width: 8px;
+        height: 8px;
+        display: inline-block;
+        margin-left: 4px;
+        border-radius: 4px;
+        position: relative;
+        top: -2px;
+        left: 2px;
+      }
+    }
+    span.email {
+      margin-top: 6px;
+      display: block;
+      font-size: 14px;
+      line-height: 100%;
+      color: rgba(255,255,255,0.3);
+    }
+  }
+  &.online {
+    .info h2::after {
+      background: #18FF6D;
+    }
+  }
+  &.offline {
+    .info h2::after {
+      background: #FF5964;
+    }
+  }
+}
+</style>
