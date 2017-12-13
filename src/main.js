@@ -4,8 +4,9 @@ import Vue from 'vue'
 import App from './App'
 import router from './router'
 import VuePaginate from 'vue-paginate'
+import VueCookie from 'vue-cookie'
 
-Vue.use(VuePaginate)
+Vue.use([VuePaginate, VueCookie])
 
 Vue.config.productionTip = false
 
