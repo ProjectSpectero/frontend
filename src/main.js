@@ -6,7 +6,8 @@ import router from './router'
 import VuePaginate from 'vue-paginate'
 import VueCookie from 'vue-cookie'
 
-Vue.use([VuePaginate, VueCookie])
+Vue.use(VueCookie)
+Vue.use(VuePaginate)
 
 Vue.config.productionTip = false
 
