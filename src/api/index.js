@@ -6,7 +6,7 @@ import { getCookie, removeCookie } from 'tiny-cookie'
  * 
  * @param {String}   method  HTTP method (ie: GET, POST, PUT, DELETE)
  * @param {String}   path    API endpoint path
- * @param {Array}    data    Form data for submit
+ * @param {Object}   data    Form data for submit
  * @param {Function} success Callback to be called on method success
  * @param {Function} failed  Callback to be called on method fail
  */
