@@ -1,19 +1,9 @@
 /* eslint-disable */ // TODO: remove
 
-// TODO: create auth wrapper to delete SPECTERO_AUTH cookie if 401 from request
-
 import axios from 'axios'
-import { setCookie, getCookie } from 'tiny-cookie'
+import { setCookie, getCookie, removeCookie } from 'tiny-cookie'
 
 let endpoint = `${process.env.DAEMON_HTTPS ? 'https://' : 'http://'}${process.env.DAEMON_ENDPOINT ? process.env.DAEMON_ENDPOINT : 'localhost'}${process.env.DAEMON_PORT ? ':' + process.env.DAEMON_PORT : ''}/v1`
-let authCookie = getCookie('SPECTERO_AUTH')
-
-const HTTP = axios.create({
-  baseURL: endpoint,
-  headers: {
-    Authorization: authCookie !== null ? `Bearer ${authCookie}` : null
-  }
-})
 
 // API wrapper
 // Example usage: API('get', '/auth', {authKey: ..., password: ...})
@@ -22,7 +12,7 @@ const API = function (method, path, data, success, error) {
     method: method,
     baseURL: endpoint,
     headers: {
-      Authorization: authCookie !== null ? `Bearer ${authCookie}` : null
+      Authorization: getCookie('SPECTERO_AUTH') !== null ? `Bearer ${getCookie('SPECTERO_AUTH')}` : null
     },
     url: path,
     data: data ? data : null
@@ -31,12 +21,18 @@ const API = function (method, path, data, success, error) {
     success(r)
   })
   .catch(e => {
+
+    // Remove authorization cookie if 401 returned by any API call
+    if (e.response.status === 401 && getCookie('SPECTERO_AUTH') !== null) {
+      removeCookie('SPECTERO_AUTH')
+    }
+
     error(e)
   })
 }
 
 export default {
-  
+
   /**
    * Login
    * 
