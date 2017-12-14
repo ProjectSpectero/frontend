@@ -23,9 +23,7 @@
 </template>
 
 <script>
-  /* eslint-disable */ // TODO: remove
-  import API from '../api/index.js'
-  import router from '../router'
+  import auth from '../api/auth.js'
 
   export default {
     name: 'login',
@@ -48,7 +46,7 @@
         let parent = this
 
         // Make API login request
-        API.login({
+        auth.login({
           username: parent.loginUsername,
           password: parent.loginPassword
         }, function (msg) {
@@ -59,7 +57,6 @@
           parent.loginError = msg
           parent.disableForm = false
         })
-
       }
     }
   }

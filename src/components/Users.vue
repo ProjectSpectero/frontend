@@ -37,7 +37,6 @@
 </template>
 
 <script>
-  /* eslint-disable */ // TODO: remove
   import UserItem from './Users/UserItem'
 
   export default {
