@@ -15,7 +15,7 @@ export default {
 
         // Login successful, JWT token issued
         if (data.message === 'JWT_TOKEN_ISSUED') {
-          setCookie('SPECTERO_AUTH', data.result, 1)
+          setCookie('SPECTERO_AUTH', data.result, { expires: '1h' })
           return options.success()
         }
 
