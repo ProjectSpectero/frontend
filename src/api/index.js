@@ -1,6 +1,7 @@
 /* eslint-disable */ // TODO: remove
 
 import axios from 'axios'
+import { setCookie } from 'tiny-cookie'
 
 let endpoint = `${process.env.DAEMON_HTTPS ? 'https://' : 'http://'}${process.env.DAEMON_ENDPOINT ? process.env.DAEMON_ENDPOINT : 'localhost'}${process.env.DAEMON_PORT ? ':' + process.env.DAEMON_PORT : ''}`
 
@@ -33,6 +34,7 @@ export default {
 
       // Login successful
       if (response.message === 'JWT_TOKEN_ISSUED') {
+        setCookie('SPECTERO_AUTH', response.result, 1) // TODO: modify 1 day expiry
         return success()
       }
 
