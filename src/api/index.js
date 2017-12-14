@@ -1,14 +1,17 @@
 /* eslint-disable */ // TODO: remove
 
-import axios from 'axios'
-import { setCookie } from 'tiny-cookie'
+// TODO: create auth wrapper to delete SPECTERO_AUTH cookie if 401 from request
 
-let endpoint = `${process.env.DAEMON_HTTPS ? 'https://' : 'http://'}${process.env.DAEMON_ENDPOINT ? process.env.DAEMON_ENDPOINT : 'localhost'}${process.env.DAEMON_PORT ? ':' + process.env.DAEMON_PORT : ''}`
+import axios from 'axios'
+import { setCookie, getCookie } from 'tiny-cookie'
+
+let endpoint = `${process.env.DAEMON_HTTPS ? 'https://' : 'http://'}${process.env.DAEMON_ENDPOINT ? process.env.DAEMON_ENDPOINT : 'localhost'}${process.env.DAEMON_PORT ? ':' + process.env.DAEMON_PORT : ''}/v1`
+let authCookie = getCookie('SPECTERO_AUTH')
 
 const HTTP = axios.create({
   baseURL: endpoint,
   headers: {
-    // Authorization: `Bearer {token}`
+    Authorization: authCookie !== null ? `Bearer ${authCookie}` : null
   }
 })
 
@@ -25,7 +28,7 @@ export default {
    * TODO: add promise to API call to allow for .then() for code that needs to always run (ie: re-enabling login form)
    */
   login: function (options, success, fail) {
-    HTTP.post(`${endpoint}/v1/auth`, {
+    HTTP.post(`${endpoint}/auth`, {
       authKey: options.authKey,
       password: options.password
     })
