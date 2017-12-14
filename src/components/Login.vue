@@ -47,15 +47,19 @@
 
         // Make API login request
         auth.login({
-          username: parent.loginUsername,
-          password: parent.loginPassword
-        }, function (msg) {
-          parent.loginError = null
-          parent.disableForm = false
-          parent.$router.push({ name: 'Users' })
-        }, function (msg) {
-          parent.loginError = msg
-          parent.disableForm = false
+          data: {
+            authKey: parent.loginUsername,
+            password: parent.loginPassword
+          },
+          success: function (msg) {
+            parent.loginError = null
+            parent.disableForm = false
+            parent.$router.push({ name: 'Users' })
+          },
+          fail: function (msg) {
+            parent.loginError = msg
+            parent.disableForm = false
+          }
         })
       }
     }
