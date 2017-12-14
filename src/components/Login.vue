@@ -49,7 +49,7 @@
 
         // Make API login request
         API.login({
-          authKey: parent.loginUsername,
+          username: parent.loginUsername,
           password: parent.loginPassword
         }, function (msg) {
           parent.loginError = null

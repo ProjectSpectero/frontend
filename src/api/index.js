@@ -15,6 +15,26 @@ const HTTP = axios.create({
   }
 })
 
+// API wrapper
+// Example usage: API('get', '/auth', {authKey: ..., password: ...})
+const API = function (method, path, data, success, error) {
+  axios({
+    method: method,
+    baseURL: endpoint,
+    headers: {
+      Authorization: authCookie !== null ? `Bearer ${authCookie}` : null
+    },
+    url: path,
+    data: data ? data : null
+  })
+  .then(r => {
+    success(r)
+  })
+  .catch(e => {
+    error(e)
+  })
+}
+
 export default {
   
   /**
@@ -28,44 +48,47 @@ export default {
    * TODO: add promise to API call to allow for .then() for code that needs to always run (ie: re-enabling login form)
    */
   login: function (options, success, fail) {
-    HTTP.post(`${endpoint}/auth`, {
-      authKey: options.authKey,
-      password: options.password
-    })
-    .then(r => {
-      let response = r.data
 
-      // Login successful
+    API('post', '/auth', {
+      authKey: options.username,
+      password: options.password
+    }, function (response) {
+      response = response.data
+
+      // Login successful, JWT token issued
       if (response.message === 'JWT_TOKEN_ISSUED') {
         setCookie('SPECTERO_AUTH', response.result, 1) // TODO: modify 1 day expiry
         return success()
       }
 
-      // 200 status code, but not JWT_TOKEN_ISSUED message
+      // 200 status code recieved, but JWT token wasn't issued
       return fail(`Unknown error occurred.`)
-    })
-    .catch(e => {
-      if (e.response === undefined) {
+
+    }, function (error) {
+
+      if (error.response === undefined) {
         return fail(`Unknown error occurred.`)
       }
 
-      let response = e.response.data
-      let error = null
+      let response = error.response.data
+      let errorMsg = null
 
       switch (response.errors[0]) {
         case 'MISSING_BODY':
-          error = `Missing username or password.`
+          errorMsg = `Missing username or password.`
           break
         case 'USER_NOT_FOUND':
         case 'MISSING_OR_INVALID_PASSWORD':
         case 'AUTHENTICATION_FAILED':
-          error = `Invalid username or password.`
+          errorMsg = `Invalid username or password.`
           break
         default:
-          error = `Unknown error occurred.`
+          errorMsg = `Unknown error occurred.`
       }
 
-      return fail(error)
+      return fail(errorMsg)
+
     })
+
   }
 }
