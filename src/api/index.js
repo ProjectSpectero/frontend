@@ -18,7 +18,7 @@ export default function (method, path, data, success, failed) {
       Authorization: getCookie('SPECTERO_AUTH') !== null ? `Bearer ${getCookie('SPECTERO_AUTH')}` : null
     },
     url: path,
-    data: data
+    data: data.data
   })
   .then(response => {
     
