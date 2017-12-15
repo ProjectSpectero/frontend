@@ -14,7 +14,8 @@ let parseJWT = function (jwt) {
     return {
       exp: decode.exp,
       id: decode[claimtypes.microsoft.userData],
-      username: decode[claimtypes.name]
+      username: decode[claimtypes.name],
+      error: null
     }
   }
   catch (err) {

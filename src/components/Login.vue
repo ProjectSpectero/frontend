@@ -54,7 +54,7 @@
           loginSuccess: function (msg) {
             parent.loginError = null
             parent.disableForm = false
-            parent.$router.push({ name: 'Users' })
+            parent.$router.push({ name: 'users' })
           },
           loginFailed: function (msg) {
             parent.loginError = msg
