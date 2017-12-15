@@ -55,7 +55,12 @@
           loginSuccess: function (msg) {
             parent.loginError = null
             parent.disableForm = false
-            parent.$router.push({ name: 'users' })
+            
+            if (parent.$route.query.redirect) {
+              parent.$router.push({ path: parent.$route.query.redirect })
+            } else {
+              parent.$router.push({ name: 'users' })
+            }
           },
           loginFailed: function (msg) {
             parent.loginError = msg
