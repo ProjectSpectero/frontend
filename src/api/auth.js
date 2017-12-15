@@ -1,5 +1,7 @@
 import api from './index.js'
-import { setCookie } from 'tiny-cookie'
+import { setCookie, getCookie, removeCookie } from 'tiny-cookie'
+import jwtDecode from 'jwt-decode'
+import claimtypes from 'claimtypes'
 
 export default {
   /**
@@ -45,5 +47,24 @@ export default {
         return options.fail(errorMsg)
       }
     )
+  },
+
+  /**
+   * Returns parsed JWT from SPECTERO_AUTH cookie.
+   * 
+   * On error, returns Object with error key and deletes cookie (if any).
+   */
+  parseJWT: function () {
+    try {
+      let decode = jwtDecode(getCookie('SPECTERO_AUTH'))
+      return {
+        'id': decode[claimtypes.microsoft.userData],
+        'username': decode[claimtypes.name]
+      }
+    }
+    catch (err) {
+      removeCookie('SPECTERO_AUTH')
+      return { error: err }
+    }
   }
 }

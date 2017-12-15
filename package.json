@@ -12,6 +12,8 @@
   },
   "dependencies": {
     "axios": "^0.17.1",
+    "claimtypes": "^0.1.0",
+    "jwt-decode": "^2.2.0",
     "tiny-cookie": "^2.1.1",
     "vue": "^2.5.2",
     "vue-cookie": "^1.1.4",
