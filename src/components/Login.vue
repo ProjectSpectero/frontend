@@ -55,11 +55,11 @@
           loginSuccess: function (msg) {
             parent.loginError = null
             parent.disableForm = false
-            
+
             if (parent.$route.query.redirect) {
               parent.$router.push({ path: parent.$route.query.redirect })
             } else {
-              parent.$router.push({ name: 'users' })
+              parent.$router.push({ name: 'dashboard' })
             }
           },
           loginFailed: function (msg) {
