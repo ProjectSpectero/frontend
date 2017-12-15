@@ -51,12 +51,12 @@
             authKey: parent.loginUsername,
             password: parent.loginPassword
           },
-          success: function (msg) {
+          loginSuccess: function (msg) {
             parent.loginError = null
             parent.disableForm = false
             parent.$router.push({ name: 'Users' })
           },
-          fail: function (msg) {
+          loginFailed: function (msg) {
             parent.loginError = msg
             parent.disableForm = false
           }

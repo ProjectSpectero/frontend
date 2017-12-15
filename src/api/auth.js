@@ -38,15 +38,15 @@ let login = function (options) {
       if (data.message === 'JWT_TOKEN_ISSUED') {
         let jwt = parseJWT(data.result)
         setCookie('SPECTERO_AUTH', data.result, { expires: new Date(jwt.exp * 1000).toGMTString() })
-        return options.success(jwt)
+        return options.loginSuccess(jwt)
       }
 
       // 200 status code recieved, but JWT token wasn't issued
-      return options.fail(`Unknown error occurred.`)
+      return options.loginFailed(`Unknown error occurred.`)
     },
     function (error) {
       if (error === undefined) {
-        return options.fail(`Unknown error occurred.`)
+        return options.loginFailed(`Unknown error occurred.`)
       }
 
       let errorMsg = null
@@ -64,7 +64,7 @@ let login = function (options) {
           errorMsg = `Unknown error occurred.`
       }
 
-      return options.fail(errorMsg)
+      return options.loginFailed(errorMsg)
     }
   )
 }
