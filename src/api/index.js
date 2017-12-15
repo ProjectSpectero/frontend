@@ -22,9 +22,12 @@ export default function (method, path, data, success, failed) {
   })
   .then(response => {
     
-    // Run success callback, if any
-    if ( typeof success === 'function' ) {
+    // Run success callbacks, if any
+    if ( typeof success === 'function' ) { // Main api callback
       success(response)
+    }
+    if ( typeof data.success === 'function' ) { // Sub-wrapper callback
+      data.success(response)
     }
 
     return { error: false, data: response }
@@ -36,9 +39,12 @@ export default function (method, path, data, success, failed) {
       removeCookie('SPECTERO_AUTH')
     }
     
-    // Run fail callback, if any
-    if ( typeof failed === 'function' ) {
+    // Run fail callbacks, if any
+    if ( typeof failed === 'function' ) { // Main api callback
       failed(error.response)
+    }
+    if ( typeof data.fail === 'function' ) { // Sub-wrapper callback
+      data.fail(response)
     }
 
     return { error: true, data: error.response }
