@@ -6,6 +6,7 @@
         <div id="authContent">
           <h1>Log into your account</h1>
           <form id="loginForm">
+            <div class="message info" v-if="!loginError && this.$route.query.redirect">Please log in to continue.</div>
             <div class="message error" v-if="loginError">{{ loginError }}</div>
             <label for="loginUsername">Username</label>
             <input type="text" v-model="loginUsername" id="loginUsername" :disabled="disableForm" placeholder="Enter username">
