@@ -13,22 +13,19 @@
         <header>
           <section class="info">User Details</section>
           <section>Last Active</section>
-          <section>VPN Access</section>
-          <section>Proxy Access</section>
-          <section>Data Received</section>
-          <section>Data Sent</section>
+          <section>Source</section>
           <section>&nbsp;</section>
         </header>
         <paginate ref="paginator" name="users" :list="users" :per="10">
-          <li v-for="user in paginated('users')">
+          <li v-for="user in paginated('users')" v-bind:key="user.id">
             <user-item v-bind:key="user.id" v-bind:user="user"></user-item>
           </li>
         </paginate>
       </section>
       <section id="paginateBar">
         <div class="overview">
-          <span class="count" v-if="$refs.paginator">Showing <strong>{{$refs.paginator.pageItemsCount}}</strong> users</span>
-          <span class="total">{{users.length}} users total</span>
+          <span class="count" v-if="$refs.paginator">Showing <strong>{{$refs.paginator.pageItemsCount}}</strong> user{{users.length > 1 ? 's': ''}}</span>
+          <span class="total">{{users.length}} user{{users.length > 1 ? 's': ''}} total</span>
         </div>
         <paginate-links for="users" :limit="2" :show-step-links="true"></paginate-links>
       </section>
@@ -36,7 +33,8 @@
   </div>
 </template>
 
-<script>
+  <script>
+  import { mapGetters, mapActions } from 'vuex'
   import UserItem from './Users/UserItem'
 
   export default {
@@ -49,49 +47,21 @@
     },
     data: function () {
       return {
-        paginate: ['users'],
-        users: [
-          {
-            id: 1,
-            name: 'Robert Clarke',
-            email: 'robert@spectero.com',
-            status: 'online',
-            data: {
-              active: 'Now',
-              vpn: true,
-              proxy: true,
-              dataRecv: '2.4 GB',
-              dataSent: '240 MB'
-            }
-          },
-          {
-            id: 2,
-            name: 'Paul S.',
-            email: 'paul@spectero.com',
-            status: 'online',
-            data: {
-              active: 'Now',
-              vpn: true,
-              proxy: false,
-              dataRecv: '54 TB',
-              dataSent: '34 TB'
-            }
-          },
-          {
-            id: 3,
-            name: 'Anatolie',
-            email: 'anatolie@spectero.com',
-            status: 'online',
-            data: {
-              active: 'Now',
-              vpn: true,
-              proxy: false,
-              dataRecv: '987 MB',
-              dataSent: '120 MB'
-            }
-          }
-        ]
+        paginate: ['users']
       }
+    },
+    computed: {
+      ...mapGetters({
+        users: 'users'
+      })
+    },
+    methods: {
+      // ...mapActions({
+      //   getUsers
+      // })
+    },
+    created() {
+      this.$store.dispatch('fetchUsers', { self: this })
     }
   }
 </script>

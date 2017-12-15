@@ -3,38 +3,31 @@
     <section class="info">
       <div class="avatar">{{ initials }}</div>
       <div class="text">
-        <h2>{{ user.name }}</h2>
+        <h2>{{ displayName }}</h2>
         <span class="email">{{ user.email }}</span>
       </div>
     </section>
-    <section class="active">{{ user.data.active }}</section>
-    <section class="vpn">{{ user.data.vpn }}</section>
-    <section class="proxy">{{ user.data.proxy }}</section>
-    <section class="dataRecv">{{ user.data.dataRecv }}</section>
-    <section class="dataSent">{{ user.data.dataSent }}</section>
+    <section class="active">{{ user.lastLoginTime }}</section>
+    <section class="source">{{ user.source }}</section>
     <section class="actions">
-      ACTIONS
+      Action Buttons
     </section>
   </article>
 </template>
 
 <script>
-  /* eslint-disable */ // TODO: remove
-
   export default {
     name: 'user-item',
     props: ['user'],
     data: function () {
-      return {
-        // loginUsername: null,
-        // loginPassword: null,
-        // loginError: null,
-        // disableForm: false
-      }
+      return {}
     },
     computed: {
+      displayName () {
+        return this.user.displayName ? this.user.displayName : this.user.authKey
+      },
       initials () {
-        let name = this.user.name
+        let name = this.displayName
         let initials = name.match(/\b\w/g) || []
         initials = ((initials.shift() || '') + (initials.pop() || '')).toUpperCase()
         return initials
@@ -45,26 +38,10 @@
 
 <style lang="scss" scoped>
 
-// @import '../assets/styles/components/_users.scss';
-
 article {
-  // width: 100%;
-  // padding: 14px;
-  // display: flex;
-  // flex-direction: row;
-  // flex-wrap: nowrap;
-  // align-items: center;
-  // justify-content: center;
-
   background: rgba(0,0,0,0.2);
   
-  // section {
-    
-  // }
   .info {
-    
-    // background: red;
-    
     display: flex;
     align-items: center;
 
@@ -90,9 +67,6 @@ article {
       display: block;
       font-size: 16px;
       line-height: 100%;
-
-      // background: blue;
-
       padding-right: 2px;
 
       &::after {

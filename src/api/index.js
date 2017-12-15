@@ -44,7 +44,7 @@ export default function (method, path, data, success, failed) {
       failed(error.response)
     }
     if ( typeof data.fail === 'function' ) { // Sub-wrapper callback
-      data.fail(response)
+      data.fail(error.response)
     }
 
     return { error: true, data: error.response }

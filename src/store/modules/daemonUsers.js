@@ -1,39 +1,38 @@
+import userAPI from '../../api/user.js'
+
 const state = {
-  tasks: [
-    
-  ]
+  users: []
 }
 
 const getters = {
-  tasks: state => state.tasks
+  users: state => state.users
 }
 
 const mutations = {
-  addTask (state, task) {
-    state.tasks.push(task)
+  FETCH_USERS (state, users) {
+    state.users = users
   }
-
-
-  // DECREMENT_MAIN_COUNTER (state) {
-  //   state.main--
-  // },
-  // INCREMENT_MAIN_COUNTER (state) {
-  //   state.main++
-  // }
 }
 
 const actions = {
-  // someAsyncTask ({ commit }) {
-  //   // do something async
-  //   commit('INCREMENT_MAIN_COUNTER')
-  // }
-  // getTasks ({ commit }, options) {
+  fetchUsers ({ commit }) {
+    userAPI.list({
+      success: function (msg) {
+        let users = msg.data.result
 
-  //   // console.log(`store/modules/Tasks.js getTasks CALLED`)
+        // Inject additional temporary fields into user objects
+        for (let i = 0; i < users.length; i++) {
+          let user = users[i]
+          user.email = 'n/a'
+        }
 
-  //   return state.tasks
-
-  // }
+        commit('FETCH_USERS', users)
+      },
+      fail: function (msg) {
+        // TODO: add proper error handling for loading user list
+      }
+    })
+  }
 }
 
 export default {
