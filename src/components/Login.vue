@@ -11,7 +11,7 @@
             <input type="text" v-model="loginUsername" id="loginUsername" :disabled="disableForm" placeholder="Enter username">
             <label for="loginPassword">Password</label>
             <input type="password" v-model="loginPassword" id="loginPassword" :disabled="disableForm" placeholder="Enter password">
-            <button @click="submitLogin" :disabled="disableForm">{{ disableForm ? 'Please Wait' : 'Log In' }}</button>
+            <button @click.prevent="submitLogin" @keyup.enter="submitLogin" :disabled="disableForm">{{ disableForm ? 'Please Wait' : 'Log In' }}</button>
           </form>
         </div>
         <div id="authBottom">
