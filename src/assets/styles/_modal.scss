@@ -1,0 +1,17 @@
+.v--modal {
+  box-shadow: none;
+  color: #000;
+  background: #fff;
+  padding: 20px;
+  border-radius: 4px;
+
+  h2 {
+    display: block;
+    margin-bottom: 20px;
+    font-size: 26px;
+    line-height: 100%;
+  }
+}
+.v--modal-overlay {
+  background: rgba(0,0,0,0.5);
+}

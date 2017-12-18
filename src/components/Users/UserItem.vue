@@ -40,6 +40,7 @@
 
 article {
   background: rgba(0,0,0,0.2);
+  border-radius: 4px;
   
   .info {
     display: flex;

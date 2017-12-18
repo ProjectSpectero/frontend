@@ -30,12 +30,14 @@
         <paginate-links for="users" :limit="2" :show-step-links="true"></paginate-links>
       </section>
 		</div>
+    <add-user-modal></add-user-modal>
   </div>
 </template>
 
-  <script>
+<script>
   import { mapGetters, mapActions } from 'vuex'
   import UserItem from './Users/UserItem'
+  import AddUserModal from './Users/AddUserModal'
 
   export default {
     name: 'users',
@@ -43,7 +45,8 @@
       title: 'Users'
     },
     components: {
-      UserItem
+      UserItem,
+      AddUserModal
     },
     data: function () {
       return {
@@ -57,7 +60,7 @@
     },
     methods: {
       showModal (id) {
-        this.$modal.show(id);
+        this.$modal.show(id)
       }
     },
     created() {

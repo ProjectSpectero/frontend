@@ -6,13 +6,13 @@
         <div id="authContent">
           <h1>Log into your account</h1>
           <form id="loginForm">
-            <div class="message info" v-if="!loginError && this.$route.query.redirect">Please log in to continue.</div>
-            <div class="message error" v-if="loginError">{{ loginError }}</div>
-            <label for="loginUsername">Username</label>
-            <input type="text" v-model="loginUsername" id="loginUsername" :disabled="disableForm" placeholder="Enter username">
-            <label for="loginPassword">Password</label>
-            <input type="password" v-model="loginPassword" id="loginPassword" :disabled="disableForm" placeholder="Enter password">
-            <button @click.prevent="submitLogin" @keyup.enter="submitLogin" :disabled="disableForm">{{ disableForm ? 'Please Wait' : 'Log In' }}</button>
+            <div class="message info" v-if="!formError && this.$route.query.redirect">Please log in to continue.</div>
+            <div class="message error" v-if="formError">{{ formError }}</div>
+            <label for="username">Username</label>
+            <input type="text" v-model="username" id="username" :disabled="formDisable" placeholder="Enter username">
+            <label for="password">Password</label>
+            <input type="password" v-model="password" id="password" :disabled="formDisable" placeholder="Enter password">
+            <button @click.prevent="submit" @keyup.enter="submit" :disabled="formDisable">{{ formDisable ? 'Please Wait' : 'Log In' }}</button>
           </form>
         </div>
         <div id="authBottom">
@@ -33,28 +33,24 @@
     },
     data: function () {
       return {
-        loginUsername: null,
-        loginPassword: null,
-        loginError: null,
-        disableForm: false
+        username: null,
+        password: null,
+        formError: null,
+        formDisable: false
       }
     },
     methods: {
-      submitLogin () {
-        // Disable form while HTTP request being made
-        this.disableForm = true
-
+      submit () {
         let parent = this
+        parent.formDisable = true // Disable form while HTTP request being made
 
-        // Make API login request
         auth.login({
           data: {
-            authKey: parent.loginUsername,
-            password: parent.loginPassword
+            authKey: parent.username,
+            password: parent.password
           },
           loginSuccess: function (msg) {
-            parent.loginError = null
-            parent.disableForm = false
+            parent.formError = null
 
             if (parent.$route.query.redirect) {
               parent.$router.push({ path: parent.$route.query.redirect })
@@ -62,11 +58,14 @@
               parent.$router.push({ name: 'dashboard' })
             }
           },
-          loginFailed: function (msg) {
-            parent.loginError = msg
-            parent.disableForm = false
+          loginFailed: function (err) {
+            parent.formError = err
+            parent.formDisable = false
           }
         })
+      },
+      reset () {
+        Object.assign(this.$data, this.$options.data.call(this))
       }
     }
   }

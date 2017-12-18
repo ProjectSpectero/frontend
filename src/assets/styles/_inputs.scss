@@ -7,7 +7,7 @@ label {
   line-height: 14px;
   cursor: pointer;
 }
-input[type="text"], input[type="password"] {
+input[type="text"], input[type="password"], input[type="email"] {
   width: 100%;
   display: block;
   padding: 14px;
@@ -16,9 +16,7 @@ input[type="text"], input[type="password"] {
   background: rgba(0,0,0,0.15);
   border: 1px solid rgba(255,255,255,0.1);
   border-radius: 4px;
-
   margin-bottom: 20px;
-
   transition: all 0.1s ease-out;
 
   &:focus {
@@ -38,10 +36,9 @@ button {
   cursor: pointer;
   font-weight: bold;
   color: $color-main;
-  background: rgba(0,0,0,0);
+  background: transparent;
   border: 2px solid $color-main;
   border-radius: 4px;
-
   transition: all 0.1s ease-out;
 
   &:hover {
@@ -52,5 +49,37 @@ button {
     border-color: #fff;
     opacity: 0.3;
     cursor: not-allowed;
+  }
+}
+
+// Modal inputs (against light background)
+.v--modal {
+  label {
+    color: #000;
+    opacity: 0.7;
+  }
+  input[type="text"], input[type="password"], input[type="email"] {
+    color: #000;
+    background: #fff;
+    border: 1px solid rgba(0,0,0,0.1);
+
+    &:focus {
+      border-color: rgba(0,0,0,0.25);
+    }
+    &:disabled {
+      background: rgba(0,0,0,0.03);
+      color: rgba(0,0,0,0.3);
+    }
+  }
+  button {
+    background: $color-main;
+    color: #fff;
+
+    &:disabled {
+      opacity: 1;
+      color: rgba(0,0,0,0.4);
+      background: #F0F0F0;
+      border-color: #F0F0F0;
+    }
   }
 }

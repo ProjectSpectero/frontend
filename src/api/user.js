@@ -20,11 +20,13 @@ export default {
   /**
    * Creates user from given parameters.
    * 
-   * @param {String} authKey  Username.
-   * @param {String} password Password.
-   * @param {Array}  roles    Array of roles to assign ([] for no roles).
-   * @param {String} cert     n/a
-   * @param {String} cartKey  n/a
+   * @param {String} authKey      Username.
+   * @param {String} password     Password.
+   * @param {String} emailAddress Email address.
+   * @param {String} fullName     Display name.
+   * @param {Array}  roles        Array of roles to assign ([] for no roles).
+   * @param {String} cert         n/a
+   * @param {String} cartKey      n/a
    */
   create: function (options) {
     return api('POST', `/user`, options)
@@ -35,11 +37,13 @@ export default {
    * 
    * @param {Integer} id       User id to edit.
    * 
-   * @param {String}  authKey  Username.
-   * @param {String}  password Password.
-   * @param {Array}   roles    Array of roles to assign ([] for no roles).
-   * @param {String}  cert     n/a
-   * @param {String}  cartKey  n/a
+   * @param {String} authKey      Username.
+   * @param {String} password     Password.
+   * @param {String} emailAddress Email address.
+   * @param {String} fullName     Display name.
+   * @param {Array}  roles        Array of roles to assign ([] for no roles).
+   * @param {String} cert         n/a
+   * @param {String} cartKey      n/a
    */
   edit: function (options) {
     return api('PUT', `/user/${options.id}`, options)
