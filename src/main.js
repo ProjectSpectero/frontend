@@ -6,9 +6,11 @@ import router from './router'
 import store from './store'
 import VuePaginate from 'vue-paginate'
 import VueCookie from 'vue-cookie'
+import VueModal from 'vue-js-modal'
 
 Vue.use(VueCookie)
 Vue.use(VuePaginate)
+Vue.use(VueModal)
 
 Vue.config.productionTip = false
 
