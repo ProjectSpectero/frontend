@@ -22,8 +22,8 @@ Vue.use(Meta)
 const router = new Router({
   mode: 'history',
   routes: [
+    { path: '/', name: 'dashboard', component: Dashboard, meta: { auth: true } },
     { path: '/login', name: 'login', component: Login, meta: { antiAuth: true } },
-    { path: '/dashboard', name: 'dashboard', component: Dashboard, meta: { auth: true } },
     { path: '/users', name: 'users', component: Users, meta: { auth: true } },
     { path: '*', name: 'notFound', component: NotFound }
   ]
