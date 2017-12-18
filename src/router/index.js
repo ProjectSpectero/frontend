@@ -20,7 +20,7 @@ Vue.use(Meta)
  * antiAuth: redirect user when already authenticated (route for non-logged in users only)
  */
 const router = new Router({
-  // mode: 'history',
+  mode: 'history',
   routes: [
     { path: '/login', name: 'login', component: Login, meta: { antiAuth: true } },
     { path: '/dashboard', name: 'dashboard', component: Dashboard, meta: { auth: true } },
