@@ -17,6 +17,7 @@
 </template>
 
 <script>
+  import { mapGetters, mapActions } from 'vuex'
   import user from '../../api/user.js'
 
   export default {
@@ -45,6 +46,10 @@
           },
           success: function (msg) {
             parent.formError = null
+
+            // Update users store to reflect new user (additionally live updates /users page data)
+            parent.$store.dispatch('fetchUsers', { self: this })
+
             parent.$modal.hide('addUser')
             parent.reset()
           },
