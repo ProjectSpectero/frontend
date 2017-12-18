@@ -23,7 +23,7 @@ const actions = {
         // Inject additional temporary fields into user objects
         for (let i = 0; i < users.length; i++) {
           let user = users[i]
-          user.email = 'n/a'
+          user.status = 'online'
         }
 
         commit('FETCH_USERS', users)

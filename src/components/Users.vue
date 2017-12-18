@@ -182,6 +182,9 @@ ul.paginate-links {
     .count, .total {
       display: block;
     }
+    .total {
+      margin-top: 4px;
+    }
     strong {
       color: rgba(255,255,255,1);
       font-weight: 600;

@@ -4,7 +4,7 @@
       <div class="avatar">{{ initials }}</div>
       <div class="text">
         <h2>{{ displayName }}</h2>
-        <span class="email">{{ user.email }}</span>
+        <span class="email">{{ user.emailAddress }}</span>
       </div>
     </section>
     <section class="active">{{ user.lastLoginTime }}</section>
@@ -24,7 +24,7 @@
     },
     computed: {
       displayName () {
-        return this.user.displayName ? this.user.displayName : this.user.authKey
+        return this.user.fullName ? this.user.fullName : this.user.authKey
       },
       initials () {
         let name = this.displayName
