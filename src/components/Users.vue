@@ -6,7 +6,7 @@
         <div class="actionButtons">
           <button>Search</button>
           <button>Filter</button>
-          <button class="green">Add User</button>
+          <button class="green" @click="showModal('addUser')">Add User</button>
         </div>
       </header>
       <section id="userList">
@@ -56,9 +56,9 @@
       })
     },
     methods: {
-      // ...mapActions({
-      //   getUsers
-      // })
+      showModal (id) {
+        this.$modal.show(id);
+      }
     },
     created() {
       this.$store.dispatch('fetchUsers', { self: this })
