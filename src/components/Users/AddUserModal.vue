@@ -11,7 +11,7 @@
       <input type="email" v-model="email" id="email" :disabled="formDisable" placeholder="example@spectero.com">
       <label for="fullName">Display name</label>
       <input type="text" v-model="fullName" id="fullName" :disabled="formDisable" placeholder="">
-      <button @click.prevent="submit" @keyup.enter="submit" :disabled="formDisable">{{ formDisable ? 'Please Wait' : 'Log In' }}</button>
+      <button @click.prevent="submit" @keyup.enter="submit" :disabled="formDisable">{{ formDisable ? 'Please Wait' : 'Add User' }}</button>
     </form>
   </modal>
 </template>
