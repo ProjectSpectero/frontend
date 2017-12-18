@@ -7,7 +7,7 @@
         <span class="email">{{ user.emailAddress }}</span>
       </div>
     </section>
-    <section class="active">{{ user.lastLoginTime }}</section>
+    <section class="active">{{ user.lastLoginDate }}</section>
     <section class="source">{{ user.source }}</section>
     <section class="actions">
       Action Buttons
