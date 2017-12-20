@@ -1,11 +1,15 @@
 <template>
-  <modal name="deleteUser" height="auto" :scrollable="true" @before-open="beforeOpen">
-    <h2>Delete User</h2>
+  <modal name="deleteUser" :adaptive="true" height="auto" width="500px" :scrollable="true" :clickToClose="false" @before-open="beforeOpen">
+    <button class="modal-close" @click.prevent="$modal.hide('deleteUser')"></button>
+    <div class="modal-title">
+      <div class="modal-title-icon red"><span class="icon icon-trash"></span></div>
+      <h2>Delete user</h2>
+    </div>
+    <p>Are you sure you want to delete <strong>{{ username }}</strong>? This action cannot be undone.
     <form id="deleteUserForm">
       <div class="message error" v-if="formError">{{ formError }}</div>
-      <p>Are you sure you want to do this? This cannot be undone.</p>
-      <button @click.prevent="submit" @keyup.enter="submit" :disabled="formDisable" class="red">{{ formDisable ? 'Please Wait' : 'Delete User' }}</button>
-      <button @click.prevent="$modal.hide('deleteUser')">Cancel</button>
+      <button class="alt red" @click.prevent="submit" @keyup.enter="submit" :disabled="formDisable">{{ formDisable ? 'Please Wait' : 'Delete User' }}</button>
+      <button class="alt light right" @click.prevent="$modal.hide('deleteUser')">Cancel</button>
     </form>
   </modal>
 </template>
@@ -21,6 +25,11 @@
         user: null,
         formError: null,
         formDisable: false
+      }
+    },
+    computed: {
+      username () {
+        return this.user !== null ? this.user.authKey : null
       }
     },
     methods: {

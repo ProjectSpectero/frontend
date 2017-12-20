@@ -7,7 +7,7 @@
   border-radius: 4px !important;
 }
 .v--modal-overlay {
-  background: rgba(0,0,0,0.8) !important;
+  background: rgba(0,0,0,0.7) !important;
 }
 .modal-title {
   cursor: default;
@@ -43,6 +43,10 @@
   &.green {
     color: #1FC4AB;
     background: #D2F4EF;
+  }
+  &.red {
+    color: #CC2664;
+    background: #F6E1E4;
   }
   .icon::before {
     position: relative;
