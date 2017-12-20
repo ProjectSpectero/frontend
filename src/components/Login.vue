@@ -59,7 +59,7 @@
             }
           },
           loginFailed: function (err) {
-            parent.formError = err
+            // parent.formError = err
             parent.formDisable = false
           }
         })
