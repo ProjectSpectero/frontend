@@ -5,10 +5,12 @@
       <div class="modal-title-icon red"><span class="icon icon-trash"></span></div>
       <h2>Delete user</h2>
     </div>
-    <p>Are you sure you want to delete <strong>{{ username }}</strong>? This action cannot be undone.
+    <p>Are you sure you want to delete the user <strong>{{ username }}</strong>?</p>
+    <p><strong>WARNING:</strong> This action cannot be undone.</p>
     <form id="deleteUserForm">
       <div class="message error" v-if="formError">{{ formError }}</div>
-      <button class="alt red" @click.prevent="submit" @keyup.enter="submit" :disabled="formDisable">{{ formDisable ? 'Please Wait' : 'Delete User' }}</button>
+      <input type="text" v-model="confirmDelete" placeholder="Type 'DELETE' to proceed" class="confirmInput">
+      <button class="alt red" @click.prevent="submit" @keyup.enter="submit" :disabled="formDisable || confirmDelete !== 'DELETE'">{{ formDisable ? 'Please Wait' : 'Delete User' }}</button>
       <button class="alt light right" @click.prevent="$modal.hide('deleteUser')">Cancel</button>
     </form>
   </modal>
@@ -24,7 +26,8 @@
       return {
         user: null,
         formError: null,
-        formDisable: false
+        formDisable: false,
+        confirmDelete: null
       }
     },
     computed: {
@@ -68,5 +71,11 @@
 </script>
 
 <style lang="scss">
-  
+  #deleteUserForm {
+    padding-top: 16px;
+
+    .confirmInput {
+      margin-bottom: 20px;
+    }
+  }
 </style>
