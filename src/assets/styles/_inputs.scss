@@ -93,7 +93,7 @@ button {
     &:hover {
       background: darken($color-blue, 4%);
     }
-    &:disabled {
+    &:disabled, &:disabled:hover {
       opacity: 1;
       color: rgba(0,0,0,0.4);
       background: #F0F0F0;
