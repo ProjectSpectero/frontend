@@ -7,10 +7,12 @@ import store from './store'
 import VuePaginate from 'vue-paginate'
 import VueCookie from 'vue-cookie'
 import VueModal from 'vue-js-modal'
+import VueMoment from 'vue-moment'
 
 Vue.use(VueCookie)
 Vue.use(VuePaginate)
 Vue.use(VueModal)
+Vue.use(VueMoment)
 
 Vue.config.productionTip = false
 

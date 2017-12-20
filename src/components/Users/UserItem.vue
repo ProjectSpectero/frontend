@@ -7,7 +7,7 @@
         <span class="email" v-if="user.emailAddress">{{ user.emailAddress }}</span>
       </div>
     </section>
-    <section class="active">{{ new Date(user.lastLoginDate) }}</section>
+    <section class="active">{{ user.lastLoginDate | moment("from") }}</section>
     <section class="source">{{ user.source }}</section>
     <section class="actions">
       <button @click="deleteUser()">Delete</button>
