@@ -1,12 +1,13 @@
+// IMPORTANT: apply !imporant to all .v--modal styles to ensure CSS is overwritten by module styling
 .v--modal-box {
-  box-shadow: none;
-  color: #000;
-  background: #fff;
-  padding: 20px;
-  border-radius: 4px;
+  box-shadow: none !important;
+  color: #000 !important;
+  background: #fff !important;
+  padding: 20px !important;
+  border-radius: 4px !important;
 }
 .v--modal-overlay {
-  background: rgba(0,0,0,0.8);
+  background: rgba(0,0,0,0.8) !important;
 }
 .modal-title {
   cursor: default;
