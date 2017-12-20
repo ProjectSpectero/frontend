@@ -10,7 +10,7 @@
     <form id="deleteUserForm">
       <div class="message error" v-if="formError">{{ formError }}</div>
       <input type="text" v-model="confirmDelete" placeholder="Type 'DELETE' to proceed" class="confirmInput">
-      <button class="alt red" @click.prevent="submit" @keyup.enter="submit" :disabled="formDisable || confirmDelete !== 'DELETE'">{{ formDisable ? 'Please Wait' : 'Delete User' }}</button>
+      <button class="alt red" @click.prevent="submit" @keyup.enter="submit" :disabled="formDisable || confirmDelete.toLowerCase() !== 'delete'">{{ formDisable ? 'Please Wait' : 'Delete User' }}</button>
       <button class="alt light right" @click.prevent="$modal.hide('deleteUser')">Cancel</button>
     </form>
   </modal>
@@ -27,7 +27,7 @@
         user: null,
         formError: null,
         formDisable: false,
-        confirmDelete: null
+        confirmDelete: ''
       }
     },
     computed: {
