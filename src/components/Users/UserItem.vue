@@ -4,13 +4,15 @@
       <div class="avatar">{{ initials }}</div>
       <div class="text">
         <h2>{{ displayName }}</h2>
-        <span class="email">{{ user.emailAddress }}</span>
+        <span class="email" v-if="user.emailAddress">{{ user.emailAddress }}</span>
       </div>
     </section>
-    <section class="active">{{ user.lastLoginDate }}</section>
+    <section class="active">{{ new Date(user.lastLoginDate) }}</section>
     <section class="source">{{ user.source }}</section>
     <section class="actions">
-      Action Buttons
+      <button @click="deleteUser()">Delete</button>
+      <button>Edit</button>
+      <button>Info</button>
     </section>
   </article>
 </template>
@@ -32,12 +34,16 @@
         initials = ((initials.shift() || '') + (initials.pop() || '')).toUpperCase()
         return initials
       }
+    },
+    methods: {
+      deleteUser () {
+        this.$modal.show('deleteUser', { user: this.user })
+      }
     }
   }
 </script>
 
 <style lang="scss" scoped>
-
 article {
   background: rgba(0,0,0,0.2);
   border-radius: 4px;

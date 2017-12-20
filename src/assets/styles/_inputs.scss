@@ -40,7 +40,7 @@ button {
   border: 2px solid $color-main;
   border-radius: 4px;
   transition: all 0.1s ease-out;
-
+  
   &:hover {
     background: rgba($color-main, 0.05);
   }
@@ -49,6 +49,13 @@ button {
     border-color: #fff;
     opacity: 0.3;
     cursor: not-allowed;
+  }
+  &.red {
+    border-color: $color-red;
+
+    &:hover {
+      background: rgba($color-red, 0.05);
+    }
   }
 }
 
@@ -74,12 +81,16 @@ button {
   button {
     background: $color-main;
     color: #fff;
+    border: none;
 
+    &.red {
+      color: #fff;
+      background: $color-red;
+    }
     &:disabled {
       opacity: 1;
       color: rgba(0,0,0,0.4);
       background: #F0F0F0;
-      border-color: #F0F0F0;
     }
   }
 }

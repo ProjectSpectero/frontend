@@ -31,6 +31,7 @@
       </section>
 		</div>
     <add-user-modal></add-user-modal>
+    <delete-user-modal></delete-user-modal>
   </div>
 </template>
 
@@ -38,6 +39,7 @@
   import { mapGetters, mapActions } from 'vuex'
   import UserItem from './Users/UserItem'
   import AddUserModal from './Users/AddUserModal'
+  import DeleteUserModal from './Users/DeleteUserModal'
 
   export default {
     name: 'users',
@@ -46,7 +48,8 @@
     },
     components: {
       UserItem,
-      AddUserModal
+      AddUserModal,
+      DeleteUserModal
     },
     data: function () {
       return {
