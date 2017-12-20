@@ -12,12 +12,12 @@ input[type="text"], input[type="password"], input[type="email"] {
   display: block;
   padding: 14px;
   font: 14px/100% $font-main;
+  line-height: 14px;
   color: #fff;
   background: rgba(0,0,0,0.15);
   border: 1px solid rgba(255,255,255,0.1);
-  border-radius: 4px;
-  margin-bottom: 20px;
   transition: all 0.1s ease-out;
+  -webkit-appearance: none;
 
   &:focus {
     border-color: rgba(255,255,255,0.2);
@@ -30,15 +30,16 @@ input[type="text"], input[type="password"], input[type="email"] {
   }
 }
 button {
-  padding: 15px 40px;
+  padding: 12px 20px;
   display: inline-block;
-  font: 15px/100% $font-main;
+  font: 14px/100% $font-main;
+  line-height: 100%;
   cursor: pointer;
-  font-weight: bold;
+  font-weight: 700;
   color: $color-main;
   background: transparent;
   border: 2px solid $color-main;
-  border-radius: 4px;
+  border-radius: 5px;
   transition: all 0.1s ease-out;
   
   &:hover {
@@ -57,6 +58,48 @@ button {
       background: rgba($color-red, 0.05);
     }
   }
+  &.alt {
+    padding: 14px 20px;
+    color: #fff;
+    background: $color-blue;
+    border: none;
+    
+    &.green {
+      background: $color-green;
+
+      &:hover {
+        background: darken($color-green, 4%);
+      }
+    }
+    &.red {
+      background: $color-red;
+
+      &:hover {
+        background: darken($color-red, 4%);
+      }
+    }
+    &.light {
+      padding: 13px 20px;
+      color: rgba(0,0,0,0.5);
+      background: #fff;
+      border: 1px solid rgba(0,0,0,0.15);
+
+      &:hover {
+        color: rgba(0,0,0,0.8);
+        background: #fff;
+        border-color: rgba(0,0,0,0.25);
+      }
+    }
+    &:hover {
+      background: darken($color-blue, 4%);
+    }
+    &:disabled {
+      opacity: 1;
+      color: rgba(0,0,0,0.4);
+      background: #F0F0F0;
+      border-color: #F0F0F0;
+    }
+  }
 }
 
 // Modal inputs (against light background)
@@ -68,7 +111,7 @@ button {
   input[type="text"], input[type="password"], input[type="email"] {
     color: #000;
     background: #fff;
-    border: 1px solid rgba(0,0,0,0.1);
+    border-color: rgba(0,0,0,0.1);
 
     &:focus {
       border-color: rgba(0,0,0,0.25);
@@ -78,19 +121,46 @@ button {
       color: rgba(0,0,0,0.3);
     }
   }
-  button {
-    background: $color-main;
-    color: #fff;
-    border: none;
+}
 
-    &.red {
-      color: #fff;
-      background: $color-red;
+form {
+  padding-top: 8px;
+
+  .input {
+    margin-bottom: 20px + 6px; // 20px + 8px for .floating-label
+    position: relative;
+
+    &.hasError {
+      input[type="text"], input[type="password"], input[type="email"] {
+        border-color: $color-red;
+      }
+      .floating-label {
+        color: $color-red;
+      }
     }
-    &:disabled {
-      opacity: 1;
-      color: rgba(0,0,0,0.4);
-      background: #F0F0F0;
+    .errorLabel {
+      font-size: 14px;
+      line-height: 100%;
+      font-weight: 600;
+      margin-top: 8px;
+      display: block;
+      color: $color-red;
+    }
+    input[type="text"], input[type="password"], input[type="email"] {
+      padding-top: 18px;
+      padding-bottom: 16px;
+    }
+    .floating-label {
+      position: absolute;
+      pointer-events: none;
+    }
+    .floating-label {
+      left: 8px;
+      top: -8px;
+      background: #fff;
+      padding: 0 4px;
+      font-weight: 600;
+      font-size: 14px;
     }
   }
 }

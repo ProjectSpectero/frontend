@@ -33,20 +33,21 @@ export default function (method, path, data, success, failed) {
     return { error: false, data: response }
   })
   .catch(error => {
-    
+    error = error.response
+
     // Remove authorization cookie if 401 returned by any API call
-    if (error.response.status === 401 && getCookie('SPECTERO_AUTH') !== null) {
+    if (error.status === 401 && getCookie('SPECTERO_AUTH') !== null) {
       removeCookie('SPECTERO_AUTH')
     }
     
     // Run fail callbacks, if any
     if ( typeof failed === 'function' ) { // Main api callback
-      failed(error.response)
+      failed(error.data.errors)
     }
     if ( typeof data.fail === 'function' ) { // Sub-wrapper callback
-      data.fail(error.response)
+      data.fail(error.data.errors)
     }
 
-    return { error: true, data: error.response }
+    return { error: true, data: error }
   })
 }
