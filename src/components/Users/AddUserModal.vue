@@ -53,7 +53,10 @@
       submit () {
         let parent = this
         this.$validator.validateAll().then((result) => {
-          if (!result) { return }
+          if (!result) {
+            parent.formError = 'Please correct any issues in the form and try again.'
+            return
+          }
           parent.formDisable = true // Disable form while HTTP request being made
           user.create({
             data: {
