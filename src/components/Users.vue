@@ -4,8 +4,6 @@
       <header id="sectionHeader">
         <h1>Users</h1>
         <div class="actionButtons">
-          <button>Search</button>
-          <button>Filter</button>
           <button class="green" @click="showModal('addUser')">Add User</button>
         </div>
       </header>
@@ -14,7 +12,7 @@
           <section class="info">User Details</section>
           <section>Last Active</section>
           <section>Source</section>
-          <section>&nbsp;</section>
+          <section class="actions">&nbsp;</section>
         </header>
         <paginate ref="paginator" name="users" :list="users" :per="10">
           <li v-for="user in paginated('users')" v-bind:key="user.id">
@@ -171,6 +169,9 @@ ul.paginate-links {
   }
   header section.info {
     padding-left: 0;
+  }
+  section.actions {
+    max-width: 90px;
   }
 }
 #paginateBar {

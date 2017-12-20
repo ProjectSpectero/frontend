@@ -10,9 +10,8 @@
     <section class="active">{{ user.lastLoginDate | moment("from") }}</section>
     <section class="source">{{ user.source }}</section>
     <section class="actions">
-      <button @click="deleteUser()">Delete</button>
-      <button>Edit</button>
-      <button>Info</button>
+      <button @click="deleteUser()"><span class="icon icon-trash"></span></button>
+      <button><span class="icon icon-pencil"></span></button>
     </section>
   </article>
 </template>
@@ -104,6 +103,30 @@ article {
   &.offline {
     .info h2::after {
       background: #FF5964;
+    }
+  }
+  .actions {
+    max-width: 90px !important;
+    cursor: default;
+    padding-right: 14px;
+    text-align: right;
+
+    button {
+      padding: 0;
+      border: 0;
+      font-size: 18px;
+      line-height: 100%;
+      font-weight: 600;
+      color: rgba(255,255,255,0.2);
+      margin-right: 4px;
+
+      &:hover {
+        background: none;
+        color: #fff;
+      }
+      &:last-child {
+        margin-right: 0;
+      }
     }
   }
 }
