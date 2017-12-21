@@ -3,7 +3,10 @@
     <section class="info">
       <div class="avatar">{{ initials }}</div>
       <div class="text">
-        <h2>{{ displayName }}</h2>
+        <div class="displayName">
+          <h2>{{ displayName }}</h2>
+          <h3 v-if="user.fullName">{{ user.authKey }}</h3>
+        </div>
         <span class="email" v-if="user.emailAddress">{{ user.emailAddress }}</span>
       </div>
     </section>
@@ -69,22 +72,35 @@ article {
     .text {
       margin-left: 14px;
     }
-    h2 {
-      display: block;
-      font-size: 16px;
-      line-height: 100%;
-      padding-right: 2px;
+    .displayName {
+      display: flex;
+      flex-wrap: nowrap;
+      align-items: center;
 
-      &::after {
-        content: '';
-        width: 8px;
-        height: 8px;
+      h2 {
         display: inline-block;
-        margin-left: 4px;
-        border-radius: 4px;
-        position: relative;
-        top: -2px;
-        left: 2px;
+        font-size: 16px;
+        line-height: 100%;
+        padding-right: 2px;
+
+        &::after {
+          content: '';
+          width: 8px;
+          height: 8px;
+          display: inline-block;
+          margin-left: 4px;
+          border-radius: 4px;
+          position: relative;
+          top: -2px;
+          left: 2px;
+        }
+      }
+      h3 {
+        margin-left: 6px;
+        color: rgba(255,255,255,0.3);
+        font-size: 14px;
+        line-height: 100%;
+        font-weight: 400;
       }
     }
     span.email {
