@@ -24,16 +24,20 @@ a {
   font-weight: 600;
   margin-bottom: 20px;
   
+  &.info {
+    color: #fff;
+    background-color: $color-blue;
+  }
   &.error {
     color: #fff;
     background-color: $color-red;
   }
   &.success {
-    color: #000;
+    color: rgba(0,0,0,0.8);
     background-color: $color-main;
   }
   &.warning {
-    color: #000;
+    color: rgba(0,0,0,0.8);
     background-color: $color-yellow;
   }
 }
