@@ -82,7 +82,7 @@
         let parent = this
         this.$validator.validateAll().then((result) => {
           if (!result) {
-            parent.formError = 'Please correct any issues in the form and try again.'
+            parent.formError = 'Please correct any errors and try again.'
             return
           }
           parent.formDisable = true // Disable form while HTTP request being made
@@ -100,7 +100,7 @@
               parent.reset()
             },
             fail: function (err) {
-              parent.formError = err.data.errors[0]
+              // parent.formError = err.data.errors[0]
               parent.formDisable = false
             }
           })

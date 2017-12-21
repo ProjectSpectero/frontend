@@ -8,8 +8,14 @@
           <form id="loginForm">
             <div class="message info" v-if="!formError && this.$route.query.redirect">Please log in to continue.</div>
             <div class="message error" v-if="formError">{{ formError }}</div>
-            <input type="text" v-model="username" id="username" :disabled="formDisable" placeholder="Username">
-            <input type="password" v-model="password" id="password" :disabled="formDisable" placeholder="Password">
+            <div class="input" :class="{'hasError': errors.has('username')}">
+              <input type="text" v-model="username" name="username" :disabled="formDisable" placeholder="Username" v-validate="'required'" data-vv-as="username">
+              <span v-show="errors.has('username')" class="errorLabel">{{ errors.first('username') }}</span>
+            </div>
+            <div class="input" :class="{'hasError': errors.has('password')}">
+              <input type="password" v-model="password" name="password" :disabled="formDisable" placeholder="Password" v-validate="'required'" data-vv-as="password">
+              <span v-show="errors.has('password')" class="errorLabel">{{ errors.first('password') }}</span>
+            </div>
             <button class="lime" @click.prevent="submit" @keyup.enter="submit" :disabled="formDisable">{{ formDisable ? 'Please Wait' : 'Log In' }}</button>
           </form>
         </div>
@@ -40,26 +46,30 @@
     methods: {
       submit () {
         let parent = this
-        parent.formDisable = true // Disable form while HTTP request being made
-
-        auth.login({
-          data: {
-            authKey: parent.username,
-            password: parent.password
-          },
-          loginSuccess: function (msg) {
-            parent.formError = null
-
-            if (parent.$route.query.redirect) {
-              parent.$router.push({ path: parent.$route.query.redirect })
-            } else {
-              parent.$router.push({ name: 'dashboard' })
-            }
-          },
-          loginFailed: function (err) {
-            // parent.formError = err
-            parent.formDisable = false
+        this.$validator.validateAll().then((result) => {
+          if (!result) {
+            parent.formError = 'Please correct any errors and try again.'
+            return
           }
+          parent.formDisable = true // Disable form while HTTP request being made
+          auth.login({
+            data: {
+              authKey: parent.username,
+              password: parent.password
+            },
+            loginSuccess: function (msg) {
+              parent.formError = null
+              if (parent.$route.query.redirect) {
+                parent.$router.push({ path: parent.$route.query.redirect })
+              } else {
+                parent.$router.push({ name: 'dashboard' })
+              }
+            },
+            loginFailed: function (err) {
+              // parent.formError = err
+              parent.formDisable = false
+            }
+          })
         })
       },
       reset () {
@@ -113,21 +123,24 @@
   //   text-transform: uppercase;
   //   text-align: center;
   // }
-  input {
-    display: block;
-    margin-bottom: 10px;
-
-    &:last-of-type {
-      margin-bottom: 20px;
-    }
-  }
   button {
+    margin-top: 20px;
     width: 100%;
     display: block;
     border-radius: 100px;
   }
   .message {
     text-align: center;
+  }
+  form {
+    .input {
+      padding-top: 0;
+      margin-bottom: 10px;
+
+      &.hasError {
+        margin-bottom: 16px;
+      }
+    }
   }
 }
 

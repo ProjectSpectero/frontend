@@ -133,11 +133,12 @@ article {
       font-size: 18px;
       line-height: 100%;
       font-weight: 600;
+      background: transparent;
       color: rgba(255,255,255,0.2);
       margin-right: 4px;
 
       &:hover {
-        background: none;
+        background: transparent;
         color: #fff;
       }
       &:last-child {
