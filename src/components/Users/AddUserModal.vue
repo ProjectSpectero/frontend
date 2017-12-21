@@ -23,7 +23,7 @@
         <span v-show="errors.has('email')" class="errorLabel">{{ errors.first('email') }}</span>
       </div>
       <div class="input" :class="{'hasError': errors.has('fullName')}">
-        <input type="text" v-model="fullName" name="fullName" :disabled="formDisable" v-validate="'required'">
+        <input type="text" v-model="fullName" name="fullName" :disabled="formDisable">
         <span class="floating-label">Display Name</span>
         <span v-show="errors.has('fullName')" class="errorLabel">{{ errors.first('fullName') }}</span>
       </div>
