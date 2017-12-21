@@ -27,6 +27,8 @@
         <span class="floating-label">Display Name</span>
         <span v-show="errors.has('fullName')" class="errorLabel">{{ errors.first('fullName') }}</span>
       </div>
+      <treeselect v-model="permissions" :multiple="true" :options="permissionOptions" placeholder="Select user permission(s)" />
+      <pre class="result">Permissions selected (not submitted yet):<br>{{ permissions }}</pre>
       <button class="alt green" @click.prevent="submit" @keyup.enter="submit" :disabled="formDisable">{{ formDisable ? 'Please Wait' : 'Add User' }}</button>
       <button class="alt light right" @click.prevent="$modal.hide('addUser')">Cancel</button>
     </form>
@@ -35,18 +37,44 @@
 
 <script>
   import { mapGetters, mapActions } from 'vuex'
+  import Treeselect from '@riophae/vue-treeselect'
   import user from '../../api/user.js'
 
   export default {
     name: 'add-user-modal',
+    components: {
+      Treeselect
+    },
     data: function () {
       return {
         username: null,
         password: null,
         email: null,
         fullName: null,
+        permissions: null,
         formError: null,
-        formDisable: false
+        formDisable: false,
+        permissionOptions: [ 
+          {
+            id: 'SuperAdmin',
+            label: 'SuperAdmin'
+          }, {
+            id: 'WebApi',
+            label: 'WebApi'
+          }, {
+            id: 'HTTPProxy',
+            label: 'HTTPProxy'
+          }, {
+            id: 'OpenVPN',
+            label: 'OpenVPN'
+          }, {
+            id: 'ShadowSOCKS',
+            label: 'ShadowSOCKS'
+          }, {
+            id: 'SSHTunnel',
+            label: 'SSHTunnel'
+          }
+        ]
       }
     },
     methods: {
@@ -85,6 +113,7 @@
   }
 </script>
 
+<style src="@riophae/vue-treeselect/dist/vue-treeselect.min.css"></style>
 <style lang="scss">
   
 </style>

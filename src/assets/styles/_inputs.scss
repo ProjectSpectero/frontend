@@ -1,34 +1,3 @@
-label {
-  display: inline-block;
-  font-size: 14px;
-  color: #fff;
-  opacity: 0.5;
-  margin-bottom: 10px;
-  line-height: 14px;
-  cursor: pointer;
-}
-input[type="text"], input[type="password"], input[type="email"] {
-  width: 100%;
-  display: block;
-  padding: 14px;
-  font: 14px/100% $font-main;
-  line-height: 14px;
-  color: #fff;
-  background: rgba(0,0,0,0.15);
-  border: 1px solid rgba(255,255,255,0.1);
-  transition: all 0.1s ease-out;
-  -webkit-appearance: none;
-
-  &:focus {
-    border-color: rgba(255,255,255,0.2);
-    background: rgba(0,0,0,0.25);
-  }
-  &:disabled {
-    border-color: rgba(255,255,255,0.1);
-    color: rgba(255,255,255,0.4);
-    cursor: not-allowed;
-  }
-}
 button {
   padding: 12px 20px;
   display: inline-block;
@@ -102,30 +71,39 @@ button {
   }
 }
 
-// Modal inputs (against light background)
-.v--modal {
-  label {
-    color: #000;
-    opacity: 0.7;
-  }
-  input[type="text"], input[type="password"], input[type="email"] {
-    color: #000;
-    background: #fff;
-    border-color: rgba(0,0,0,0.1);
-
-    &:focus {
-      border-color: rgba(0,0,0,0.25);
-    }
-    &:disabled {
-      background: rgba(0,0,0,0.03);
-      color: rgba(0,0,0,0.3);
-    }
-  }
-}
-
 form {
   padding-top: 8px;
 
+  label {
+    display: inline-block;
+    font-size: 14px;
+    color: rgba(255,255,255,0.3);
+    margin-bottom: 10px;
+    line-height: 14px;
+    cursor: pointer;
+  }
+  input[type="text"], input[type="password"], input[type="email"] {
+    width: 100%;
+    display: block;
+    padding: 14px;
+    font: 14px/100% $font-main;
+    line-height: 14px;
+    color: #fff;
+    background: rgba(0,0,0,0.15);
+    border: 1px solid rgba(255,255,255,0.1);
+    transition: all 0.1s ease-out;
+    -webkit-appearance: none;
+  
+    &:focus {
+      border-color: rgba(255,255,255,0.2);
+      background: rgba(0,0,0,0.25);
+    }
+    &:disabled {
+      border-color: rgba(255,255,255,0.1);
+      color: rgba(255,255,255,0.4);
+      cursor: not-allowed;
+    }
+  }
   .input {
     margin-bottom: 20px + 6px; // 20px + 8px for .floating-label
     position: relative;
@@ -161,6 +139,64 @@ form {
       padding: 0 4px;
       font-weight: 600;
       font-size: 14px;
+    }
+  }
+}
+
+// Modal inputs (against light background)
+.v--modal {
+  label {
+    color: rgba(0,0,0,0.7);
+  }
+  input[type="text"], input[type="password"], input[type="email"] {
+    color: #000;
+    background: transparent;
+    border-color: rgba(0,0,0,0.1);
+
+    &:focus {
+      border-color: rgba(0,0,0,0.25);
+      background: transparent;
+    }
+    &:disabled {
+      background: rgba(0,0,0,0.03);
+      color: rgba(0,0,0,0.3);
+    }
+  }
+}
+
+// Vue-Treeselect
+.vue-treeselect {
+  label {
+    color: #000;
+    font-size: 15px;
+    line-height: 100%;
+    line-height: 15px;
+  }
+  .vue-treeselect__placeholder {
+    font-size: 15px;
+    color: #aaa;
+  }
+  .vue-treeselect__menu {
+    line-height: 150%;
+    padding-top: 10px;
+    padding-bottom: 0;
+  }
+  .vue-treeselect__option-arrow-placeholder,
+  .vue-treeselect__option-arrow-wrapper {
+    line-height: 5px;
+  }
+  .vue-treeselect__option {
+    margin-bottom: 10px;
+  }
+  .vue-treeselect__input-wrapper input {
+    background: transparent;
+    border: none;
+    transition: none;
+
+    &:focus {
+      background: transparent;
+      padding-left: 0;
+      padding-right: 0;
     }
   }
 }
