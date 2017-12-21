@@ -72,8 +72,6 @@ button {
 }
 
 form {
-  padding-top: 8px;
-
   label {
     display: inline-block;
     font-size: 14px;
@@ -105,7 +103,8 @@ form {
     }
   }
   .input {
-    margin-bottom: 20px + 6px; // 20px + 8px for .floating-label
+    margin-bottom: 20px;
+    padding-top: 8px; // accommodate for .floating-label
     position: relative;
 
     &.hasError {
@@ -131,10 +130,8 @@ form {
     .floating-label {
       position: absolute;
       pointer-events: none;
-    }
-    .floating-label {
       left: 8px;
-      top: -8px;
+      top: 0;
       background: #fff;
       padding: 0 4px;
       font-weight: 600;
