@@ -49,23 +49,7 @@ let login = function (options) {
       if (error === undefined) {
         return options.loginFailed(`Unknown error occurred.`)
       }
-
-      let errorMsg = null
-
-      switch (error.data.errors[0]) {
-        case 'MISSING_BODY':
-          errorMsg = `Missing username or password.`
-          break
-        case 'USER_NOT_FOUND':
-        case 'MISSING_OR_INVALID_PASSWORD':
-        case 'AUTHENTICATION_FAILED':
-          errorMsg = `Invalid username or password.`
-          break
-        default:
-          errorMsg = `Unknown error occurred.`
-      }
-
-      return options.loginFailed(errorMsg)
+      return options.loginFailed(error)
     }
   )
 }

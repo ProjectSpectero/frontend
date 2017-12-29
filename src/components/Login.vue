@@ -4,13 +4,12 @@
       <div id="authContainer">
         <div id="logo"><img src="~@/assets/img/logo.svg"></div>
         <div id="authContent">
-          <!-- <h1>Log In</h1> -->
           <form id="loginForm">
             <div class="message info" v-if="!formError && this.$route.query.redirect">Please log in to continue.</div>
             <div class="message error" v-if="formError">{{ formError }}</div>
-            <div class="input" :class="{'hasError': errors.has('username')}">
-              <input type="text" v-model="username" name="username" :disabled="formDisable" placeholder="Username" v-validate="'required'" data-vv-as="username">
-              <span v-show="errors.has('username')" class="errorLabel">{{ errors.first('username') }}</span>
+            <div class="input" :class="{'hasError': errors.has('authKey')}">
+              <input type="text" v-model="authKey" name="authKey" :disabled="formDisable" placeholder="Username" v-validate="'required'" data-vv-as="username">
+              <span v-show="errors.has('authKey')" class="errorLabel">{{ errors.first('authKey') }}</span>
             </div>
             <div class="input" :class="{'hasError': errors.has('password')}">
               <input type="password" v-model="password" name="password" :disabled="formDisable" placeholder="Password" v-validate="'required'" data-vv-as="password">
@@ -37,7 +36,7 @@
     },
     data: function () {
       return {
-        username: null,
+        authKey: null,
         password: null,
         formError: null,
         formDisable: false
@@ -48,13 +47,13 @@
         let parent = this
         this.$validator.validateAll().then((result) => {
           if (!result) {
-            parent.formError = 'Please correct any errors and try again.'
+            parent.formError = parent.$i18n.t(`errors.VALIDATION_FAILED`)
             return
           }
           parent.formDisable = true // Disable form while HTTP request being made
           auth.login({
             data: {
-              authKey: parent.username,
+              authKey: parent.authKey,
               password: parent.password
             },
             loginSuccess: function (msg) {
@@ -66,8 +65,28 @@
               }
             },
             loginFailed: function (err) {
-              // parent.formError = err
-              parent.formDisable = false
+              parent.formDisable = false // Here otherwise $validator won't allow you to act on disabled inputs
+
+              // Get first error key to display main error msg
+              for (var errorKey in err.errors) {
+                if (err.errors.hasOwnProperty(errorKey)) {
+                  parent.formError = parent.$i18n.t(`errors.${errorKey}`)
+                  break // Only want the first element key
+                }
+              }
+
+              // Inject errors into form fields
+              for (var inputName in err.fields) {
+                if (err.fields.hasOwnProperty(inputName)) {
+                  let inputErrors = err.fields[inputName]
+                  for (var errorKey in inputErrors) {
+                    if (inputErrors.hasOwnProperty(errorKey)) {
+                      parent.$validator.errors.add(inputName, parent.$i18n.t(`errors.${errorKey}`, null, { x: inputErrors[errorKey] }))
+                    }
+                  }
+                }
+              }
+
             }
           })
         })
@@ -115,14 +134,6 @@
   border-radius: 4px;
   text-align: left;
 
-  // h1 {
-  //   display: block;
-  //   margin-bottom: 20px;
-  //   font-size: 18px;
-  //   font-weight: 700;
-  //   text-transform: uppercase;
-  //   text-align: center;
-  // }
   button {
     margin-top: 20px;
     width: 100%;

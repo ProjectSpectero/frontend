@@ -1,5 +1,6 @@
 import axios from 'axios'
 import { getCookie, removeCookie } from 'tiny-cookie'
+import Err from '../modules/error.js'
 
 /**
  * API wrapper for making various calls from sub-wrappers.
@@ -22,7 +23,6 @@ export default function (method, path, data, success, failed) {
   })
   .then(response => {
     
-    // Run success callbacks, if any
     if ( typeof success === 'function' ) { // Main api callback
       success(response)
     }
@@ -40,14 +40,15 @@ export default function (method, path, data, success, failed) {
       removeCookie('SPECTERO_AUTH')
     }
     
-    // Run fail callbacks, if any
+    let err = new Err(error.data.errors)
+    
     if ( typeof failed === 'function' ) { // Main api callback
-      failed(error.data.errors)
+      failed(err)
     }
     if ( typeof data.fail === 'function' ) { // Sub-wrapper callback
-      data.fail(error.data.errors)
+      data.fail(err)
     }
 
-    return { error: true, data: error }
+    return { error: true, data: err }
   })
 }
