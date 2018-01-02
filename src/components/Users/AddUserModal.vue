@@ -65,7 +65,6 @@
       },
       allowedPermissions: function () {
         let permissions = [
-          { id: 'WebApi', label: 'WebApi' },
           { id: 'HTTPProxy', label: 'HTTPProxy' },
           { id: 'OpenVPN', label: 'OpenVPN' },
           { id: 'ShadowSOCKS', label: 'ShadowSOCKS' },
@@ -73,6 +72,7 @@
         ]
         if (this.currentUserIsSuperAdmin) {
           permissions.unshift({ id: 'SuperAdmin', label: 'SuperAdmin' })
+          permissions.unshift({ id: 'WebApi', label: 'WebApi' })
         }
         return permissions
       }
