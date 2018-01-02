@@ -9,7 +9,7 @@ const getters = {
 }
 
 const mutations = {
-  FETCH_USERS (state, users) {
+  updateUsers (state, users) {
     state.users = users
   }
 }
@@ -19,17 +19,14 @@ const actions = {
     userAPI.list({
       success: function (msg) {
         let users = msg.data.result
-
-        // Inject additional temporary fields into user objects
-        for (let i = 0; i < users.length; i++) {
+        for (let i = 0; i < users.length; i++) { // Inject temp fields into user objects
           let user = users[i]
           user.status = 'online'
         }
-
-        commit('FETCH_USERS', users)
+        commit('updateUsers', users)
       },
       fail: function (msg) {
-        // TODO: add proper error handling for loading user list
+        // TODO: implement
       }
     })
   }

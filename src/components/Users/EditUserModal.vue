@@ -1,11 +1,11 @@
 <template>
-  <modal name="addUser" :adaptive="true" height="auto" width="500px" :scrollable="true" :clickToClose="false">
-    <button class="modal-close" @click.prevent="$modal.hide('addUser')"></button>
+  <modal name="editUser" :adaptive="true" height="auto" width="500px" :scrollable="true" :clickToClose="false" @before-open="beforeOpen">
+    <button class="modal-close" @click.prevent="$modal.hide('editUser')"></button>
     <div class="modal-title">
-      <div class="modal-title-icon green"><span class="icon icon-users"></span></div>
-      <h2>Add new user</h2>
+      <div class="modal-title-icon"><span class="icon icon-pencil"></span></div>
+      <h2>Edit user</h2>
     </div>
-    <form id="addUserForm">
+    <form id="editUserForm">
       <div class="message error" v-if="formError">{{ formError }}</div>
       <div class="input" :class="{'hasError': errors.has('authKey')}">
         <input type="text" v-model="authKey" name="authKey" :disabled="formDisable" v-validate="'required'" data-vv-as="username">
@@ -13,8 +13,9 @@
         <span v-show="errors.has('authKey')" class="errorLabel">{{ errors.first('authKey') }}</span>
       </div>
       <div class="input" :class="{'hasError': errors.has('password')}">
-        <input type="password" v-model="password" name="password" :disabled="formDisable" v-validate="'required'" data-vv-as="password">
+        <input type="password" v-model="password" name="password" :disabled="formDisable" v-validate="''" data-vv-as="password">
         <span class="floating-label">Password</span>
+        <small>Leave password blank if no change needed.</small>
         <span v-show="errors.has('password')" class="errorLabel">{{ errors.first('password') }}</span>
       </div>
       <div class="input" :class="{'hasError': errors.has('email')}">
@@ -36,8 +37,8 @@
           </div>
         </div>
       </div>
-      <button class="alt green" @click.prevent="submit" @keyup.enter="submit" :disabled="formDisable">{{ formDisable ? 'Please Wait' : 'Add User' }}</button>
-      <button class="alt light right" @click.prevent="$modal.hide('addUser')">Cancel</button>
+      <button class="alt green" @click.prevent="submit" @keyup.enter="submit" :disabled="formDisable">{{ formDisable ? 'Please Wait' : 'Save Changes' }}</button>
+      <button class="alt light right" @click.prevent="$modal.hide('editUser')">Cancel</button>
     </form>
   </modal>
 </template>
@@ -47,9 +48,10 @@
   import user from '../../api/user.js'
 
   export default {
-    name: 'add-user-modal',
+    name: 'edit-user-modal',
     data: function () {
       return {
+        user: {},
         authKey: null,
         password: null,
         email: null,
@@ -78,6 +80,14 @@
       }
     },
     methods: {
+      beforeOpen (event) {
+        this.reset()
+        this.user = event.params.user
+        this.authKey = this.user.authKey
+        this.email = this.user.emailAddress
+        this.fullName = this.user.fullName
+        this.roles = this.user.roles
+      },
       submit () {
         let parent = this
         parent.formError = null
@@ -88,8 +98,9 @@
             return
           }
           parent.formDisable = true // Disable form while HTTP request being made
-          user.create({
+          user.edit({
             data: {
+              id: parent.user.id,
               authKey: parent.authKey,
               password: parent.password,
               emailAddress: parent.email,
@@ -99,7 +110,7 @@
             success: function (msg) {
               parent.formError = null
               parent.$store.dispatch('fetchUsers', { self: this }) // Re-fetch users store to reflect user updates
-              parent.$modal.hide('addUser')
+              parent.$modal.hide('editUser')
               parent.reset()
             },
             fail: function (err) {

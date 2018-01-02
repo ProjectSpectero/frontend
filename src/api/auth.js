@@ -7,14 +7,17 @@ import claimtypes from 'claimtypes'
  * Returns parsed JWT from SPECTERO_AUTH cookie.
  * 
  * On error, returns Object with error key and deletes cookie (if any).
+ * 
+ * @param {String} jwt JWT token to validate (uses auth cookie if null)
  */
 let parseJWT = function (jwt) {
   try {
-    let decode = jwtDecode(jwt ? jwt : getCookie('SPECTERO_AUTH'))
+    let token = jwt ? jwt : getCookie('SPECTERO_AUTH')
+    let decode = jwtDecode(token)
     return {
+      token: token,
       exp: decode.exp,
-      id: decode[claimtypes.microsoft.userData],
-      username: decode[claimtypes.name],
+      data: JSON.parse(decode[claimtypes.microsoft.userData]),
       error: null
     }
   }
@@ -22,6 +25,14 @@ let parseJWT = function (jwt) {
     removeCookie('SPECTERO_AUTH')
     return { error: err }
   }
+}
+
+/**
+ * Verifies current JWT token in cookies and user object in vuex store.
+ */
+let checkLogin = function() {
+  let jwt = parseJWT()
+  return jwt.error !== null ? false : jwt
 }
 
 /**
@@ -55,6 +66,7 @@ let login = function (options) {
 }
 
 export default {
+  parseJWT,
+  checkLogin,
   login,
-  parseJWT
 }

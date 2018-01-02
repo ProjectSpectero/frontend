@@ -5,16 +5,17 @@
       <div class="text">
         <div class="displayName">
           <h2>{{ displayName }}</h2>
-          <h3 v-if="user.fullName">{{ user.authKey }}</h3>
         </div>
-        <span class="email" v-if="user.emailAddress">{{ user.emailAddress }}</span>
+        <span class="username" v-if="user.fullName">{{ user.authKey }}</span>
       </div>
     </section>
     <section class="active">{{ user.lastLoginDate | moment("from") }}</section>
     <section class="source">{{ user.source }}</section>
+    <section class="roles">{{ user.roles }}</section>
     <section class="actions">
       <button @click="deleteUser()"><span class="icon icon-trash"></span></button>
-      <button><span class="icon icon-pencil"></span></button>
+      <button @click="editUser()"><span class="icon icon-pencil"></span></button>
+      <button @click="viewCert()"><span class="icon icon-lock"></span></button>
     </section>
   </article>
 </template>
@@ -40,6 +41,12 @@
     methods: {
       deleteUser () {
         this.$modal.show('deleteUser', { user: this.user })
+      },
+      editUser () {
+        this.$modal.show('editUser', { user: this.user })
+      },
+      viewCert () {
+        this.$modal.show('userCert', { user: this.user })
       }
     }
   }
@@ -103,7 +110,7 @@ article {
         font-weight: 400;
       }
     }
-    span.email {
+    span.username {
       margin-top: 6px;
       display: block;
       font-size: 14px;
@@ -122,7 +129,7 @@ article {
     }
   }
   .actions {
-    max-width: 90px !important;
+    max-width: 100px !important;
     cursor: default;
     padding-right: 14px;
     text-align: right;

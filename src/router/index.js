@@ -2,6 +2,7 @@ import Vue from 'vue'
 import Router from 'vue-router'
 import Meta from 'vue-meta'
 
+import store from '../store'
 import auth from '../api/auth.js'
 
 // Components
@@ -30,11 +31,17 @@ const router = new Router({
 })
 
 router.beforeEach((to, from, next) => {
+
+  let loginCheck = auth.checkLogin()
   
+  // JWT token verified, update current user in Vuex store
+  if (loginCheck !== false) {
+    router.app.$store.commit('setCurrentJWT', loginCheck)
+  }
+
   // Handle routes requiring authentication
   if (to.matched.some(record => record.meta.auth)) {
-    // Get decoded JWT token (if any), check user authentication against API
-    if (auth.parseJWT().error === null) {
+    if (loginCheck !== false) {
       next()
     } else {
       next({ name: 'login', query: { redirect: to.fullPath } })
@@ -43,7 +50,7 @@ router.beforeEach((to, from, next) => {
 
   // Handle routes that arent view-able by already logged in users (default to /dashboard)
   else if (to.matched.some(record => record.meta.antiAuth)) {
-    if (auth.parseJWT().error === null) {
+    if (loginCheck !== false) {
       next({ name: 'dashboard' })
     } else {
       next()

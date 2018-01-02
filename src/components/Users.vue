@@ -12,6 +12,7 @@
           <section class="info">User Details</section>
           <section>Last Active</section>
           <section>Source</section>
+          <section>Roles</section>
           <section class="actions">&nbsp;</section>
         </header>
         <paginate ref="paginator" name="users" :list="users" :per="10">
@@ -29,7 +30,9 @@
       </section>
 		</div>
     <add-user-modal></add-user-modal>
+    <edit-user-modal></edit-user-modal>
     <delete-user-modal></delete-user-modal>
+    <user-cert-modal></user-cert-modal>
   </div>
 </template>
 
@@ -37,7 +40,9 @@
   import { mapGetters, mapActions } from 'vuex'
   import UserItem from './Users/UserItem'
   import AddUserModal from './Users/AddUserModal'
+  import EditUserModal from './Users/EditUserModal'
   import DeleteUserModal from './Users/DeleteUserModal'
+  import UserCertModal from './Users/UserCertModal'
 
   export default {
     name: 'users',
@@ -47,7 +52,9 @@
     components: {
       UserItem,
       AddUserModal,
-      DeleteUserModal
+      EditUserModal,
+      DeleteUserModal,
+      UserCertModal
     },
     data: function () {
       return {

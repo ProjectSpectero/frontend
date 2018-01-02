@@ -5,14 +5,22 @@
       <div class="modal-title-icon red"><span class="icon icon-trash"></span></div>
       <h2>Delete user</h2>
     </div>
-    <p>Are you sure you want to delete the user <strong>{{ username }}</strong>?</p>
-    <p><strong>WARNING:</strong> This action cannot be undone.</p>
-    <form id="deleteUserForm">
-      <div class="message error" v-if="formError">{{ formError }}</div>
-      <input type="text" v-model="confirmDelete" placeholder="Type 'DELETE' to proceed" class="confirmInput">
-      <button class="alt red" @click.prevent="submit" @keyup.enter="submit" :disabled="formDisable || confirmDelete.toLowerCase() !== 'delete'">{{ formDisable ? 'Please Wait' : 'Delete User' }}</button>
-      <button class="alt light right" @click.prevent="$modal.hide('deleteUser')">Cancel</button>
-    </form>
+    <div v-if="isCurrentUser ">
+      <form>
+        <div class="message error">{{ $t('errors.CANNOT_DELETE_SELF') }}</div>
+        <button class="alt light right" @click.prevent="$modal.hide('deleteUser')">Close</button>
+      </form>
+    </div>
+    <div v-else>
+      <p>Are you sure you want to delete the user <strong>{{ username }}</strong>?</p>
+      <p><strong>WARNING:</strong> This action cannot be undone.</p>
+      <form id="deleteUserForm">
+        <div class="message error" v-if="formError">{{ formError }}</div>
+        <input type="text" v-model="confirmDelete" placeholder="Type 'DELETE' to proceed" class="confirmInput">
+        <button class="alt red" @click.prevent="submit" @keyup.enter="submit" :disabled="formDisable || confirmDelete.toLowerCase() !== 'delete'">{{ formDisable ? 'Please Wait' : 'Delete User' }}</button>
+        <button class="alt light right" @click.prevent="$modal.hide('deleteUser')">Cancel</button>
+      </form>
+    </div>
   </modal>
 </template>
 
@@ -24,7 +32,7 @@
     name: 'delete-user-modal',
     data: function () {
       return {
-        user: null,
+        user: {},
         formError: null,
         formDisable: false,
         confirmDelete: ''
@@ -33,6 +41,9 @@
     computed: {
       username () {
         return this.user !== null ? this.user.authKey : null
+      },
+      isCurrentUser () {
+        return this.user.id === this.$store.getters.currentUser.Id
       }
     },
     methods: {

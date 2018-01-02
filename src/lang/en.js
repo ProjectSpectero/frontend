@@ -3,6 +3,7 @@ module.exports = {
   errors: {
     VALIDATION_FAILED: 'Please correct any errors and try again.',
     OBJECT_PERSIST_FAILED: 'Something went wrong, please try again later.',
+    RESOURCE_CREATION_FAILED: 'Unable to create resource, please try again later.',
 
     FIELD_REQUIRED: 'This field is required.',
     FIELD_MAXLENGTH: 'Cannot be longer than {x} characters.',
@@ -22,6 +23,8 @@ module.exports = {
     INVALID_SERVICE_OR_ACTION_ATTEMPT: 'Invalid action attempt on service.', 
     INVALID_IP_AS_LISTENER_REQUEST: 'Unable to bind httpProxy/openVPN server to this listener.',
     INVALID_HTTP_MODE_REQUEST: 'Invalid HTTP mode change requested.',
-    STORED_CONFIG_WAS_NULL: 'Unable to store service configuration.'
+    STORED_CONFIG_WAS_NULL: 'Unable to store service configuration.',
+
+    CANNOT_DELETE_SELF: 'You can\'t delete yourself.'
   }
 }
