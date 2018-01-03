@@ -114,7 +114,6 @@
               // Update user in store if user updating themselves
               if (parent.user.id === parent.$store.getters.currentUser.id) {
                 parent.$store.dispatch('syncCurrentUser', { self: this })
-                console.warn(`syncing`)
               }
               parent.formError = null
               parent.$store.dispatch('fetchUsers', { self: this }) // Re-fetch users store to reflect user updates
