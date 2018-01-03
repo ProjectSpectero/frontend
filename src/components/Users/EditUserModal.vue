@@ -93,8 +93,8 @@
       submit () {
         let parent = this
         parent.formError = null
-        this.errors.clear()
-        this.$validator.validateAll().then((result) => {
+        parent.errors.clear()
+        parent.$validator.validateAll().then((result) => {
           if (!result) {
             parent.formError = parent.$i18n.t(`errors.VALIDATION_FAILED`)
             return
@@ -110,6 +110,12 @@
               roles: parent.roles
             },
             success: function (msg) {
+              
+              // Update user in store if user updating themselves
+              if (parent.user.id === parent.$store.getters.currentUser.Id) {
+                parent.$store.dispatch('syncCurrentUser', { self: this })
+                console.warn(`syncing`)
+              }
               parent.formError = null
               parent.$store.dispatch('fetchUsers', { self: this }) // Re-fetch users store to reflect user updates
               parent.$modal.hide('editUser')
