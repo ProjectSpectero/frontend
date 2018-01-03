@@ -32,7 +32,7 @@
         <span class="floating-label">Permissions</span>
         <div class="inputContentWrapper">
           <div class="checkbox" v-for="permission in allowedPermissions" v-bind:key="permission.id">
-            <input type="checkbox" v-bind:id="permission.id" v-bind:value="permission.id" v-model="roles">
+            <input type="checkbox" v-bind:id="permission.id" v-bind:value="permission.id" v-bind:disabled="permission.disabled" v-model="roles">
             <label v-bind:for="permission.id">{{ permission.label }}</label>
           </div>
         </div>
@@ -67,14 +67,16 @@
       },
       allowedPermissions: function () {
         let permissions = [
+          { id: 'SuperAdmin', label: 'SuperAdmin' },
+          { id: 'WebApi', label: 'WebApi' },
           { id: 'HTTPProxy', label: 'HTTPProxy' },
           { id: 'OpenVPN', label: 'OpenVPN' },
           { id: 'ShadowSOCKS', label: 'ShadowSOCKS' },
           { id: 'SSHTunnel', label: 'SSHTunnel' }
         ]
-        if (this.currentUserIsSuperAdmin) {
-          permissions.unshift({ id: 'SuperAdmin', label: 'SuperAdmin' })
-          permissions.unshift({ id: 'WebApi', label: 'WebApi' })
+        if (!this.currentUserIsSuperAdmin) { // Disable SuperAdmin and WebApi checkboxes if not SuperAdmin 
+          permissions[0].disabled = true // SuperAdmin
+          permissions[1].disabled = true // WebApi
         }
         return permissions
       }
