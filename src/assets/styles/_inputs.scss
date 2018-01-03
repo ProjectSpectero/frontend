@@ -129,6 +129,11 @@ form {
       label {
         margin-bottom: 0;
       }
+      &.disabled {
+        label {
+          color: rgba(0,0,0,0.5);
+        }
+      }
       &:last-of-type {
         margin-bottom: 0;
       }
@@ -142,6 +147,10 @@ form {
       display: block;
       margin-top: 6px;
       color: rgba(0,0,0,0.5);
+    }
+    label small {
+      display: inline-block;
+      margin-left: 4px;
     }
   }
 }

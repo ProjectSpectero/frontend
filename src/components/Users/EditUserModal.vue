@@ -31,9 +31,9 @@
       <div class="input" :class="{'hasError': errors.has('permissions')}">
         <span class="floating-label">Permissions</span>
         <div class="inputContentWrapper">
-          <div class="checkbox" v-for="permission in allowedPermissions" v-bind:key="permission.id">
+          <div class="checkbox" v-for="permission in allowedPermissions" v-bind:key="permission.id" v-bind:class="{ disabled: permission.disabled }">
             <input type="checkbox" v-bind:id="permission.id" v-bind:value="permission.id" v-bind:disabled="permission.disabled" v-model="roles">
-            <label v-bind:for="permission.id">{{ permission.label }}</label>
+            <label v-bind:for="permission.id">{{ permission.label }}<small v-if="permission.disabled">Can't set</small></label>
           </div>
         </div>
       </div>
@@ -142,7 +142,6 @@
                   }
                 }
               }
-
             }
           })
         })
