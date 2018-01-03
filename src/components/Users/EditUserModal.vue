@@ -110,9 +110,9 @@
               roles: parent.roles
             },
             success: function (msg) {
-              
+
               // Update user in store if user updating themselves
-              if (parent.user.id === parent.$store.getters.currentUser.Id) {
+              if (parent.user.id === parent.$store.getters.currentUser.id) {
                 parent.$store.dispatch('syncCurrentUser', { self: this })
                 console.warn(`syncing`)
               }

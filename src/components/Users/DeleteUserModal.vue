@@ -43,7 +43,7 @@
         return this.user !== null ? this.user.authKey : null
       },
       isCurrentUser () {
-        return this.user.id === this.$store.getters.currentUser.Id
+        return this.user.id === this.$store.getters.currentUser.id
       }
     },
     methods: {

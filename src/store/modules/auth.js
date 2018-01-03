@@ -30,7 +30,7 @@ const mutations = {
 const actions = {
   syncCurrentUser ({ commit }) {
     userAPI.get({
-      data: { id: state.user.Id },
+      data: { id: state.user.id },
       success: function (msg) {
         commit('setCurrentUser', msg.data.result)
       },
