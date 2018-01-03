@@ -13,6 +13,7 @@ module.exports = {
 
     MISSING_BODY: 'Some required fields are missing or empty.',
     USER_NOT_FOUND: 'Invalid username or password.',
+    USER_AUTHKEY_ALREADY_EXISTS: 'Username already in use.',
     AUTHENTICATION_FAILED: 'Invalid username or password.',
     ROLE_VALIDATION_FAILED: 'You don\'t have access to assign this role.',
 
