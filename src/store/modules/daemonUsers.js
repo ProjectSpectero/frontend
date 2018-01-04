@@ -5,7 +5,10 @@ const state = {
 }
 
 const getters = {
-  users: state => state.users
+  users: state => state.users,
+  usernameRules: () => {
+    return { required: true, max: 50, regex: /^[a-zA-Z][\w]*$/ }
+  }
 }
 
 const mutations = {
