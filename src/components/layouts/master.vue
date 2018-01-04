@@ -1,5 +1,5 @@
 <template>
-  <div class="basic">
+  <div class="spectero">
     <router-view></router-view>
   </div>
 </template>

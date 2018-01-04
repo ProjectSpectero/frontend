@@ -1,5 +1,5 @@
 import Vue from 'vue'
-import App from './App'
+import app from './app'
 import router from './router'
 import store from './store'
 
@@ -32,6 +32,6 @@ new Vue({
   router,
   store,
   i18n,
-  template: '<App/>',
-  components: { App }
+  template: '<app/>',
+  components: { app }
 })

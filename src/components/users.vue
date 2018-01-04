@@ -44,11 +44,11 @@
 
 <script>
   import { mapGetters, mapActions } from 'vuex'
-  import UserItem from './Users/UserItem'
-  import AddUserModal from './Users/AddUserModal'
-  import EditUserModal from './Users/EditUserModal'
-  import DeleteUserModal from './Users/DeleteUserModal'
-  import UserCertModal from './Users/UserCertModal'
+  import userItem from './users/userItem'
+  import addUserModal from './users/addUserModal'
+  import editUserModal from './users/editUserModal'
+  import deleteUserModal from './users/deleteUserModal'
+  import userCertModal from './users/userCertModal'
 
   export default {
     data () {
@@ -73,11 +73,11 @@
       }
     },
     components: {
-      UserItem,
-      AddUserModal,
-      EditUserModal,
-      DeleteUserModal,
-      UserCertModal
+      userItem,
+      addUserModal,
+      editUserModal,
+      deleteUserModal,
+      userCertModal
     },
     metaInfo: {
       title: 'Users'
