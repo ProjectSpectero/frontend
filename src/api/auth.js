@@ -10,18 +10,18 @@ import claimtypes from 'claimtypes'
  * 
  * @param {String} jwt JWT token to validate (uses auth cookie if null)
  */
-let parseJWT = function (jwt) {
+const parseJWT = function (jwt) {
   try {
-    let token = jwt ? jwt : getCookie('SPECTERO_AUTH')
-    let decode = jwtDecode(token)
+    const token = jwt || getCookie('SPECTERO_AUTH')
+    const decode = jwtDecode(token)
+
     return {
       token: token,
       exp: decode.exp,
       data: JSON.parse(decode[claimtypes.microsoft.userData]),
       error: null
     }
-  }
-  catch (err) {
+  } catch (err) {
     removeCookie('SPECTERO_AUTH')
     return { error: err }
   }
@@ -30,8 +30,8 @@ let parseJWT = function (jwt) {
 /**
  * Verifies current JWT token in cookies and user object in vuex store.
  */
-let checkLogin = function() {
-  let jwt = parseJWT()
+const checkLogin = function () {
+  const jwt = parseJWT()
   return jwt.error !== null ? false : jwt
 }
 
@@ -41,32 +41,30 @@ let checkLogin = function() {
  * @param {String} authKey  Username or email for user to authenticate.
  * @param {String} password Password for user to authenticate.
  */
-let login = function (options) {
-  return api('POST', `/auth`, options, 
-    function (response) {
-      let data = response.data
+const login = function (options) {
+  return api('POST', `/auth`, options, function (response) {
+    const data = response.data
 
-      // Login successful, JWT token issued
-      if (data.message === 'JWT_TOKEN_ISSUED') {
-        let jwt = parseJWT(data.result)
-        setCookie('SPECTERO_AUTH', data.result, { expires: new Date(jwt.exp * 1000).toGMTString() })
-        return options.loginSuccess(jwt)
-      }
-
-      // 200 status code recieved, but JWT token wasn't issued
-      return options.loginFailed(`Unknown error occurred.`)
-    },
-    function (error) {
-      if (error === undefined) {
-        return options.loginFailed(`Unknown error occurred.`)
-      }
-      return options.loginFailed(error)
+    // Login successful, JWT token issued
+    if (data.message === 'JWT_TOKEN_ISSUED') {
+      let jwt = parseJWT(data.result)
+      setCookie('SPECTERO_AUTH', data.result, { expires: new Date(jwt.exp * 1000).toGMTString() })
+      return options.loginSuccess(jwt)
     }
-  )
+
+    // 200 status code recieved, but JWT token wasn't issued
+    return options.loginFailed(`Unknown error occurred.`)
+  },
+  function (error) {
+    if (error === undefined) {
+      return options.loginFailed(`Unknown error occurred.`)
+    }
+    return options.loginFailed(error)
+  })
 }
 
 export default {
   parseJWT,
   checkLogin,
-  login,
+  login
 }

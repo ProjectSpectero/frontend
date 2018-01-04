@@ -4,7 +4,7 @@ export default {
   /**
    * List services and statuses.
    */
-  list: function (options) {
+  list (options) {
     return api('GET', `/service`, options)
   },
 
@@ -13,7 +13,7 @@ export default {
    * 
    * @param {String} name Service name to query.
    */
-  get: function (options) {
+  get (options) {
     return api('GET', `/service/${options.name}/config`, options)
   },
 
@@ -27,7 +27,7 @@ export default {
    * @param {Array}  bannedDomains
    * @param {String} proxyMode
    */
-  update: function (options) {
+  update (options) {
     return api('PUT', `/service/${options.name}/config`, options)
   },
 
@@ -37,7 +37,7 @@ export default {
    * @param {String} name   Service name to query.
    * @param {String} action Action to perform to service (action name).
    */
-  manage: function (options) {
+  manage (options) {
     return api('PUT', `/service/${options.name}/${options.action}`, options)
   }
 }

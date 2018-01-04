@@ -31,37 +31,31 @@ const router = new Router({
 })
 
 router.beforeEach((to, from, next) => {
+  const loginCheck = auth.checkLogin()
 
-  let loginCheck = auth.checkLogin()
-  
   // JWT token verified, update current user in Vuex store
   if (loginCheck !== false) {
-    router.app.$store.commit('setCurrentJWT', loginCheck)
+    store.commit('setCurrentJWT', loginCheck)
   }
 
   // Handle routes requiring authentication
+  // or handle routes that arent view-able by already logged in users (default to /dashboard)
+  // else handles regular routes
   if (to.matched.some(record => record.meta.auth)) {
     if (loginCheck !== false) {
       next()
     } else {
       next({ name: 'login', query: { redirect: to.fullPath } })
     }
-  }
-
-  // Handle routes that arent view-able by already logged in users (default to /dashboard)
-  else if (to.matched.some(record => record.meta.antiAuth)) {
+  } else if (to.matched.some(record => record.meta.antiAuth)) {
     if (loginCheck !== false) {
       next({ name: 'dashboard' })
     } else {
       next()
     }
-  }
-  
-  // Handle regular routes
-  else {
+  } else {
     next()
   }
-
 })
 
 export default router

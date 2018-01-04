@@ -1,10 +1,11 @@
 <template>
   <modal name="userCert" :adaptive="true" height="auto" width="500px" :scrollable="true" @before-open="beforeOpen">
-    <button class="modal-close" @click.prevent="$modal.hide('userCert')"></button>
+    <button class="modal-close" @click.prevent="hide"></button>
     <div class="modal-title">
       <div class="modal-title-icon"><span class="icon icon-lock"></span></div>
       <h2>View certificate</h2>
     </div>
+
     <form>
       <div>
         <label for="authKey">Username:</label>
@@ -18,15 +19,14 @@
         <label for="key">Key:</label>
         <textarea id="key" v-model="certKey" readonly></textarea>
       </div>
-      <button class="alt light right" @click.prevent="$modal.hide('userCert')">Close</button>
+      <button class="alt light right" @click.prevent="hide">Close</button>
     </form>
   </modal>
 </template>
 
 <script>
   export default {
-    name: 'user-cert-modal',
-    data: function () {
+    data () {
       return {
         user: {},
         cert: null,
@@ -35,6 +35,9 @@
       }
     },
     methods: {
+      hide () {
+        this.$modal.hide('userCert')
+      },
       beforeOpen (event) {
         this.reset()
         this.user = event.params.user

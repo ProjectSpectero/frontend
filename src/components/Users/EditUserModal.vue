@@ -1,10 +1,11 @@
 <template>
   <modal name="editUser" :adaptive="true" height="auto" width="500px" :scrollable="true" :clickToClose="false" @before-open="beforeOpen">
-    <button class="modal-close" @click.prevent="$modal.hide('editUser')"></button>
+    <button class="modal-close" @click.prevent="hide"></button>
     <div class="modal-title">
       <div class="modal-title-icon"><span class="icon icon-pencil"></span></div>
       <h2>Edit user</h2>
     </div>
+
     <form id="editUserForm">
       <div class="message error" v-if="formError">{{ formError }}</div>
       <div class="input" :class="{'hasError': errors.has('authKey')}">
@@ -28,17 +29,23 @@
         <span class="floating-label">Display Name</span>
         <span v-show="errors.has('fullName')" class="errorLabel">{{ errors.first('fullName') }}</span>
       </div>
+
       <div class="input" :class="{'hasError': errors.has('permissions')}">
         <span class="floating-label">Permissions</span>
         <div class="inputContentWrapper">
           <div class="checkbox" v-for="permission in allowedPermissions" v-bind:key="permission.id" v-bind:class="{ disabled: permission.disabled }">
             <input type="checkbox" v-bind:id="permission.id" v-bind:value="permission.id" v-bind:disabled="permission.disabled" v-model="roles">
-            <label v-bind:for="permission.id">{{ permission.label }}<small v-if="permission.disabled">Can't set</small></label>
+            <label v-bind:for="permission.id">{{ permission.label }}
+              <small v-if="permission.disabled">Can't set</small>
+            </label>
           </div>
         </div>
       </div>
-      <button class="alt green" @click.prevent="submit" @keyup.enter="submit" :disabled="formDisable">{{ formDisable ? 'Please Wait' : 'Save Changes' }}</button>
-      <button class="alt light right" @click.prevent="$modal.hide('editUser')">Cancel</button>
+
+      <button class="alt green" @click.prevent="submit" @keyup.enter="submit" :disabled="formDisable">
+        {{ formDisable ? 'Please Wait' : 'Save Changes' }}
+      </button>
+      <button class="alt light right" @click.prevent="hide">Cancel</button>
     </form>
   </modal>
 </template>
@@ -48,8 +55,7 @@
   import user from '../../api/user.js'
 
   export default {
-    name: 'edit-user-modal',
-    data: function () {
+    data () {
       return {
         user: {},
         authKey: null,
@@ -62,10 +68,10 @@
       }
     },
     computed: {
-      currentUserIsSuperAdmin: function () {
+      currentUserIsSuperAdmin () {
         return this.$store.getters.currentUserRoles.indexOf('SuperAdmin') > -1
       },
-      allowedPermissions: function () {
+      allowedPermissions () {
         let permissions = [
           { id: 'SuperAdmin', label: 'SuperAdmin' },
           { id: 'WebApi', label: 'WebApi' },
@@ -74,10 +80,12 @@
           { id: 'ShadowSOCKS', label: 'ShadowSOCKS' },
           { id: 'SSHTunnel', label: 'SSHTunnel' }
         ]
+
         if (!this.currentUserIsSuperAdmin) { // Disable SuperAdmin and WebApi checkboxes if not SuperAdmin 
           permissions[0].disabled = true // SuperAdmin
           permissions[1].disabled = true // WebApi
         }
+
         return permissions
       }
     },
@@ -89,6 +97,9 @@
         this.email = this.user.emailAddress
         this.fullName = this.user.fullName
         this.roles = this.user.roles
+      },
+      hide () {
+        this.$modal.hide('editUser')
       },
       submit () {
         let parent = this
@@ -109,8 +120,7 @@
               fullName: parent.fullName,
               roles: parent.roles
             },
-            success: function (msg) {
-
+            success (msg) {
               // Update user in store if user updating themselves
               if (parent.user.id === parent.$store.getters.currentUser.id) {
                 parent.$store.dispatch('syncCurrentUser', { self: this })
@@ -120,7 +130,7 @@
               parent.$modal.hide('editUser')
               parent.reset()
             },
-            fail: function (err) {
+            fail (err) {
               parent.formDisable = false // Here otherwise $validator won't allow you to act on disabled inputs
               
               // Get first error key to display main error msg
@@ -152,7 +162,3 @@
     }
   }
 </script>
-
-<style lang="scss">
-  
-</style>

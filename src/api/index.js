@@ -20,32 +20,29 @@ export default function (method, path, data, success, failed) {
     },
     url: path,
     data: data.data
-  })
-  .then(response => {
-    
-    if ( typeof success === 'function' ) { // Main api callback
+  }).then(response => {
+    if (typeof success === 'function') { // Main api callback
       success(response)
     }
-    if ( typeof data.success === 'function' ) { // Sub-wrapper callback
+    if (typeof data.success === 'function') { // Sub-wrapper callback
       data.success(response)
     }
 
     return { error: false, data: response }
-  })
-  .catch(error => {
+  }).catch(error => {
     error = error.response
 
     // Remove authorization cookie if 401 returned by any API call
     if (error.status === 401 && getCookie('SPECTERO_AUTH') !== null) {
       removeCookie('SPECTERO_AUTH')
     }
-    
+
     let err = new Err(error.data.errors)
-    
-    if ( typeof failed === 'function' ) { // Main api callback
+
+    if (typeof failed === 'function') { // Main api callback
       failed(err)
     }
-    if ( typeof data.fail === 'function' ) { // Sub-wrapper callback
+    if (typeof data.fail === 'function') { // Sub-wrapper callback
       data.fail(err)
     }
 

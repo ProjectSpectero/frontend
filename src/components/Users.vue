@@ -4,9 +4,10 @@
       <header id="sectionHeader">
         <h1>Users</h1>
         <div class="actionButtons">
-          <button class="green" @click="showModal('addUser')">Add User</button>
+          <button class="green" @click="addUser">Add User</button>
         </div>
       </header>
+
       <section id="userList">
         <header>
           <section class="info">User Details</section>
@@ -21,10 +22,15 @@
           </li>
         </paginate>
       </section>
+
       <section id="paginateBar">
         <div class="overview">
-          <span class="count" v-if="$refs.paginator">Showing <strong>{{$refs.paginator.pageItemsCount}}</strong> user{{users.length > 1 ? 's': ''}}</span>
-          <span class="total">{{users.length}} user{{users.length > 1 ? 's': ''}} total</span>
+          <span class="count" v-if="$refs.paginator">
+            Showing <strong>{{ $refs.paginator.pageItemsCount }}</strong> {{ usersSingularOrPlural }}
+          </span>
+          <span class="total">
+            {{ users.length }} {{ usersSingularOrPlural }} total
+          </span>
         </div>
         <paginate-links for="users" :limit="2" :show-step-links="true"></paginate-links>
       </section>
@@ -45,9 +51,26 @@
   import UserCertModal from './Users/UserCertModal'
 
   export default {
-    name: 'users',
-    metaInfo: {
-      title: 'Users'
+    data () {
+      return {
+        paginate: ['users']
+      }
+    },
+    created () {
+      this.$store.dispatch('fetchUsers', { self: this })
+    },
+    computed: {
+      ...mapGetters({
+        users: 'users'
+      }),
+      usersSingularOrPlural () {
+        return  'user' + (this.users.length > 1 ? 's': '')
+      }
+    },
+    methods: {
+      addUser () {
+        this.$modal.show('addUser')
+      }
     },
     components: {
       UserItem,
@@ -56,23 +79,8 @@
       DeleteUserModal,
       UserCertModal
     },
-    data: function () {
-      return {
-        paginate: ['users']
-      }
-    },
-    computed: {
-      ...mapGetters({
-        users: 'users'
-      })
-    },
-    methods: {
-      showModal (id) {
-        this.$modal.show(id)
-      }
-    },
-    created() {
-      this.$store.dispatch('fetchUsers', { self: this })
+    metaInfo: {
+      title: 'Users'
     }
   }
 </script>

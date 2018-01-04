@@ -6,14 +6,21 @@
         <div id="authContent">
           <form id="loginForm">
             <div class="message info" v-if="!formError && this.$route.query.redirect">Please log in to continue.</div>
-            <div class="message error" v-if="formError">{{ formError }}</div>
+            <div class="message error" v-if="formError">
+              {{ formError }}
+            </div>
+
             <div class="input" :class="{'hasError': errors.has('authKey')}">
               <input type="text" v-model="authKey" name="authKey" :disabled="formDisable" placeholder="Username" v-validate="'required'" data-vv-as="username">
-              <span v-show="errors.has('authKey')" class="errorLabel">{{ errors.first('authKey') }}</span>
+              <span v-show="errors.has('authKey')" class="errorLabel">
+                {{ errors.first('authKey') }}
+              </span>
             </div>
             <div class="input" :class="{'hasError': errors.has('password')}">
               <input type="password" v-model="password" name="password" :disabled="formDisable" placeholder="Password" v-validate="'required'" data-vv-as="password">
-              <span v-show="errors.has('password')" class="errorLabel">{{ errors.first('password') }}</span>
+              <span v-show="errors.has('password')" class="errorLabel">
+                {{ errors.first('password') }}
+              </span>
             </div>
             <button class="lime" @click.prevent="submit" @keyup.enter="submit" :disabled="formDisable">{{ formDisable ? 'Please Wait' : 'Log In' }}</button>
           </form>
@@ -30,11 +37,7 @@
   import auth from '../api/auth.js'
 
   export default {
-    name: 'login',
-    metaInfo: {
-      title: 'Login'
-    },
-    data: function () {
+    data () {
       return {
         authKey: null,
         password: null,
@@ -56,7 +59,7 @@
               authKey: parent.authKey,
               password: parent.password
             },
-            loginSuccess: function (msg) {
+            loginSuccess (msg) {
               parent.formError = null
               if (parent.$route.query.redirect) {
                 parent.$router.push({ path: parent.$route.query.redirect })
@@ -64,7 +67,7 @@
                 parent.$router.push({ name: 'dashboard' })
               }
             },
-            loginFailed: function (err) {
+            loginFailed (err) {
               parent.formDisable = false // Here otherwise $validator won't allow you to act on disabled inputs
 
               // Get first error key to display main error msg
@@ -94,6 +97,9 @@
       reset () {
         Object.assign(this.$data, this.$options.data.call(this))
       }
+    },
+    metaInfo: {
+      title: 'Login'
     }
   }
 </script>

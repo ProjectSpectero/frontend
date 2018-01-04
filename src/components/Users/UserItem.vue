@@ -9,23 +9,33 @@
         <span class="username" v-if="user.fullName">{{ user.authKey }}</span>
       </div>
     </section>
-    <section class="active">{{ user.lastLoginDate | moment("from") }}</section>
-    <section class="source">{{ user.source }}</section>
-    <section class="roles">{{ user.roles }}</section>
+    <section class="active">
+      {{ user.lastLoginDate | moment('from') }}
+    </section>
+    <section class="source">
+      {{ user.source }}
+    </section>
+    <section class="roles">
+      {{ user.roles }}
+    </section>
     <section class="actions">
-      <button @click="deleteUser()"><span class="icon icon-trash"></span></button>
-      <button @click="editUser()"><span class="icon icon-pencil"></span></button>
-      <button @click="viewCert()"><span class="icon icon-lock"></span></button>
+      <button @click="triggerModal('deleteUser')">
+        <span class="icon icon-trash"></span>
+      </button>
+      <button @click="triggerModal('editUser')">
+        <span class="icon icon-pencil"></span>
+      </button>
+      <button @click="triggerModal('userCert')">
+        <span class="icon icon-lock"></span>
+      </button>
     </section>
   </article>
 </template>
 
 <script>
   export default {
-    name: 'user-item',
-    props: ['user'],
-    data: function () {
-      return {}
+    props: {
+      user: Object
     },
     computed: {
       displayName () {
@@ -39,14 +49,8 @@
       }
     },
     methods: {
-      deleteUser () {
-        this.$modal.show('deleteUser', { user: this.user })
-      },
-      editUser () {
-        this.$modal.show('editUser', { user: this.user })
-      },
-      viewCert () {
-        this.$modal.show('userCert', { user: this.user })
+      triggerModal (action) {
+        this.$modal.show(action, { user: this.user })
       }
     }
   }

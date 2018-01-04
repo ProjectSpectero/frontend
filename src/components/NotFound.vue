@@ -9,16 +9,8 @@
 
 <script>
   export default {
-    name: 'notFound',
     metaInfo: {
       title: 'Not Found'
-    },
-    data: function () {
-      return {}
     }
   }
 </script>
-
-<style lang="scss" scoped>
-
-</style>

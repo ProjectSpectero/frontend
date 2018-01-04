@@ -4,7 +4,7 @@ export default {
   /**
    * List all users.
    */
-  list: function (options) {
+  list (options) {
     return api('GET', `/user`, options)
   },
 
@@ -13,7 +13,7 @@ export default {
    * 
    * @param {Integer} id ID pertaining to user being requested.
    */
-  get: function (options) {
+  get (options) {
     return api('GET', `/user/${options.data.id}`, options)
   },
 
@@ -28,7 +28,7 @@ export default {
    * @param {String} cert         n/a
    * @param {String} cartKey      n/a
    */
-  create: function (options) {
+  create (options) {
     return api('POST', `/user`, options)
   },
 
@@ -45,7 +45,7 @@ export default {
    * @param {String} cert         n/a
    * @param {String} cartKey      n/a
    */
-  edit: function (options) {
+  edit (options) {
     return api('PUT', `/user/${options.data.id}`, options)
   },
 
@@ -54,7 +54,7 @@ export default {
    * 
    * @param {Integer} id User id to delete.
    */
-  delete: function (options) {
+  delete (options) {
     return api('DELETE', `/user/${options.data.id}`, options)
   }
 }

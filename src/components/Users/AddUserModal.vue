@@ -1,10 +1,13 @@
 <template>
   <modal name="addUser" :adaptive="true" height="auto" width="500px" :scrollable="true" :clickToClose="false">
-    <button class="modal-close" @click.prevent="$modal.hide('addUser')"></button>
+    <button class="modal-close" @click.prevent="hide"></button>
     <div class="modal-title">
-      <div class="modal-title-icon green"><span class="icon icon-users"></span></div>
+      <div class="modal-title-icon green">
+        <span class="icon icon-users"></span>
+      </div>
       <h2>Add new user</h2>
     </div>
+
     <form id="addUserForm">
       <div class="message error" v-if="formError">{{ formError }}</div>
       <div class="input" :class="{'hasError': errors.has('authKey')}">
@@ -36,8 +39,11 @@
           </div>
         </div>
       </div>
-      <button class="alt green" @click.prevent="submit" @keyup.enter="submit" :disabled="formDisable">{{ formDisable ? 'Please Wait' : 'Add User' }}</button>
-      <button class="alt light right" @click.prevent="$modal.hide('addUser')">Cancel</button>
+
+      <button class="alt green" @click.prevent="submit" @keyup.enter="submit" :disabled="formDisable">
+        {{ formDisable ? 'Please Wait' : 'Add User' }}
+      </button>
+      <button class="alt light right" @click.prevent="hide">Cancel</button>
     </form>
   </modal>
 </template>
@@ -47,8 +53,7 @@
   import user from '../../api/user.js'
 
   export default {
-    name: 'add-user-modal',
-    data: function () {
+    data () {
       return {
         authKey: null,
         password: null,
@@ -60,10 +65,10 @@
       }
     },
     computed: {
-      currentUserIsSuperAdmin: function () {
+      currentUserIsSuperAdmin () {
         return this.$store.getters.currentUserRoles.indexOf('SuperAdmin') > -1
       },
-      allowedPermissions: function () {
+      allowedPermissions () {
         let permissions = [
           { id: 'SuperAdmin', label: 'SuperAdmin' },
           { id: 'WebApi', label: 'WebApi' },
@@ -72,24 +77,33 @@
           { id: 'ShadowSOCKS', label: 'ShadowSOCKS' },
           { id: 'SSHTunnel', label: 'SSHTunnel' }
         ]
+
         if (!this.currentUserIsSuperAdmin) { // Disable SuperAdmin and WebApi checkboxes if not SuperAdmin 
           permissions[0].disabled = true // SuperAdmin
           permissions[1].disabled = true // WebApi
         }
+
         return permissions
       }
     },
     methods: {
+      hide () {
+        this.$modal.hide('addUser')
+      },
       submit () {
         let parent = this
         parent.formError = null
+
         this.errors.clear()
+
         this.$validator.validateAll().then((result) => {
           if (!result) {
             parent.formError = parent.$i18n.t(`errors.VALIDATION_FAILED`)
             return
           }
+
           parent.formDisable = true // Disable form while HTTP request being made
+
           user.create({
             data: {
               authKey: parent.authKey,
@@ -98,13 +112,13 @@
               fullName: parent.fullName,
               roles: parent.roles
             },
-            success: function (msg) {
+            success (msg) {
               parent.formError = null
               parent.$store.dispatch('fetchUsers', { self: this }) // Re-fetch users store to reflect user updates
               parent.$modal.hide('addUser')
               parent.reset()
             },
-            fail: function (err) {
+            fail (err) {
               parent.formDisable = false // Here otherwise $validator won't allow you to act on disabled inputs
               
               // Get first error key to display main error msg
@@ -126,7 +140,6 @@
                   }
                 }
               }
-
             }
           })
         })
@@ -137,7 +150,3 @@
     }
   }
 </script>
-
-<style lang="scss">
-  
-</style>
