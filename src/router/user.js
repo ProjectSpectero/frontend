@@ -1,7 +1,7 @@
 // User routes
 
-import Dashboard from '@/components/Dashboard'
-import Users from '@/components/Users'
+import Dashboard from '@/components/dashboard'
+import Users from '@/components/users/list'
 
 export default [
   { path: '/', name: 'dashboard', component: Dashboard, meta: { auth: true } },

@@ -34,7 +34,7 @@
 </template>
 
 <script>
-  import auth from '../api/auth.js'
+  import auth from '@/api/auth.js'
 
   export default {
     data () {
@@ -105,7 +105,7 @@
 </script>
 
 <style lang="scss" scoped>
-@import '../assets/styles/_vars.scss';
+@import '../../assets/styles/_vars.scss';
 
 #login {
   width: 100%;

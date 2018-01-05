@@ -1,7 +1,7 @@
 // Default routes: error pages, catch-all ...
 
-import NotFound from '@/components/NotFound'
+import notFound from '@/components/notFound'
 
 export default [
-  { path: '*', name: 'notFound', component: NotFound }
+  { path: '*', name: 'notFound', component: notFound }
 ]

@@ -35,6 +35,7 @@
         <paginate-links for="users" :limit="2" :show-step-links="true"></paginate-links>
       </section>
 		</div>
+    
     <add-user-modal></add-user-modal>
     <edit-user-modal></edit-user-modal>
     <delete-user-modal></delete-user-modal>
@@ -44,11 +45,11 @@
 
 <script>
   import { mapGetters, mapActions } from 'vuex'
-  import userItem from './users/userItem'
-  import addUserModal from './users/addUserModal'
-  import editUserModal from './users/editUserModal'
-  import deleteUserModal from './users/deleteUserModal'
-  import userCertModal from './users/userCertModal'
+  import userItem from './userItem'
+  import addUserModal from './addUserModal'
+  import editUserModal from './editUserModal'
+  import deleteUserModal from './deleteUserModal'
+  import userCertModal from './userCertModal'
 
   export default {
     data () {
@@ -86,7 +87,7 @@
 </script>
 
 <style lang="scss">
-@import '../assets/styles/_vars.scss';
+@import '../../assets/styles/_vars.scss';
 
 ul.paginate-links {
   > li {
