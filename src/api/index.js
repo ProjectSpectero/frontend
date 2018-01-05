@@ -30,6 +30,7 @@ export default function (method, path, data, success, failed) {
 
     return { error: false, data: response }
   }).catch(error => {
+    console.log(error)
     error = error.response
 
     // Remove authorization cookie if 401 returned by any API call

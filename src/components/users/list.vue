@@ -58,7 +58,7 @@
       }
     },
     created () {
-      this.$store.dispatch('fetchUsers', { self: this })
+      this.fetchUsers({ self: this })
     },
     computed: {
       ...mapGetters({
@@ -69,6 +69,9 @@
       }
     },
     methods: {
+      ...mapActions([
+        'fetchUsers'
+      ]),
       addUser () {
         this.$modal.show('addUser')
       }
@@ -79,9 +82,6 @@
       editUserModal,
       deleteUserModal,
       userCertModal
-    },
-    metaInfo: {
-      title: 'Users'
     }
   }
 </script>

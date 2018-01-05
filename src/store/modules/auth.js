@@ -6,14 +6,17 @@ const state = {
 }
 
 const getters = {
-  currentUser: (state, getters) => {
+  currentUser: (state) => {
     return state.user
   },
-  currentJWT: (state, getters) => {
+  currentJWT: (state) => {
     return state.jwt
   },
-  currentUserRoles: (state, getters) => {
+  currentUserRoles: (state) => {
     return state.user !== null ? state.user.roles : []
+  },
+  isSuperAdmin: (getters) => {
+    return getters.currentUserRoles ? getters.currentUserRoles.indexOf('SuperAdmin') > -1 : false
   }
 }
 

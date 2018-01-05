@@ -66,11 +66,9 @@
     },
     computed: {
       ...mapGetters([
-        'usernameRules'
+        'usernameRules',
+        'isSuperAdmin'
       ]),
-      currentUserIsSuperAdmin () {
-        return this.$store.getters.currentUserRoles.indexOf('SuperAdmin') > -1
-      },
       allowedPermissions () {
         let permissions = [
           { id: 'SuperAdmin', label: 'SuperAdmin' },
@@ -81,7 +79,7 @@
           { id: 'SSHTunnel', label: 'SSHTunnel' }
         ]
 
-        if (!this.currentUserIsSuperAdmin) { // Disable SuperAdmin and WebApi checkboxes if not SuperAdmin 
+        if (!this.isSuperAdmin) { // Disable SuperAdmin and WebApi checkboxes if not SuperAdmin 
           permissions[0].disabled = true // SuperAdmin
           permissions[1].disabled = true // WebApi
         }
@@ -90,44 +88,47 @@
       }
     },
     methods: {
+      ...mapActions([
+        'fetchUsers'
+      ]),
       hide () {
         this.$modal.hide('addUser')
       },
       submit () {
-        let parent = this
-        parent.formError = null
+        this.formError = null
 
         this.errors.clear()
 
         this.$validator.validateAll().then((result) => {
           if (!result) {
-            parent.formError = parent.$i18n.t(`errors.VALIDATION_FAILED`)
+            this.formError = this.$i18n.t(`errors.VALIDATION_FAILED`)
             return
           }
 
-          parent.formDisable = true // Disable form while HTTP request being made
+          this.formDisable = true // Disable form while HTTP request being made
 
           user.create({
             data: {
-              authKey: parent.authKey,
-              password: parent.password,
-              emailAddress: parent.email,
-              fullName: parent.fullName,
-              roles: parent.roles
+              authKey: this.authKey,
+              password: this.password,
+              emailAddress: this.email,
+              fullName: this.fullName,
+              roles: this.roles
             },
-            success (msg) {
-              parent.formError = null
-              parent.$store.dispatch('fetchUsers', { self: this }) // Re-fetch users store to reflect user updates
-              parent.$modal.hide('addUser')
-              parent.reset()
+            success: (response) => {
+              console.log(response)
+              this.formError = null
+              this.fetchUsers({ self: this }) // Re-fetch users store to reflect user updates
+              this.$modal.hide('addUser')
+              this.reset()
             },
-            fail (err) {
-              parent.formDisable = false // Here otherwise $validator won't allow you to act on disabled inputs
+            fail: (err) => {
+              this.formDisable = false // Here otherwise $validator won't allow you to act on disabled inputs
               
               // Get first error key to display main error msg
               for (var errorKey in err.errors) {
                 if (err.errors.hasOwnProperty(errorKey)) {
-                  parent.formError = parent.$i18n.t(`errors.${errorKey}`)
+                  this.formError = this.$i18n.t(`errors.${errorKey}`)
                   break // Only want the first element key
                 }
               }
@@ -138,7 +139,7 @@
                   let inputErrors = err.fields[inputName]
                   for (var errorKey in inputErrors) {
                     if (inputErrors.hasOwnProperty(errorKey)) {
-                      parent.$validator.errors.add(inputName, parent.$i18n.t(`errors.${errorKey}`, null, { x: inputErrors[errorKey] }))
+                      this.$validator.errors.add(inputName, this.$i18n.t(`errors.${errorKey}`, null, { x: inputErrors[errorKey] }))
                     }
                   }
                 }

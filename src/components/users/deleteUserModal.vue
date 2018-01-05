@@ -5,7 +5,7 @@
       <div class="modal-title-icon red"><span class="icon icon-trash"></span></div>
       <h2>Delete user</h2>
     </div>
-    <div v-if="isCurrentUser ">
+    <div v-if="isCurrentUser">
       <form>
         <div class="message error">{{ $t('errors.CANNOT_DELETE_SELF') }}</div>
         <button class="alt light right" @click.prevent="hide">Close</button>
@@ -42,11 +42,14 @@
       }
     },
     computed: {
+      ...mapGetters([
+        'currentUser'
+      ]),
       username () {
         return this.user !== null ? this.user.authKey : null
       },
       isCurrentUser () {
-        return this.user.id === this.$store.getters.currentUser.id
+        return this.user.id === this.currentUser.id
       },
       isDisabled () {
         return this.formDisable || this.confirmDelete.toLowerCase() !== 'delete'
@@ -58,25 +61,24 @@
         this.user = event.params.user
       },
       submit () {
-        let parent = this
-        parent.formDisable = true // Disable form while HTTP request being made
+        this.formDisable = true // Disable form while HTTP request being made
 
         user.delete({
           data: {
-            id: parent.user.id
+            id: this.user.id
           },
-          success (msg) {
-            parent.formError = null
+          success: (msg) => {
+            this.formError = null
 
             // Re-fetch users store to reflect new user (additionally live updates /users page data)
-            parent.$store.dispatch('fetchUsers', { self: this })
+            this.fetchUsers({ self: this })
 
-            parent.$modal.hide('deleteUser')
-            parent.reset()
+            this.$modal.hide('deleteUser')
+            this.reset()
           },
-          fail (err) {
-            parent.formError = err.data.errors[0]
-            parent.formDisable = false
+          fail: (err) => {
+            this.formError = err.data.errors[0]
+            this.formDisable = false
           }
         })
       },
