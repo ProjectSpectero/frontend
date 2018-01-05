@@ -5,31 +5,28 @@ import Meta from 'vue-meta'
 import store from '../store'
 import auth from '../api/auth.js'
 
-// Components
-import Login from '@/components/Login'
-import Dashboard from '@/components/Dashboard'
-import Users from '@/components/Users'
-import NotFound from '@/components/NotFound'
+// Routes
+import authRoutes from './auth'
+import userRoutes from './user'
+import defaultRoutes from './default'
 
 Vue.use(Router)
 Vue.use(Meta)
 
-/**
- * Meta keys for router:
- * 
- * auth:     redirect user when not logged in (login required from user to access route)
- * antiAuth: redirect user when already authenticated (route for non-logged in users only)
- */
+// Meta keys for router:
+// auth:     redirect user when not logged in (login required from user to access route)
+// antiAuth: redirect user when already authenticated (route for non-logged in users only)
 const router = new Router({
   mode: 'history',
+  saveScrollPosition: true,
   routes: [
-    { path: '/', name: 'dashboard', component: Dashboard, meta: { auth: true } },
-    { path: '/login', name: 'login', component: Login, meta: { antiAuth: true } },
-    { path: '/users', name: 'users', component: Users, meta: { auth: true } },
-    { path: '*', name: 'notFound', component: NotFound }
+    ...authRoutes,
+    ...userRoutes,
+    ...defaultRoutes
   ]
 })
 
+// Test authentication before landing on each route request
 router.beforeEach((to, from, next) => {
   const loginCheck = auth.checkLogin()
 

@@ -1,5 +1,5 @@
 const state = {
-  layout: 'main'
+  layout: 'master'
 }
 
 const getters = {
@@ -8,8 +8,8 @@ const getters = {
 
 const actions = {
   switchLayout: ({ commit }, layout) => {
-    commit('SWITCH_LAYOUT', layout || 'main')
-  },
+    commit('SWITCH_LAYOUT', layout || 'master')
+  }
 }
 
 const mutations = {
