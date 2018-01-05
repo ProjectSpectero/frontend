@@ -13,10 +13,33 @@ import master from './components/layouts/master'
 
 export default {
   name: 'Spectero',
+  created () {
+      this.init()
+  },
   computed: {
     ...mapGetters([
       'layout'
     ])
+  },
+  methods: {
+    ...mapActions([
+      'switchLayout'
+    ]),
+    init () {
+      // If we refresh the page, we need to make sure our layout is set correctly
+      // before vue-router kicks in. This is just necessary on the first page load;
+      // any layout changes will be handled by watching vue-router from then on.
+      // If there's no specified route.meta.layout, the default 'master' layout will be used.
+      this.switchLayout(this.fetchLayoutFromRoute(this.$route))
+    },
+    fetchLayoutFromRoute: function(route) {
+      return route.meta.layout || ''
+    }
+  },
+  watch: {
+    '$route' (to, from) {
+      this.switchLayout(this.fetchLayoutFromRoute(to))
+    }
   },
   metaInfo: {
     title: null,
