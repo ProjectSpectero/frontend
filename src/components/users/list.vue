@@ -62,16 +62,16 @@
     },
     computed: {
       ...mapGetters({
-        users: 'users'
+        users: 'users/list'
       }),
       usersSingularOrPlural () {
         return  'user' + (this.users.length > 1 ? 's': '')
       }
     },
     methods: {
-      ...mapActions([
-        'fetchUsers'
-      ]),
+      ...mapActions({
+        fetchUsers: 'users/fetch'
+      }),
       addUser () {
         this.$modal.show('addUser')
       }

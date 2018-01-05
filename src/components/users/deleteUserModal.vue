@@ -42,9 +42,9 @@
       }
     },
     computed: {
-      ...mapGetters([
-        'currentUser'
-      ]),
+      ...mapGetters({
+        currentUser: 'auth/currentUser'
+      }),
       username () {
         return this.user !== null ? this.user.authKey : null
       },
@@ -56,6 +56,9 @@
       }
     },
     methods: {
+      ...mapActions({
+        fetchUsers: 'users/fetch'
+      }),
       beforeOpen (event) {
         this.reset()
         this.user = event.params.user

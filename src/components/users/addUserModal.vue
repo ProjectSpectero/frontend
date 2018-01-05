@@ -65,10 +65,10 @@
       }
     },
     computed: {
-      ...mapGetters([
-        'usernameRules',
-        'isSuperAdmin'
-      ]),
+      ...mapGetters({
+        isSuperAdmin: 'auth/isSuperAdmin',
+        usernameRules: 'users/usernameRules'
+      }),
       allowedPermissions () {
         let permissions = [
           { id: 'SuperAdmin', label: 'SuperAdmin' },
@@ -88,9 +88,9 @@
       }
     },
     methods: {
-      ...mapActions([
-        'fetchUsers'
-      ]),
+      ...mapActions({
+        fetchUsers: 'users/fetch'
+      }),
       hide () {
         this.$modal.hide('addUser')
       },

@@ -6,46 +6,42 @@ const state = {
 }
 
 const getters = {
-  currentUser: (state) => {
-    return state.user
-  },
-  currentJWT: (state) => {
-    return state.jwt
-  },
-  currentUserRoles: (state) => {
-    return state.user !== null ? state.user.roles : []
-  },
-  isSuperAdmin: (getters) => {
-    return getters.currentUserRoles ? getters.currentUserRoles.indexOf('SuperAdmin') > -1 : false
-  }
-}
-
-const mutations = {
-  setCurrentUser (state, payload) {
-    state.user = payload
-  },
-  setCurrentJWT (state, payload) {
-    state.user = payload.data
-    state.jwt = payload.token
-  }
+  currentUser: (state) => state.user,
+  currentJWT: (state) => state.jwt,
+  currentUserRoles: (state) => state.user !== null ? state.user.roles : [],
+  isSuperAdmin: (getters) => getters.currentUserRoles ? getters.currentUserRoles.indexOf('SuperAdmin') > -1 : false
 }
 
 const actions = {
   syncCurrentUser ({ commit }) {
     userAPI.get({
       data: { id: state.user.id },
-      success: function (msg) {
-        commit('setCurrentUser', msg.data.result)
+      success: (response) => {
+        commit('SET_CURRENT_USER', response.data.result)
       },
-      fail: function (msg) {
+      fail: (error) => {
+        console.log(error)
         // TODO: implement
       }
     })
+  },
+  setCurrentJWT ({ commit }, payload) {
+    commit('SET_CURRENT_JWT', payload)
+  }
+}
 
+const mutations = {
+  SET_CURRENT_USER (state, payload) {
+    state.user = payload
+  },
+  SET_CURRENT_JWT (state, payload) {
+    state.user = payload.data
+    state.jwt = payload.token
   }
 }
 
 export default {
+  namespaced: true,
   state,
   getters,
   mutations,

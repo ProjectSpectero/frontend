@@ -17,14 +17,14 @@ export default {
       this.init()
   },
   computed: {
-    ...mapGetters([
-      'layout'
-    ])
+    ...mapGetters({
+      layout: 'settings/layout'
+    })
   },
   methods: {
-    ...mapActions([
-      'switchLayout'
-    ]),
+    ...mapActions({
+      switchLayout: 'settings/switchLayout'
+    }),
     init () {
       // If we refresh the page, we need to make sure our layout is set correctly
       // before vue-router kicks in. This is just necessary on the first page load;

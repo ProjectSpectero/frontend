@@ -68,11 +68,11 @@
       }
     },
     computed: {
-      ...mapGetters([
-        'currentUser',
-        'usernameRules',
-        'isSuperAdmin'
-      ]),
+      ...mapGetters({
+        currentUser: 'auth/currentUser',
+        isSuperAdmin: 'auth/isSuperAdmin',
+        usernameRules: 'users/usernameRules'
+      }),
       allowedPermissions () {
         let permissions = [
           { id: 'SuperAdmin', label: 'SuperAdmin' },
@@ -92,10 +92,10 @@
       }
     },
     methods: {
-      ...mapActions([
-        'syncCurrentUser',
-        'fetchUsers'
-      ]),
+      ...mapActions({
+        syncCurrentUser: 'auth/syncCurrentUser',
+        fetchUsers: 'users/fetch'
+      }),
       beforeOpen (event) {
         this.reset()
         this.user = event.params.user

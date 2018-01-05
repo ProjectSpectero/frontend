@@ -5,14 +5,12 @@ const state = {
 }
 
 const getters = {
-  users: state => state.users,
-  usernameRules: () => {
-    return { required: true, max: 50, regex: /^[a-zA-Z][\w]*$/ }
-  }
+  list: state => state.users,
+  usernameRules: () => ({ required: true, max: 50, regex: /^[a-zA-Z][\w]*$/ })
 }
 
 const actions = {
-  fetchUsers ({ commit }) {
+  fetch ({ commit }) {
     userAPI.list({
       success: function (response) {
         const users = response.data.result
@@ -24,8 +22,8 @@ const actions = {
 
         commit('UPDATE_USERS', response.data.result)
       },
-      fail: function (response) {
-        console.log(response)
+      fail: function (error) {
+        console.log(error)
         // TODO: implement
       }
     })
@@ -39,6 +37,7 @@ const mutations = {
 }
 
 export default {
+  namespaced: true,
   state,
   getters,
   mutations,

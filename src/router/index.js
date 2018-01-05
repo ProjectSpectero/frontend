@@ -32,7 +32,7 @@ router.beforeEach((to, from, next) => {
 
   // JWT token verified, update current user in Vuex store
   if (loginCheck !== false) {
-    store.commit('setCurrentJWT', loginCheck)
+    store.dispatch('auth/setCurrentJWT', loginCheck)
   }
 
   // Handle routes requiring authentication
