@@ -9,7 +9,7 @@
     <form id="editUserForm">
       <div class="message error" v-if="formError">{{ formError }}</div>
       <div class="input" :class="{'hasError': errors.has('authKey')}">
-        <input type="text" v-model="authKey" name="authKey" :disabled="formDisable" v-validate="rules.username" data-vv-as="username">
+        <input type="text" v-model="authKey" name="authKey" :disabled="formDisable" v-validate="rules.authKey" data-vv-as="username">
         <span class="floating-label">Username</span>
         <span v-show="errors.has('authKey')" class="errorLabel">{{ errors.first('authKey') }}</span>
       </div>

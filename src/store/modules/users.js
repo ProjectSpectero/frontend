@@ -8,16 +8,15 @@ const getters = {
   list: state => state.users,
   editRules: () => {
     return {
-      username: {
+      authKey: {
         required: true,
         max: 50,
         regex: /^[a-zA-Z][\w]*$/
       },
       password: {
-        min: 5,
         max: 72
       },
-      email: {
+      emailAddress: {
         required: true,
         email: true
       },
@@ -27,7 +26,7 @@ const getters = {
     }
   },
   createRules: (state, getters) => {
-    let rules = getters.editRules
+    let rules = JSON.parse(JSON.stringify(getters.editRules))
     rules.password.required = true
     return rules
   }
