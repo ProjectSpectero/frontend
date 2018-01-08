@@ -20,7 +20,7 @@
         <span v-show="errors.has('password')" class="errorLabel">{{ errors.first('password') }}</span>
       </div>
       <div class="input" :class="{'hasError': errors.has('email')}">
-        <input type="email" v-model="email" name="email" :disabled="formDisable" v-validate="rules.email" placeholder="example@spectero.com" data-vv-as="email">
+        <input type="email" v-model="emailAddress" name="email" :disabled="formDisable" v-validate="rules.emailAddress" placeholder="example@spectero.com" data-vv-as="email">
         <span class="floating-label">Email</span>
         <span v-show="errors.has('email')" class="errorLabel">{{ errors.first('email') }}</span>
       </div>
@@ -60,7 +60,7 @@
         user: {},
         authKey: null,
         password: null,
-        email: null,
+        emailAddress: null,
         fullName: null,
         roles: [],
         formError: null,
@@ -100,7 +100,7 @@
         this.reset()
         this.user = event.params.user
         this.authKey = this.user.authKey
-        this.email = this.user.emailAddress
+        this.emailAddress = this.user.emailAddress
         this.fullName = this.user.fullName
         this.roles = this.user.roles
       },
@@ -125,7 +125,7 @@
               id: this.user.id,
               authKey: this.authKey,
               password: this.password,
-              emailAddress: this.email,
+              emailAddress: this.emailAddress,
               fullName: this.fullName,
               roles: this.roles
             },

@@ -142,7 +142,7 @@
             id: this.user.id,
             authKey: this.authKey,
             password: this.password,
-            emailAddress: this.email,
+            emailAddress: this.emailAddress,
             fullName: this.fullName,
             roles: this.roles
           },
