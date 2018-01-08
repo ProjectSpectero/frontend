@@ -9,23 +9,23 @@
     <form id="editUserForm">
       <div class="message error" v-if="formError">{{ formError }}</div>
       <div class="input" :class="{'hasError': errors.has('authKey')}">
-        <input type="text" v-model="authKey" name="authKey" :disabled="formDisable" v-validate="usernameRules" data-vv-as="username">
+        <input type="text" v-model="authKey" name="authKey" :disabled="formDisable" v-validate="rules.username" data-vv-as="username">
         <span class="floating-label">Username</span>
         <span v-show="errors.has('authKey')" class="errorLabel">{{ errors.first('authKey') }}</span>
       </div>
       <div class="input" :class="{'hasError': errors.has('password')}">
-        <input type="password" v-model="password" name="password" :disabled="formDisable" v-validate="'min:5|max:72'" data-vv-as="password">
+        <input type="password" v-model="password" name="password" :disabled="formDisable" v-validate="rules.password" data-vv-as="password">
         <span class="floating-label">Password</span>
         <small>Leave password blank if no change needed.</small>
         <span v-show="errors.has('password')" class="errorLabel">{{ errors.first('password') }}</span>
       </div>
       <div class="input" :class="{'hasError': errors.has('email')}">
-        <input type="email" v-model="email" name="email" :disabled="formDisable" v-validate="'required|email'" placeholder="example@spectero.com" data-vv-as="email">
+        <input type="email" v-model="email" name="email" :disabled="formDisable" v-validate="rules.email" placeholder="example@spectero.com" data-vv-as="email">
         <span class="floating-label">Email</span>
         <span v-show="errors.has('email')" class="errorLabel">{{ errors.first('email') }}</span>
       </div>
       <div class="input" :class="{'hasError': errors.has('fullName')}">
-        <input type="text" v-model="fullName" name="fullName" :disabled="formDisable" v-validate="'max:50'" data-vv-as="display name">
+        <input type="text" v-model="fullName" name="fullName" :disabled="formDisable" v-validate="rules.fullName" data-vv-as="display name">
         <span class="floating-label">Display Name</span>
         <span v-show="errors.has('fullName')" class="errorLabel">{{ errors.first('fullName') }}</span>
       </div>
@@ -71,7 +71,7 @@
       ...mapGetters({
         currentUser: 'auth/currentUser',
         isSuperAdmin: 'auth/isSuperAdmin',
-        usernameRules: 'users/usernameRules'
+        rules: 'users/editRules'
       }),
       allowedPermissions () {
         let permissions = [
