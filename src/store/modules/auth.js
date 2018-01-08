@@ -9,7 +9,7 @@ const getters = {
   currentUser: (state) => state.user,
   currentJWT: (state) => state.jwt,
   currentUserRoles: (state) => state.user !== null ? state.user.roles : [],
-  isSuperAdmin: (getters) => getters.currentUserRoles ? getters.currentUserRoles.indexOf('SuperAdmin') > -1 : false
+  isSuperAdmin: (state, getters) => getters.currentUserRoles ? getters.currentUserRoles.indexOf('SuperAdmin') > -1 : false
 }
 
 const actions = {
