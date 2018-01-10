@@ -1,6 +1,7 @@
 <template>
   <div id="app">
     <component :is="layout"></component>
+    <vue-progress-bar></vue-progress-bar>
   </div>
 </template>
 

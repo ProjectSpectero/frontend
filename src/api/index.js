@@ -1,10 +1,11 @@
+import Vue from 'vue'
 import axios from 'axios'
 import { getCookie, removeCookie } from 'tiny-cookie'
 import Err from '../modules/error.js'
 
 /**
  * API wrapper for making various calls from sub-wrappers.
- * 
+ *
  * @param {String}   method  HTTP method (ie: GET, POST, PUT, DELETE)
  * @param {String}   path    API endpoint path
  * @param {Object}   data    Form data for submit
@@ -12,6 +13,8 @@ import Err from '../modules/error.js'
  * @param {Function} failed  Callback to be called on method fail
  */
 export default function (method, path, data, success, failed) {
+  Vue.prototype.$Progress.start()
+
   axios({
     method: method,
     baseURL: `${process.env.DAEMON_HTTPS ? 'https://' : 'http://'}${process.env.DAEMON_ENDPOINT ? process.env.DAEMON_ENDPOINT : 'localhost'}${process.env.DAEMON_PORT ? ':' + process.env.DAEMON_PORT : ''}/v${process.env.DAEMON_VERSION}`,
@@ -21,6 +24,8 @@ export default function (method, path, data, success, failed) {
     url: path,
     data: data.data
   }).then(response => {
+    Vue.prototype.$Progress.finish()
+
     if (typeof success === 'function') { // Main api callback
       success(response)
     }
@@ -30,6 +35,8 @@ export default function (method, path, data, success, failed) {
 
     return { error: false, data: response }
   }).catch(error => {
+    Vue.prototype.$Progress.finish()
+
     console.log(error)
     error = error.response
 
@@ -41,6 +48,7 @@ export default function (method, path, data, success, failed) {
     let err = new Err(error.data.errors)
 
     if (typeof failed === 'function') { // Main api callback
+
       failed(err)
     }
     if (typeof data.fail === 'function') { // Sub-wrapper callback
