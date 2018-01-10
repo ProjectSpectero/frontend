@@ -1,6 +1,6 @@
 <template>
   <modal name="addUser" :adaptive="true" height="auto" width="500px" :scrollable="true" :clickToClose="false">
-    <button class="modal-close" @click.prevent="hide"></button>
+    <button class="modal-close" @click.prevent="closeModal"></button>
     <div class="modal-title">
       <div class="modal-title-icon green">
         <span class="icon icon-users"></span>
@@ -13,7 +13,7 @@
 </template>
 
 <script>
-  import { mapGetters, mapActions } from 'vuex'  
+  import { mapGetters, mapActions } from 'vuex'
   import userForm from './form'
 
   export default {

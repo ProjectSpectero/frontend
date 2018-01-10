@@ -13,6 +13,7 @@ module.exports = {
 
     MISSING_BODY: 'Some required fields are missing or empty.',
     USER_NOT_FOUND: 'Invalid username or password.',
+    USER_OBJECT_NOT_FOUND: 'Unable to submit the form without a proper user',
     USER_AUTHKEY_ALREADY_EXISTS: 'Username already in use.',
     AUTHENTICATION_FAILED: 'Invalid username or password.',
     ROLE_VALIDATION_FAILED: 'You don\'t have access to assign this role.',
@@ -21,7 +22,7 @@ module.exports = {
     CLOUD_USER_ALTER_NOT_ALLOWED: 'You can\'t alter this cloud user.',
     USER_CANNOT_REMOVE_SELF: 'You cannot delete yourself.',
 
-    INVALID_SERVICE_OR_ACTION_ATTEMPT: 'Invalid action attempt on service.', 
+    INVALID_SERVICE_OR_ACTION_ATTEMPT: 'Invalid action attempt on service.',
     INVALID_IP_AS_LISTENER_REQUEST: 'Unable to bind httpProxy/openVPN server to this listener.',
     INVALID_HTTP_MODE_REQUEST: 'Invalid HTTP mode change requested.',
     STORED_CONFIG_WAS_NULL: 'Unable to store service configuration.',

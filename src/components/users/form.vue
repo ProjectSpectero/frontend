@@ -29,13 +29,17 @@
 
 <script>
   import { mapGetters, mapActions } from 'vuex'
-  import user from '../../api/user.js'
+  import userAPI from '../../api/user.js'
 
   export default {
     props: {
       action: {
         type: String,
         default: 'edit'
+      },
+      user: {
+        type: Object,
+        default: null
       },
       modalName: String
     },
@@ -59,8 +63,10 @@
     },
     computed: {
       ...mapGetters({
+        currentUser: 'auth/currentUser',
         isSuperAdmin: 'auth/isSuperAdmin',
-        rules: 'users/createRules'
+        createRules: 'users/createRules',
+        editRules: 'users/editRules'
       }),
       allowedPermissions () {
         let permissions = [
@@ -72,7 +78,7 @@
           { id: 'SSHTunnel', label: 'SSHTunnel' }
         ]
 
-        if (!this.isSuperAdmin) { // Disable SuperAdmin and WebApi checkboxes if not SuperAdmin 
+        if (!this.isSuperAdmin) { // Disable SuperAdmin and WebApi checkboxes if not SuperAdmin
           permissions[0].disabled = true // SuperAdmin
           permissions[1].disabled = true // WebApi
         }
@@ -82,14 +88,22 @@
     },
     methods: {
       ...mapActions({
+        syncCurrentUser: 'auth/syncCurrentUser',
         fetchUsers: 'users/fetch'
       }),
       setup () {
-        // Switch between edit and create mode if needed.
-        // The component defaults to edit mode - we just need to switch when we're creating a new user.
+        // Set up the form. In this method we'll do two things:
+        // 1) Take care of specific data fields (titles, etc.)
+        // 2) Set the form fields array
+
         if (this.action === 'create') {
           this.title = 'Add User'
           this.modalName = 'addUser'
+          this.rules = this.createRules
+        }
+        else {
+          this.form = JSON.parse(JSON.stringify(this.user))
+          this.rules = this.editRules
         }
 
         // Set up basic form fields to avoid code repetition
@@ -126,7 +140,8 @@
         })
       },
       create () {
-        user.create({
+        console.log('on create')
+        userAPI.create({
           data: this.form,
           success: (response) => {
             this.dealWithSuccess(response)
@@ -137,40 +152,35 @@
         })
       },
       update () {
-        user.edit({
-          data: {
-            id: this.user.id,
-            authKey: this.authKey,
-            password: this.password,
-            emailAddress: this.emailAddress,
-            fullName: this.fullName,
-            roles: this.roles
-          },
-          success: (response) => {
-            // Update user in store if user updating themselves
-            if (this.user.id === this.currentUser.id) {
-              this.syncCurrentUser({ self: this })
-            }
+        console.log('update', this.currentUser.id, ' vs ', this.form.id)
+        if (this.user) {
+          userAPI.edit({
+            data: this.form,
+            success: (response) => {
+              // Update user in store if user updating themselves
+              if (this.form.id === this.currentUser.id) {
+                this.syncCurrentUser({ self: this })
+              }
 
-            this.formError = null
-            this.fetchUsers({ self: this }) // Re-fetch users store to reflect user updates
-            this.hide()
-            this.reset()
-          },
-          fail: (err) => {
-            
-          }
-        })
+              this.dealWithSuccess(response)
+            },
+            fail: (err) => {
+              this.dealWithErrors(err)
+            }
+          })
+        } else {
+          throw new ReferenceError(this.$i18n.t('errors.USER_OBJECT_NOT_FOUND'))
+        }
       },
       dealWithSuccess (response) {
         this.formError = null
         this.fetchUsers({ self: this })
-        this.$modal.hide(this.modalName)
+        this.hide()
         this.reset()
       },
       dealWithErrors (err) {
         // Here otherwise $validator won't allow you to act on disabled inputs
-        this.formDisable = false 
+        this.formDisable = false
 
         // Get first error key to display main error msg
         for (var errorKey in err.errors) {
@@ -179,7 +189,7 @@
             break // Only want the first element key
           }
         }
-        
+
         // Inject errors into form fields
         for (var inputName in err.fields) {
           if (err.fields.hasOwnProperty(inputName)) {
