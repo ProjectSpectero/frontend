@@ -1,5 +1,5 @@
 <template>
-  <modal name="addUser" :adaptive="true" height="auto" width="500px" :scrollable="true" :clickToClose="false">
+  <modal name="addUser" :adaptive="true" height="auto" width="500px" :scrollable="true">
     <button class="modal-close" @click.prevent="closeModal"></button>
     <div class="modal-title">
       <div class="modal-title-icon green">

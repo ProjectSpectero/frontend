@@ -1,5 +1,5 @@
 <template>
-  <modal name="deleteUser" :adaptive="true" height="auto" width="500px" :scrollable="true" :clickToClose="false" @before-open="beforeOpen">
+  <modal name="deleteUser" :adaptive="true" height="auto" width="500px" :scrollable="true" @before-open="beforeOpen">
     <button class="modal-close" @click.prevent="hide"></button>
     <div class="modal-title">
       <div class="modal-title-icon red"><span class="icon icon-trash"></span></div>

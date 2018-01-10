@@ -1,5 +1,5 @@
 <template>
-  <modal name="editUser" :adaptive="true" height="auto" width="500px" :scrollable="true" :clickToClose="false" @before-open="beforeOpen">
+  <modal name="editUser" :adaptive="true" height="auto" width="500px" :scrollable="true" @before-open="beforeOpen">
     <button class="modal-close" @click.prevent="closeModal"></button>
     <div class="modal-title">
       <div class="modal-title-icon"><span class="icon icon-pencil"></span></div>
