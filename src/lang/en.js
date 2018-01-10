@@ -16,6 +16,7 @@ module.exports = {
     USER_OBJECT_NOT_FOUND: 'Unable to submit the form without a proper user',
     USER_AUTHKEY_ALREADY_EXISTS: 'Username already in use.',
     AUTHENTICATION_FAILED: 'Invalid username or password.',
+    UNABLE_TO_LOGOUT: 'Unable to log the user out.',
     ROLE_VALIDATION_FAILED: 'You don\'t have access to assign this role.',
 
     ROLE_ESCALATION_FAILED: 'You don\'t have permission to add users of this role level.',

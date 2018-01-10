@@ -57,10 +57,12 @@
 </script>
 
 <style lang="scss" scoped>
+@import '../../assets/styles/_vars.scss';
+
 article {
-  background: rgba(0,0,0,0.2);
+  background: $darker;
   border-radius: 4px;
-  
+
   .info {
     display: flex;
     align-items: center;
