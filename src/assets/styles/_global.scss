@@ -19,24 +19,56 @@
 }
 html {
   height: 100%;
+}
+
+body {
   min-height: 100%;
+  height: 100%;
+  color: $white;
+  font-size: 16px/100%;
+  font-family: $font-main;
+  font-weight: $font-weight-normal;
   background: #181E24 linear-gradient(-59deg, #2B333B 0%, #181E24 100%);
   -webkit-font-smoothing: antialiased;
   -webkit-backface-visibility: hidden;
   -moz-osx-font-smoothing: grayscale;
   -webkit-text-size-adjust: 100%;
   backface-visibility: hidden;
-}
-body {
-  height: 100%;
-  color: #fff;
-  font: 16px/100% $font-main;
-  -webkit-font-smoothing: antialiased;
-  -webkit-backface-visibility: hidden;
-  -moz-osx-font-smoothing: grayscale;
-  -webkit-text-size-adjust: 100%;
-  backface-visibility: hidden;
   -webkit-overflow-scrolling: touch;
+}
+
+input, textarea, select {
+  font-size: 16px/100%;
+  font-family: $font-main;
+  font-weight: $font-weight-normal;
+}
+
+h1 {
+
+}
+
+h2 {
+
+}
+
+h3 {
+
+}
+
+h4 {
+
+}
+
+h5 {
+  font-size: $font-size-large;
+  font-weight: $font-weight-strong;
+  margin: 0.25rem 0;
+}
+
+h6 {
+  font-size: $font-size-small;
+  font-weight: $font-weight-normal;
+  color: $dark;
 }
 
 ::selection {
@@ -49,6 +81,72 @@ body {
 }
 .right {
   float: right;
+}
+
+.good-table {
+  .spectero-table {
+    width: 100%;
+    border: 0;
+    border-collapse: separate;
+    border-spacing: 0 5px;
+    font-size: $font-size-normal;
+
+    th {
+      font-weight: $font-weight-strong;
+      color: $dark;
+      padding: 0.5rem 0.75rem;
+    }
+
+    td {
+      border: 0;
+      background: $darker;
+      padding: 0.75rem 0;
+    }
+
+    .global-search-icon {
+      left: 1rem;
+    }
+
+    .global-search-input {
+      margin-left: 1.5rem;
+      border: 0;
+      background: transparent;
+      color: $white;
+      line-height: 34px;
+      font-size: $font-size-large;
+    }
+  }
+
+  > div {
+    > .table-footer {
+      border: 0;
+      color: $white;
+
+      select {
+        color: $white;
+      }
+
+      > .pagination-controls {
+        .info {
+          color: $white;
+        }
+
+        a {
+          color: $white;
+        }
+
+        .chevron {
+          margin: 0 5px;
+
+          &::after {
+            border-left-color: $white;
+            margin-top: -10px;
+            border-right-color: $white;
+          }
+        }
+      }
+    }
+  }
 }
 
 #mainContainer {

@@ -1,5 +1,8 @@
 <template>
   <div id="users">
+
+    <new-list></new-list>
+
 		<div id="mainContainer">
       <header id="sectionHeader">
         <h1>Users</h1>
@@ -35,21 +38,16 @@
         <paginate-links for="users" :limit="2" :show-step-links="true"></paginate-links>
       </section>
 		</div>
-    
-    <add-user-modal></add-user-modal>
-    <edit-user-modal></edit-user-modal>
-    <delete-user-modal></delete-user-modal>
-    <user-cert-modal></user-cert-modal>
+
+    <list-actions></list-actions>
   </div>
 </template>
 
 <script>
   import { mapGetters, mapActions } from 'vuex'
   import userItem from './userItem'
-  import addUserModal from './addUserModal'
-  import editUserModal from './editUserModal'
-  import deleteUserModal from './deleteUserModal'
-  import userCertModal from './userCertModal'
+  import newList from './newList'
+  import listActions from './listActions'
 
   export default {
     data () {
@@ -78,10 +76,8 @@
     },
     components: {
       userItem,
-      addUserModal,
-      editUserModal,
-      deleteUserModal,
-      userCertModal
+      newList,
+      listActions
     }
   }
 </script>
@@ -197,7 +193,7 @@ ul.paginate-links {
   align-items: center;
   justify-content: space-between;
   color: rgba(255,255,255,0.3);
-  
+
   .overview {
     font-size: 14px;
     line-height: 18px;
