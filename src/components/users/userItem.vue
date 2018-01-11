@@ -6,7 +6,9 @@
         <div class="displayName">
           <h2>{{ displayName }}</h2>
         </div>
-        <span class="username" v-if="user.fullName">{{ user.authKey }}</span>
+        <span class="username" v-if="user.fullName">
+          {{ user.authKey }}
+        </span>
       </div>
     </section>
     <section class="active">
@@ -16,7 +18,7 @@
       {{ user.source }}
     </section>
     <section class="roles">
-      {{ user.roles }}
+      {{ roles }}
     </section>
     <section class="actions">
       <button @click="triggerModal('deleteUser')">
@@ -42,10 +44,11 @@
         return this.user.fullName ? this.user.fullName : this.user.authKey
       },
       initials () {
-        let name = this.displayName
-        let initials = name.match(/\b\w/g) || []
-        initials = ((initials.shift() || '') + (initials.pop() || '')).toUpperCase()
-        return initials
+        const initials = this.displayName.match(/\b\w/g) || []
+        return ((initials.shift() || '') + (initials.pop() || '')).toUpperCase()
+      },
+      roles () {
+        return this.user.roles.join(', ')
       }
     },
     methods: {
