@@ -1,213 +1,151 @@
 <template>
-  <div id="users">
+  <div class="datatable">
+    <add-user-modal></add-user-modal>
 
-    <new-list></new-list>
+    <vue-good-table
+    :title="title"
+    :columns="columns"
+    :rows="rows"
+    :paginate="true"
+    :globalSearch="true"
+    :globalSearchPlaceholder="placeholder"
+    :responsive="false"
+    styleClass="spectero-table">
+      <template slot="table-row" slot-scope="props">
+        <td>
+          <div class="mainInfo">
+            <div class="avatar">
+              {{ parseInitials(props.row) }}
+            </div>
+            <div class="name">
+              <div>
+                <h5>{{ props.row.fullName || props.row.authKey }}</h5>
+              </div>
 
-		<div id="mainContainer">
-      <header id="sectionHeader">
-        <h1>Users</h1>
-        <div class="actionButtons">
-          <button class="green" @click="addUser">Add User</button>
-        </div>
-      </header>
+              <h6 v-if="props.row.fullName">{{ props.row.authKey }}</h6>
+            </div>
+          </div>
+        </td>
+        <td>
+          {{ props.row.lastLoginDate | moment('from') }}
+        </td>
+        <td>
+          {{ props.row.source }}
+        </td>
+        <td>
+          {{ parseRoles(props.row.roles) }}
+        </td>
+      </template>
 
-      <section id="userList">
-        <header>
-          <section class="info">User Details</section>
-          <section>Last Active</section>
-          <section>Source</section>
-          <section>Roles</section>
-          <section class="actions">&nbsp;</section>
-        </header>
-        <paginate ref="paginator" name="users" :list="users" :per="10">
-          <li v-for="user in paginated('users')" v-bind:key="user.id">
-            <user-item v-bind:key="user.id" v-bind:user="user"></user-item>
-          </li>
-        </paginate>
-      </section>
-
-      <section id="paginateBar">
-        <div class="overview">
-          <span class="count" v-if="$refs.paginator">
-            Showing <strong>{{ $refs.paginator.pageItemsCount }}</strong> {{ usersSingularOrPlural }}
-          </span>
-          <span class="total">
-            {{ users.length }} {{ usersSingularOrPlural }} total
-          </span>
-        </div>
-        <paginate-links for="users" :limit="2" :show-step-links="true"></paginate-links>
-      </section>
-		</div>
-
-    <list-actions></list-actions>
+      <template slot="table-row-after" slot-scope="props">
+        <td>
+          <list-actions :user="props.row"></list-actions>
+        </td>
+      </template>
+    </vue-good-table>
   </div>
 </template>
 
 <script>
   import { mapGetters, mapActions } from 'vuex'
-  import userItem from './userItem'
-  import newList from './newList'
+  import addUserModal from './addUserModal'
   import listActions from './listActions'
 
   export default {
     data () {
       return {
-        paginate: ['users']
+        title: 'New Users list (WIP)',
+        placeholder: 'Search users ...',
+        columns: []
       }
     },
     created () {
       this.fetchUsers({ self: this })
+      this.columns = [
+        {
+          label: 'User details',
+          field: 'fullName',
+          filterable: true
+        },
+        {
+          label: 'Last active',
+          field: 'lastLoginDate',
+          filterable: true
+        },
+        {
+          label: 'Source',
+          field: 'source',
+          filterable: true
+        },
+        {
+          label: 'Roles',
+          field: 'roles'
+        },
+      ]
     },
     computed: {
       ...mapGetters({
-        users: 'users/list'
-      }),
-      usersSingularOrPlural () {
-        return  'user' + (this.users.length > 1 ? 's': '')
-      }
+        rows: 'users/list'
+      })
     },
     methods: {
       ...mapActions({
         fetchUsers: 'users/fetch'
       }),
-      addUser () {
-        this.$modal.show('addUser')
+      parseInitials (user) {
+        const displayName = user.fullName || user.authKey
+        const initials = displayName.match(/\b\w/g) || []
+        return ((initials.shift() || '') + (initials.pop() || '')).toUpperCase()
+      },
+      parseRoles (roles) {
+        return roles.join(', ')
       }
     },
     components: {
-      userItem,
-      newList,
+      addUserModal,
       listActions
     }
   }
 </script>
 
-<style lang="scss">
-@import '../../assets/styles/_vars.scss';
+<style lang="scss" scoped>
+  @import '../../assets/styles/_vars.scss';
 
-ul.paginate-links {
-  > li {
-    display: inline-block;
-    margin-right: 2px;
-
-    &:last-child {
-      margin-right: 0;
-    }
-  }
-  > li > a {
-    width: 36px;
-    height: 36px;
-    padding: 8px 0;
-    display: block;
-    text-align: center;
-    font-weight: 600;
-    border: 2px solid transparent;
-    border-radius: 4px;
-    cursor: pointer;
-    color: rgba(255,255,255,0.3);
-
-    &:hover {
-      color: rgba(255,255,255,1);
-      background: rgba(255,255,255,0.05);
-    }
-  }
-  > li.active > a {
-    color: $color-main;
-    border-color: $color-main;
-    cursor: default;
-
-    &:hover {
-      background: none;
-    }
-  }
-  > li.disabled > a {
-    cursor: not-allowed;
-
-    &:hover {
-      color: rgba(255,255,255,0.3);
-      background: none;
-    }
-  }
-}
-#sectionHeader {
-  padding: 10px 0;
-  display: flex;
-  flex-wrap: nowrap;
-  align-items: center;
-  justify-content: space-between;
-
-  .actionButtons button {
-    margin-right: 10px;
-    padding: 12px 20px;
-    border-radius: 100px;
-
-    &:last-child {
-      margin-right: 0;
-    }
-  }
-}
-#userList {
-  header, article {
-    width: 100%;
-    padding: 14px 0;
+  .mainInfo {
     display: flex;
-    flex-direction: row;
-    flex-wrap: nowrap;
     align-items: center;
-  }
-  header {
-    padding: 12px 0;
-  }
-  li {
-    margin-bottom: 10px;
 
-    &:last-child {
-      margin-bottom: 0;
+    .avatar {
+      width: 40px;
+      height: 40px;
+      display: flex;
+      flex-wrap: nowrap;
+      align-items: center;
+      justify-content: center;
+      color: #fff;
+      font-weight: $font-weight-strong;
+      font-size: $font-size-normal;
+      text-align: center;
+      background: $color-blue;
+      border-radius: 100%;
+      margin-right: 0.75rem;
     }
-  }
-  li section, header section {
-    width: 100%;
-    max-width: 150px;
-    font-size: 15px;
-    line-height: 100%;
-    padding-left: 14px;
-  }
-  header section {
-    color: rgba(255,255,255,0.3);
-    font-weight: 600;
-  }
-  section.info {
-    max-width: none;
-  }
-  header section.info {
-    padding-left: 0;
-  }
-  section.actions {
-    max-width: 90px;
-  }
-}
-#paginateBar {
-  margin-top: 20px;
-  display: flex;
-  flex-wrap: nowrap;
-  align-items: center;
-  justify-content: space-between;
-  color: rgba(255,255,255,0.3);
 
-  .overview {
-    font-size: 14px;
-    line-height: 18px;
-
-    .count, .total {
-      display: block;
-    }
-    .total {
-      margin-top: 4px;
-    }
-    strong {
-      color: rgba(255,255,255,1);
-      font-weight: 600;
+    .name {
+      > div {
+        &::after {
+          content: '';
+          width: 8px;
+          height: 8px;
+          display: inline-block;
+          margin-left: 4px;
+          border-radius: 4px;
+          position: relative;
+          top: -2px;
+          left: 2px;
+          background: $color-main;
+        }
+      }
     }
   }
-}
 </style>
