@@ -14,6 +14,14 @@ import Err from '../modules/error.js'
  * @param {Function} failed  Callback to be called on method fail
  */
 export default function (method, path, data, success, failed) {
+  // Setting up the proper axios path for deamon interaction works as follows:
+  // 1) If you specify daemon params on the config build file, those will be used across the app
+  // 2) If you don't specify certain (or all) params, defaults will kick in.
+  //    This means url will be derived from where we're at, protocol too. However, port is a bit different:
+  // 2.1) If no port is specified, defaults to the current url port (8080, etc.)
+  // 2.2) If a port is specified on our config BUT that port is '', we'll run the app using only the ip address
+  // 2.3) If a port is specified and numeric, that will be used as expected
+
   const protocol = process.env.DAEMON_HTTPS ? 'https://' : location.protocol + '//'
   const endpoint = process.env.DAEMON_ENDPOINT ? process.env.DAEMON_ENDPOINT : location.hostname
   const version = process.env.DAEMON_VERSION
@@ -27,8 +35,6 @@ export default function (method, path, data, success, failed) {
   const url = protocol + endpoint + port + '/v' + version
 
   Vue.prototype.$Progress.start()
-
-  console.log(url)
 
   axios({
     method: method,
