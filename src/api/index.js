@@ -1,5 +1,6 @@
 import Vue from 'vue'
 import axios from 'axios'
+import ip from 'ip'
 import { getCookie, removeCookie } from 'tiny-cookie'
 import Err from '../modules/error.js'
 
@@ -13,11 +14,25 @@ import Err from '../modules/error.js'
  * @param {Function} failed  Callback to be called on method fail
  */
 export default function (method, path, data, success, failed) {
+  const protocol = process.env.DAEMON_HTTPS ? 'https://' : location.protocol + '//'
+  const endpoint = process.env.DAEMON_ENDPOINT ? process.env.DAEMON_ENDPOINT : location.hostname
+  const version = process.env.DAEMON_VERSION
+  let port = location.port ? ':' + location.port : ''
+
+  // Allowing a default empty port to be specified
+  if (process.env.DAEMON_PORT !== undefined) {
+    port = process.env.DAEMON_PORT ? ':' + process.env.DAEMON_PORT : ''
+  }
+
+  const url = protocol + endpoint + port + '/v' + version
+
   Vue.prototype.$Progress.start()
+
+  console.log(url)
 
   axios({
     method: method,
-    baseURL: `${process.env.DAEMON_HTTPS ? 'https://' : 'http://'}${process.env.DAEMON_ENDPOINT ? process.env.DAEMON_ENDPOINT : 'localhost'}${process.env.DAEMON_PORT ? ':' + process.env.DAEMON_PORT : ''}/v${process.env.DAEMON_VERSION}`,
+    baseURL: url,
     headers: {
       Authorization: getCookie('SPECTERO_AUTH') !== null ? `Bearer ${getCookie('SPECTERO_AUTH')}` : null
     },
