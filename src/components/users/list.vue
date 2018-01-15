@@ -2,8 +2,14 @@
   <div class="datatable">
     <add-user-modal></add-user-modal>
 
+    <header>
+      <h1>Users</h1>
+      <div>
+        <button class="green" @click="addUser">Add User</button>
+      </div>
+    </header>
+
     <vue-good-table
-    :title="title"
     :columns="columns"
     :rows="rows"
     :paginate="true"
@@ -38,10 +44,14 @@
       </template>
 
       <template slot="table-row-after" slot-scope="props">
-        <td>
+        <td class="actions">
           <list-actions :user="props.row"></list-actions>
         </td>
       </template>
+
+      <div slot="emptystate">
+        No users found.
+      </div>
     </vue-good-table>
   </div>
 </template>
@@ -54,7 +64,6 @@
   export default {
     data () {
       return {
-        title: 'New Users list (WIP)',
         placeholder: 'Search users ...',
         columns: []
       }
@@ -92,6 +101,9 @@
       ...mapActions({
         fetchUsers: 'users/fetch'
       }),
+      addUser () {
+        this.$modal.show('addUser')
+      },
       parseInitials (user) {
         const displayName = user.fullName || user.authKey
         const initials = displayName.match(/\b\w/g) || []
@@ -147,5 +159,15 @@
         }
       }
     }
+  }
+
+  header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .actions {
+    width: 220px;
   }
 </style>

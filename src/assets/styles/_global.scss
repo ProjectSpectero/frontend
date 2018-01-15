@@ -124,6 +124,10 @@ h6 {
 
       select {
         color: $white;
+
+        > option {
+          color: $color-dark;
+        }
       }
 
       > .pagination-controls {
