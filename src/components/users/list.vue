@@ -1,56 +1,65 @@
 <template>
-  <div class="datatable">
-    <add-user-modal></add-user-modal>
+  <div>
+    <top title="Users">
+      <button @click.prevent="addUser" class="button button-success">
+        Add New User
+      </button>
+    </top>
 
-    <div v-if="selectedUser">
-      <remove :name="modalName('delete')"></remove>
-      <edit :name="modalName('edit')"></edit>
-      <certificates :name="modalName('certificates')"></certificates>
-    </div>
+    <div class="datatable">
+      <add-user-modal></add-user-modal>
 
-    <header>
-      <h1>Users</h1>
-      <div>
-        <button class="green" @click="addUser">Add User</button>
+      <div v-if="selectedUser">
+        <remove :name="modalName('delete')"></remove>
+        <edit :name="modalName('edit')"></edit>
+        <certificates :name="modalName('certificates')"></certificates>
       </div>
-    </header>
 
-    <v-client-table :data="tableData" :columns="columns" :options="options">
-      <template slot="name" slot-scope="props">
-        <div class="mainInfo">
-          <div class="avatar">
-            {{ parseInitials(props.row) }}
-          </div>
-          <div class="name">
-            <div>
-              <h5>{{ props.row.fullName || props.row.authKey }}</h5>
-            </div>
-
-            <h6 v-if="props.row.fullName">{{ props.row.authKey }}</h6>
-          </div>
+      <header>
+        <h1>Users</h1>
+        <div>
+          <button class="green" @click="addUser">Add User</button>
         </div>
-      </template>
+      </header>
 
-      <template slot="lastLoginDate" slot-scope="props">
-        {{ props.row.lastLoginDate | moment('from') }}
-      </template>
+      <v-client-table :data="tableData" :columns="columns" :options="options">
+        <template slot="name" slot-scope="props">
+          <div class="mainInfo">
+            <div class="avatar">
+              {{ parseInitials(props.row) }}
+            </div>
+            <div class="name">
+              <div>
+                <h5>{{ props.row.fullName || props.row.authKey }}</h5>
+              </div>
 
-      <template slot="roles" slot-scope="props">
-        {{ parseRoles(props.row.roles) }}
-      </template>
+              <h6 v-if="props.row.fullName">{{ props.row.authKey }}</h6>
+            </div>
+          </div>
+        </template>
 
-      <template slot="actions" slot-scope="props">
-        <button v-for="(actionButton, index) in actionButtons" :key="index" @click="triggerActionModal(props.row, actionButton.key)">
-          <span :class="['icon', actionButton.icon]"></span>
-        </button>
-      </template>
-    </v-client-table>
+        <template slot="lastLoginDate" slot-scope="props">
+          {{ props.row.lastLoginDate | moment('from') }}
+        </template>
+
+        <template slot="roles" slot-scope="props">
+          {{ parseRoles(props.row.roles) }}
+        </template>
+
+        <template slot="actions" slot-scope="props">
+          <button v-for="(actionButton, index) in actionButtons" :key="index" @click="triggerActionModal(props.row, actionButton.key)">
+            <span :class="['icon', actionButton.icon]"></span>
+          </button>
+        </template>
+      </v-client-table>
+    </div>
   </div>
 </template>
 
 <script>
   import Vue from 'vue'
   import { mapGetters, mapActions } from 'vuex'
+  import Top from '../common/top'
   import addUserModal from './addUserModal'
   import edit from './editModal'
   import remove from './deleteModal'
@@ -131,6 +140,7 @@
       }
     },
     components: {
+      Top,
       addUserModal,
       edit,
       remove,

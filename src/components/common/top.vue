@@ -1,8 +1,8 @@
 <template>
   <div class="title-bar">
-    <h1>Users</h1>
-    <div class="title-extras">
-      <a href="#" class="button button-success">Add New User</a>
+    <h1>{{ title }}</h1>
+    <div>
+      <slot></slot>
     </div>
   </div>
 </template>
@@ -11,6 +11,9 @@
   import { getCookie, removeCookie } from 'tiny-cookie'
 
   export default {
+    props: {
+      title: String
+    },
     methods: {
       logout () {
         try {

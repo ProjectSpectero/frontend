@@ -39,6 +39,7 @@ export default function (method, path, data, success, failed) {
   axios({
     method: method,
     baseURL: url,
+    timeout: 10000,
     headers: {
       Authorization: getCookie('SPECTERO_AUTH') !== null ? `Bearer ${getCookie('SPECTERO_AUTH')}` : null
     },

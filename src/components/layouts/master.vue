@@ -1,20 +1,18 @@
 <template>
   <div class="spectero">
     <sidebar></sidebar>
+
     <div class="content">
-      <top></top>
       <router-view></router-view>
     </div>
   </div>
 </template>
 
 <script>
-  import Top from '../common/top'
   import Sidebar from '../common/sidebar'
 
   export default {
     components: {
-      Top,
       Sidebar
     }
   }
