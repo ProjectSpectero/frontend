@@ -1,35 +1,24 @@
 <template>
-  <div id="login">
-		<div id="mainContainer">
-      <div id="authContainer">
-        <div id="logo"><img src="~@/assets/img/logo.svg"></div>
-        <div id="authContent">
-          <form id="loginForm">
-            <div class="message info" v-if="!formError && this.$route.query.redirect">Please log in to continue.</div>
-            <div class="message error" v-if="formError">
-              {{ formError }}
-            </div>
-
-            <div class="input" :class="{'hasError': errors.has('authKey')}">
-              <input type="text" v-model="authKey" name="authKey" :disabled="formDisable" placeholder="Username" v-validate="'required'" data-vv-as="username">
-              <span v-show="errors.has('authKey')" class="errorLabel">
-                {{ errors.first('authKey') }}
-              </span>
-            </div>
-            <div class="input" :class="{'hasError': errors.has('password')}">
-              <input type="password" v-model="password" name="password" :disabled="formDisable" placeholder="Password" v-validate="'required'" data-vv-as="password">
-              <span v-show="errors.has('password')" class="errorLabel">
-                {{ errors.first('password') }}
-              </span>
-            </div>
-            <button class="lime" @click.prevent="submit" @keyup.enter="submit" :disabled="formDisable">{{ formDisable ? 'Please Wait' : 'Log In' }}</button>
-          </form>
-        </div>
-        <!-- <div id="authBottom">
-          <a href="#">Don’t have an account? <strong>Create one now.</strong></a>
-        </div> -->
+  <div>
+    <form id="loginForm">
+      <div class="message info" v-if="!formError && this.$route.query.redirect">Please log in to continue.</div>
+      <div class="message error" v-if="formError">
+        {{ formError }}
       </div>
-		</div>
+      <div class="input-container">
+        <input type="text" class="input full-width" v-model="authKey" name="authKey" :disabled="formDisable" placeholder="Username" v-validate="'required'" data-vv-as="username" :class="{'input-error': errors.has('authKey')}">
+        <span v-show="errors.has('authKey')" class="input-error-msg">
+          {{ errors.first('authKey') }}
+        </span>
+      </div>
+      <div class="input-container">
+        <input type="password" class="input full-width" v-model="password" name="password" :disabled="formDisable" placeholder="Password" v-validate="'required'" data-vv-as="password" :class="{'input-error': errors.has('password')}">
+        <span v-show="errors.has('password')" class="input-error-msg">
+          {{ errors.first('password') }}
+        </span>
+      </div>
+      <button class="button button-success full-width" @click.prevent="submit" @keyup.enter="submit" :disabled="formDisable">{{ formDisable ? 'Please Wait' : 'Log In' }}</button>
+    </form>
   </div>
 </template>
 
@@ -105,75 +94,5 @@
 </script>
 
 <style lang="scss" scoped>
-@import '../../assets/styles/_vars.scss';
 
-#login {
-  width: 100%;
-  height: 100%;
-  display: flex;
-  flex-direction: row;
-  flex-wrap: nowrap;
-  align-items: center;
-  justify-content: center;
-}
-
-#authContainer {
-  width: 350px;
-
-  #logo {
-    display: block;
-    margin-bottom: 20px;
-    text-align: center;
-
-    img {
-      width: 175px;
-      height: 25px;
-      display: inline-block;
-    }
-  }
-}
-
-#authContent {
-  width: 100%;
-  background: rgba(0,0,0,0.2);
-  padding: 20px;
-  border-radius: 4px;
-  text-align: left;
-
-  button {
-    margin-top: 20px;
-    width: 100%;
-    display: block;
-    border-radius: 100px;
-  }
-  .message {
-    text-align: center;
-  }
-  form {
-    .input {
-      padding-top: 0;
-      margin-bottom: 10px;
-
-      &.hasError {
-        margin-bottom: 16px;
-      }
-    }
-  }
-}
-
-// #authBottom {
-//   font-size: 14px;
-//   line-height: 14px;
-//   text-align: center;
-//   margin-top: 20px;
-
-//   a {
-//     color: rgba(255,255,255,0.6);
-
-//     strong {
-//       color: rgba(255,255,255,1);
-//       font-weight: bold;
-//     }
-//   }
-// }
 </style>

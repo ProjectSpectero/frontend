@@ -2,13 +2,13 @@
   <form>
     <div class="message error" v-if="formError">{{ formError }}</div>
 
-    <div v-for="field in formFields" :key="field.name" class="input" :class="{'hasError': errors.has(field.model)}">
+    <div v-for="field in formFields" :key="field.name" class="input" :class="{'input-error': errors.has(field.model)}">
       <input :type="field.type" v-model="form[field.model]" :disabled="formDisable" v-validate="rules[field.model]" :data-vv-as="field.as">
       <span class="floating-label">{{ field.label }}</span>
-      <span v-show="errors.has(field.model)" class="errorLabel">{{ errors.first(field.model) }}</span>
+      <span v-show="errors.has(field.model)" class="input-error-msg">{{ errors.first(field.model) }}</span>
     </div>
 
-    <div class="input" :class="{'hasError': errors.has('permissions')}">
+    <div class="input" :class="{'input-error': errors.has('permissions')}">
       <span>Permissions</span>
       <div>
         <div class="checkbox" v-for="permission in permissions" :key="permission.id" :class="{ disabled: permission.disabled }">

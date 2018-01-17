@@ -1,8 +1,6 @@
 <template>
   <div class="sidebar">
-    <div class="logo">
-      <img src="~@/assets/img/logo.svg">
-    </div>
+    <div class="logo logo-sm"></div>
     <section class="nav-section">
       <ul>
         <li><a href="#"><span class="icon-zap"></span> Overview</a></li>
@@ -66,13 +64,7 @@
     padding-bottom: 8px;
   }
   .logo {
-    padding: $pad;
-    
-    img {
-      width: 138px;
-      height: 20px;
-      display: block;
-    }
+    margin: $pad;
   }
   .nav-section {
     margin-bottom: 16px;
