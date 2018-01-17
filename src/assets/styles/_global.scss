@@ -49,6 +49,54 @@ body {
   float: right;
 }
 
+.VueTables.VueTables--client {
+  margin: 2rem 0;
+  overflow: hidden;
+
+  > .row:first-child {
+    float: left;
+  }
+
+  .VueTables__search {
+  }
+
+  .VuePagination {
+    margin: 2rem 0;
+
+    > nav:first-child {
+      display: flex;
+    }
+
+    .VuePagination__count {
+      flex: 1;
+    }
+
+    .VuePagination__pagination {
+      display: flex;
+      order: 2;
+
+      > li {
+        margin: 0 0.5rem;
+      }
+    }
+  }
+
+  .table-responsive {
+    width: auto;
+    overflow:hidden;
+    padding: 0 0 0 2rem;
+
+    > .VueTables__table {
+      width: 100%;
+    }
+  }
+
+  > .VuePagination {
+    overflow: hidden;
+    clear: both;
+  }
+}
+
 .good-table {
   .spectero-table {
     width: 100%;
@@ -90,6 +138,10 @@ body {
 
       select {
         color: $white;
+
+        > option {
+          color: $color-dark;
+        }
       }
 
       > .pagination-controls {

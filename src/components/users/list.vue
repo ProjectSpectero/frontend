@@ -2,96 +2,125 @@
   <div class="datatable">
     <add-user-modal></add-user-modal>
 
-    <vue-good-table
-    :title="title"
-    :columns="columns"
-    :rows="rows"
-    :paginate="true"
-    :globalSearch="true"
-    :globalSearchPlaceholder="placeholder"
-    :responsive="false"
-    styleClass="spectero-table">
-      <template slot="table-row" slot-scope="props">
-        <td>
-          <div class="mainInfo">
-            <div class="avatar">
-              {{ parseInitials(props.row) }}
-            </div>
-            <div class="name">
-              <div>
-                <h5>{{ props.row.fullName || props.row.authKey }}</h5>
-              </div>
+    <div v-if="selectedUser">
+      <remove :name="modalName('delete')"></remove>
+      <edit :name="modalName('edit')"></edit>
+      <certificates :name="modalName('certificates')"></certificates>
+    </div>
 
-              <h6 v-if="props.row.fullName">{{ props.row.authKey }}</h6>
-            </div>
+    <header>
+      <h1>Users</h1>
+      <div>
+        <button class="green" @click="addUser">Add User</button>
+      </div>
+    </header>
+
+    <v-client-table :data="tableData" :columns="columns" :options="options">
+      <template slot="name" slot-scope="props">
+        <div class="mainInfo">
+          <div class="avatar">
+            {{ parseInitials(props.row) }}
           </div>
-        </td>
-        <td>
-          {{ props.row.lastLoginDate | moment('from') }}
-        </td>
-        <td>
-          {{ props.row.source }}
-        </td>
-        <td>
-          {{ parseRoles(props.row.roles) }}
-        </td>
+          <div class="name">
+            <div>
+              <h5>{{ props.row.fullName || props.row.authKey }}</h5>
+            </div>
+
+            <h6 v-if="props.row.fullName">{{ props.row.authKey }}</h6>
+          </div>
+        </div>
       </template>
 
-      <template slot="table-row-after" slot-scope="props">
-        <td>
-          <list-actions :user="props.row"></list-actions>
-        </td>
+      <template slot="lastLoginDate" slot-scope="props">
+        {{ props.row.lastLoginDate | moment('from') }}
       </template>
-    </vue-good-table>
+
+      <template slot="roles" slot-scope="props">
+        {{ parseRoles(props.row.roles) }}
+      </template>
+
+      <template slot="actions" slot-scope="props">
+        <button v-for="(actionButton, index) in actionButtons" :key="index" @click="triggerActionModal(props.row, actionButton.key)">
+          <span :class="['icon', actionButton.icon]"></span>
+        </button>
+      </template>
+    </v-client-table>
   </div>
 </template>
 
 <script>
+  import Vue from 'vue'
   import { mapGetters, mapActions } from 'vuex'
   import addUserModal from './addUserModal'
-  import listActions from './listActions'
+  import edit from './editModal'
+  import remove from './deleteModal'
+  import certificates from './certificatesModal'
 
   export default {
     data () {
       return {
-        title: 'New Users list (WIP)',
-        placeholder: 'Search users ...',
-        columns: []
+        selectedUser: null,
+        actionButtons: [],
+        columns: [],
+        options: {}
       }
     },
     created () {
       this.fetchUsers({ self: this })
-      this.columns = [
-        {
-          label: 'User details',
-          field: 'fullName',
-          filterable: true
+      this.actionButtons = [
+        { key: 'edit', icon: 'icon-trash' },
+        { key: 'delete', icon: 'icon-lock' },
+        { key: 'certificates', icon: 'icon-pencil' }
+      ],
+      this.columns = ['name', 'lastLoginDate', 'source', 'roles', 'actions']
+      this.options = {
+        skin: '',
+        headings: {
+          name: 'Name',
+          lastLoginDate: 'Last login',
+          source: 'Source',
+          roles: 'Roles',
+          actions: 'Actions'
         },
-        {
-          label: 'Last active',
-          field: 'lastLoginDate',
-          filterable: true
+        sortable: ['lastLoginDate', 'source', 'roles'],
+        filterable: ['fullName'],
+        customFilters: [],
+        texts: {
+          count:"Showing {from} to {to} of {count} records|{count} records|One record",
+          filter: '',
+          filterPlaceholder: 'Search users ...',
+          limit: 'Records:',
+          page: 'Page:',
+          noResults: 'No matching records',
+          filterBy: "Filter by {column}",
+          loading: 'Loading...',
+          defaultOption: 'Select {column}',
+          columns: 'Columns'
         },
-        {
-          label: 'Source',
-          field: 'source',
-          filterable: true
-        },
-        {
-          label: 'Roles',
-          field: 'roles'
-        },
-      ]
+        perPage: 3
+      }
     },
     computed: {
       ...mapGetters({
-        rows: 'users/list'
+        tableData: 'users/list'
       })
     },
     methods: {
       ...mapActions({
         fetchUsers: 'users/fetch'
       }),
+      triggerActionModal (user, action) {
+        this.selectedUser = user
+        Vue.nextTick().then(() => {
+          this.$modal.show(this.modalName(action), { user: user })
+        })
+      },
+      modalName (modal) {
+        return modal + '-' + this.selectedUser.id
+      },
+      addUser () {
+        this.$modal.show('addUser')
+      },
       parseInitials (user) {
         const displayName = user.fullName || user.authKey
         const initials = displayName.match(/\b\w/g) || []
@@ -103,7 +132,9 @@
     },
     components: {
       addUserModal,
-      listActions
+      edit,
+      remove,
+      certificates
     }
   }
 </script>
@@ -147,5 +178,15 @@
         }
       }
     }
+  }
+
+  header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .actions {
+    width: 220px;
   }
 </style>

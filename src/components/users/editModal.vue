@@ -1,5 +1,5 @@
 <template>
-  <modal name="editUser" :adaptive="true" height="auto" width="500px" :scrollable="true" @before-open="beforeOpen">
+  <modal :name="name" :adaptive="true" height="auto" width="500px" :scrollable="true" @before-open="beforeOpen">
     <button class="modal-close" @click.prevent="closeModal"></button>
     <div class="modal-title">
       <div class="modal-title-icon"><span class="icon icon-pencil"></span></div>
@@ -15,9 +15,12 @@
   import userForm from './form'
 
   export default {
+    props: {
+      name: String
+    },
     data () {
       return {
-        user: {},
+        user: {}
       }
     },
     methods: {
@@ -25,7 +28,7 @@
         this.user = event.params.user
       },
       closeModal () {
-        this.$modal.hide('editUser')
+        this.$modal.hide(this.name)
       }
     },
     components: {

@@ -1,6 +1,6 @@
 <template>
-  <modal name="deleteUser" :adaptive="true" height="auto" width="500px" :scrollable="true" @before-open="beforeOpen">
-    <button class="modal-close" @click.prevent="hide"></button>
+  <modal :name="name" :adaptive="true" height="auto" width="500px" :scrollable="true" @before-open="beforeOpen">
+    <button class="modal-close" @click.prevent="closeModal"></button>
     <div class="modal-title">
       <div class="modal-title-icon red"><span class="icon icon-trash"></span></div>
       <h2>Delete user</h2>
@@ -22,7 +22,7 @@
           {{ formDisable ? 'Please Wait' : 'Delete User' }}
         </button>
 
-        <button class="alt light right" @click.prevent="hide">Cancel</button>
+        <button class="alt light right" @click.prevent="closeModal">Cancel</button>
       </form>
     </div>
   </modal>
@@ -33,6 +33,9 @@
   import user from '../../api/user.js'
 
   export default {
+    props: {
+      name: String
+    },
     data () {
       return {
         user: {},
@@ -76,7 +79,7 @@
             // Re-fetch users store to reflect new user (additionally live updates /users page data)
             this.fetchUsers({ self: this })
 
-            this.$modal.hide('deleteUser')
+            this.$modal.hide(this.name)
             this.reset()
           },
           fail: (err) => {
@@ -85,8 +88,8 @@
           }
         })
       },
-      hide () {
-        this.$modal.hide('deleteUser')
+      closeModal () {
+        this.$modal.hide(this.name)
       },
       reset () {
         Object.assign(this.$data, this.$options.data.call(this))

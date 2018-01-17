@@ -10,14 +10,14 @@ import VueModal from 'vue-js-modal'
 import VueMoment from 'vue-moment'
 import VeeValidate from 'vee-validate'
 import VueProgressBar from 'vue-progressbar'
-import VueGoodTable from 'vue-good-table'
+import { ClientTable } from 'vue-tables-2'
 
 Vue.use(VueI18n)
 Vue.use(VueCookie)
 Vue.use(VuePaginate)
 Vue.use(VueModal)
 Vue.use(VueMoment)
-Vue.use(VueGoodTable)
+Vue.use(ClientTable)
 Vue.use(VeeValidate, {
   events: 'input|blur' // Default: 'input|blur'
 })
