@@ -1,10 +1,12 @@
 <template>
   <div>
     <top title="Users">
-      <button @click.prevent="addUser" class="button button-success">
+      <router-link :to="{ name: 'usersCreate' }" class="button button-success">
         Add New User
-      </button>
+      </router-link>
     </top>
+
+              <button class="button button-success" @click="addUser">Add User</button>
 
     <div class="datatable">
       <add-user-modal></add-user-modal>
@@ -14,13 +16,6 @@
         <edit :name="modalName('edit')"></edit>
         <certificates :name="modalName('certificates')"></certificates>
       </div>
-
-      <header>
-        <h1>Users</h1>
-        <div>
-          <button class="green" @click="addUser">Add User</button>
-        </div>
-      </header>
 
       <v-client-table :data="tableData" :columns="columns" :options="options">
         <template slot="name" slot-scope="props">
@@ -145,6 +140,9 @@
       edit,
       remove,
       certificates
+    },
+    metaInfo: {
+      title: 'Users'
     }
   }
 </script>
@@ -188,12 +186,6 @@
         }
       }
     }
-  }
-
-  header {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
   }
 
   .actions {
