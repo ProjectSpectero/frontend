@@ -3,7 +3,7 @@
 
     <new-list></new-list>
 
-		<div id="mainContainer">
+		<div>
       <header id="sectionHeader">
         <h1>Users</h1>
         <div class="actionButtons">

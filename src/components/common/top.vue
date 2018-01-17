@@ -35,7 +35,7 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 16px $pad;
+    padding: 14px $pad;
     background: $white;
     border-bottom: 1px solid $color-border;
   }

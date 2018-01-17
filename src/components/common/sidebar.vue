@@ -53,6 +53,7 @@
 
   .sidebar {
     width: 230px;
+    min-width: 230px;
     background: #161A1F;
     color: $white;
   }

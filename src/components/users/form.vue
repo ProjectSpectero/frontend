@@ -2,10 +2,14 @@
   <form>
     <div class="message error" v-if="formError">{{ formError }}</div>
 
-    <div v-for="field in formFields" :key="field.name" class="input" :class="{'input-error': errors.has(field.model)}">
-      <input :type="field.type" v-model="form[field.model]" :disabled="formDisable" v-validate="rules[field.model]" :data-vv-as="field.as">
-      <span class="floating-label">{{ field.label }}</span>
-      <span v-show="errors.has(field.model)" class="input-error-msg">{{ errors.first(field.model) }}</span>
+    <div v-for="field in formFields" :key="field.name" class="input-container">
+      <div class="label">
+        <label :for="field.model">{{ field.label }}</label>
+      </div>
+      <input :type="field.type" :id="field.model" class="input" v-model="form[field.model]" :disabled="formDisable" v-validate="rules[field.model]" :data-vv-as="field.as" :class="{'input-error': errors.has(field.model)}">
+      <span v-show="errors.has(field.model)" class="input-error-msg">
+        {{ errors.first(field.model) }}
+      </span>
     </div>
 
     <div class="input" :class="{'input-error': errors.has('permissions')}">
@@ -21,10 +25,10 @@
       </div>
     </div>
 
-    <button class="alt green" @click.prevent="submit" @keyup.enter="submit" :disabled="formDisable">
+    <button class="button button-info" @click.prevent="submit" @keyup.enter="submit" :disabled="formDisable">
       {{ formDisable ? 'Please wait...' : title }}
     </button>
-    <button class="alt light right" @click.prevent="hide">
+    <button class="button button-light right" @click.prevent="hide">
       Cancel
     </button>
   </form>
