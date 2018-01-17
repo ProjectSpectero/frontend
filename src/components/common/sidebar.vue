@@ -13,7 +13,15 @@
           <a href="#"><span class="icon-sliders"></span> Manage Server</a>
           <ul>
             <li><a href="#">Overview</a></li>
-            <li><a href="#">Services</a></li>
+
+            <router-link tag="li" :to="{ name: 'vpn' }">
+              <a>VPN</a>
+            </router-link>
+
+            <router-link tag="li" :to="{ name: 'proxies' }">
+              <a>Proxies</a>
+            </router-link>
+
             <li><a href="#">Users</a></li>
             <li><a href="#">Statistics</a></li>
           </ul>
@@ -42,7 +50,7 @@
 
 <style lang="scss" scoped>
   @import '../../assets/styles/_vars.scss';
-  
+
   .sidebar {
     width: 230px;
     background: #161A1F;
