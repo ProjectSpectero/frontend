@@ -1,11 +1,9 @@
 <template>
-  <div class="top p-3">
-    <img src="~@/assets/img/logo.svg">
-    <ul>
-      <li>
-        <a href="/logout" @click.prevent="logout">Logout</a>
-      </li>
-    </ul>
+  <div class="title-bar">
+    <h1>Users</h1>
+    <div class="title-extras">
+      <a href="#" class="button button-success">Add New User</a>
+    </div>
   </div>
 </template>
 
@@ -27,16 +25,15 @@
 </script>
 
 <style lang="scss" scoped>
-  .top {
+  @import '../../assets/styles/_vars.scss';
+
+  .title-bar {
+    width: 100%;
     display: flex;
+    justify-content: space-between;
     align-items: center;
-
-    > img {
-      height: 25px;
-    }
-
-    > ul {
-      margin-left: auto;
-    }
+    padding: 16px $pad;
+    background: $white;
+    border-bottom: 1px solid $color-border;
   }
 </style>

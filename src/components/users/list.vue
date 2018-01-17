@@ -126,7 +126,7 @@
       font-weight: $font-weight-strong;
       font-size: $font-size-normal;
       text-align: center;
-      background: $color-blue;
+      background: $color-info;
       border-radius: 100%;
       margin-right: 0.75rem;
     }

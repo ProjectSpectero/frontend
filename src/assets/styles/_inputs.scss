@@ -1,238 +1,97 @@
-button {
-  padding: 14px 20px;
-  display: inline-block;
-  font: 15px/100% $font-main;
-  line-height: 100%;
-  cursor: pointer;
-  font-weight: 700;
-  color: #fff;
-  background: $color-blue;
-  border: none;
-  border-radius: 5px;
-  transition: all 0.1s ease-out;
-  -webkit-appearance: none;
-  
-  &.lime {
-    background: $color-main;
-    color: rgba(0,0,0,0.8);
+// Button background color mixin
+@mixin buttonBackgroundColor($color) {
+  background-color: $color;
 
-    &:hover {
-      background: $color-main;
-    }
-  }
-  &.green {
-    background: $color-green;
-
-    &:hover {
-      background: darken($color-green, 4%);
-    }
-  }
-  &.red {
-    background: $color-red;
-
-    &:hover {
-      background: darken($color-red, 4%);
-    }
-  }
-  &.light {
-    padding: 13px 20px;
-    color: rgba(0,0,0,0.5);
-    background: #fff;
-    border: 1px solid rgba(0,0,0,0.15);
-
-    &:hover {
-      color: rgba(0,0,0,0.8);
-      background: #fff;
-      border-color: rgba(0,0,0,0.25);
-    }
-  }
   &:hover {
-    background: darken($color-blue, 4%);
+    background-color: darken($color, 4%);
   }
-  &:disabled, &:disabled:hover {
-    opacity: 1;
-    color: rgba(0,0,0,0.4);
-    background: #F0F0F0;
-    border-color: #F0F0F0;
+  &[disabled] {
+    background-color: $color;
   }
 }
 
-form {
-  label {
-    display: inline-block;
-    font-size: 14px;
-    color: rgba(255,255,255,0.3);
-    margin-bottom: 10px;
-    line-height: 14px;
-    cursor: pointer;
-  }
-  input[type="text"], input[type="password"], input[type="email"] {
-    width: 100%;
-    display: block;
-    padding: 14px;
-    font: 14px/100% $font-main;
-    line-height: 14px;
-    color: #fff;
-    background: rgba(0,0,0,0.15);
-    border: 1px solid rgba(255,255,255,0.1);
-    transition: all 0.1s ease-out;
-    -webkit-appearance: none;
+// BUTTONS
+.button {
+  display: inline-block;
+  padding: 11px 18px;
+  font-size: 14px;
+  font-weight: $font-weight-semi;
+  border-radius: 4px;
+  color: $white;
+  cursor: pointer;
+  border: 1px solid transparent;
+  transition: all 0.1s ease-out;
+  color: $color-dark;
+  @include buttonBackgroundColor($color-smoke);
   
-    &:focus {
-      border-color: rgba(255,255,255,0.15);
-      background: rgba(0,0,0,0.3);
-    }
-    &:disabled {
-      border-color: rgba(255,255,255,0.1);
-      color: rgba(255,255,255,0.4);
-      cursor: not-allowed;
-    }
+  &[disabled] {
+    cursor: not-allowed;
+    opacity: 0.5;
   }
-  .input {
-    margin-bottom: 20px;
-    padding-top: 8px; // accommodate for .floating-label
-    position: relative;
 
-    &.hasError {
-      input[type="text"], input[type="password"], input[type="email"] {
-        border-color: $color-red;
-      }
-      .floating-label {
-        color: $color-red;
-      }
-    }
-    .errorLabel {
-      font-size: 14px;
-      line-height: 100%;
-      font-weight: 600;
-      margin-top: 8px;
-      display: block;
-      color: $color-red;
-    }
-    input[type="text"], input[type="password"], input[type="email"] {
-      padding-top: 18px;
-      padding-bottom: 16px;
-    }
-    .floating-label {
-      position: absolute;
-      pointer-events: none;
-      left: 8px;
-      top: 0;
-      background: #fff;
-      padding: 0 4px;
-      font-weight: 600;
-      font-size: 14px;
-    }
-    .checkbox {
-      margin-bottom: 10px;
-      
-      label {
-        margin-bottom: 0;
-      }
-      &.disabled {
-        label {
-          color: rgba(0,0,0,0.5);
-        }
-      }
-      &:last-of-type {
-        margin-bottom: 0;
-      }
-    }
-    .inputContentWrapper {
-      padding: 18px 14px 16px 14px;
-      border: 1px solid rgba(0,0,0,0.1);
-      font-size: 14px;
-    }
-    small {
-      display: block;
-      margin-top: 6px;
-      color: rgba(0,0,0,0.5);
-    }
-    label small {
-      display: inline-block;
-      margin-left: 4px;
-    }
+  // Button color styles
+  &.button-info {
+    color: $color-white;
+    @include buttonBackgroundColor($color-info);
+  }
+  &.button-success {
+    color: $color-white;
+    @include buttonBackgroundColor($color-success);
+  }
+  &.button-danger {
+    color: $color-white;
+    @include buttonBackgroundColor($color-danger);
+  }
+  &.button-warning {
+    color: #4C421A;
+    @include buttonBackgroundColor($color-warning);
+  }
+  &.button-dark {
+    color: $color-white;
+    @include buttonBackgroundColor($color-dark);
   }
 }
 
-textarea {
-  width: 100%;
-  height: 180px;
-  display: block;
-  resize: none;
+// TEXT & TEXTAREA INPUTS
+.input, .textarea {
+  display: inline-block;
   padding: 12px 14px;
-  font: 14px/100% $font-main;
-  line-height: 18px;
-  color: #000;
-  background: #fff;
-  border: 1px solid rgba(0,0,0,0.1);
+  font-size: $font-size-main;
+  font-family: $font-main;
+  font-weight: $font-weight-normal;
+  line-height: 100%;
+  color: $color-main;
+  background: none;
+  border-radius: 4px;
+  border: 1px solid $color-border;
   transition: all 0.1s ease-out;
   -webkit-appearance: none;
 
   &:focus {
-    border-color: rgba(0,0,0,0.25);
+    border-color: darken($color-border, 10%);
   }
-  &:disabled {
-    background: rgba(0,0,0,0.03);
-    color: rgba(0,0,0,0.3);
+  &[disabled] {
+    color: $color-dark;
+    background: $color-smoke;
     cursor: not-allowed;
   }
 }
-
-// Modal inputs (against light background)
-.v--modal {
-  label {
-    color: rgba(0,0,0,1);
-  }
-  input[type="text"], input[type="password"], input[type="email"] {
-    color: #000;
-    background: transparent;
-    border-color: rgba(0,0,0,0.1);
-
-    &:focus {
-      border-color: rgba(0,0,0,0.25);
-      background: transparent;
-    }
-    &:disabled {
-      background: rgba(0,0,0,0.03);
-      color: rgba(0,0,0,0.3);
-    }
-  }
+textarea.input {
+  min-height: 100px;
+  line-height: 150%;
+  resize: vertical;
 }
 
-// Vue-Treeselect
-// .vue-treeselect {
-//   label {
-//     color: #000;
-//     font-size: 15px;
-//     line-height: 100%;
-//     line-height: 15px;
-//   }
-//   .vue-treeselect__placeholder {
-//     font-size: 15px;
-//     color: #aaa;
-//   }
-//   .vue-treeselect__menu {
-//     line-height: 150%;
-//     padding-top: 10px;
-//     padding-bottom: 0;
-//   }
-//   .vue-treeselect__option-arrow-placeholder,
-//   .vue-treeselect__option-arrow-wrapper {
-//     line-height: 5px;
-//   }
-//   .vue-treeselect__option {
-//     margin-bottom: 10px;
-//   }
-//   .vue-treeselect__input-wrapper input {
-//     background: transparent;
-//     border: none;
-//     transition: none;
+// LABELS
+.label {
+  display: block;
+  margin-bottom: 8px;
 
-//     &:focus {
-//       background: transparent;
-//       padding-left: 0;
-//       padding-right: 0;
-//     }
-//   }
-// }
+  label {
+    display: inline-block;
+    color: $color-dark;
+    font-size: $font-size-main;
+    line-height: 100%;
+    cursor: pointer;
+  }
+}

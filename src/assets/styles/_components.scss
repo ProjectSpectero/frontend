@@ -6,7 +6,7 @@ ul {
 // LINKS
 a {
   color: $color-main;
-  transition: all 0.1s ease-out;
+  // transition: all 0.1s ease-out;
   text-decoration: none;
 }
 
@@ -18,7 +18,7 @@ a {
 // MESSAGES
 .message {
   color: #fff;
-  background-color: $color-blue;
+  background-color: $color-info;
   padding: 16px;
   border-radius: 4px;
   font-size: 16px;
@@ -28,11 +28,11 @@ a {
   
   &.info {
     color: #fff;
-    background-color: $color-blue;
+    background-color: $color-info;
   }
   &.error {
     color: #fff;
-    background-color: $color-red;
+    background-color: $color-danger;
   }
   &.success {
     color: rgba(0,0,0,0.8);
@@ -40,6 +40,6 @@ a {
   }
   &.warning {
     color: rgba(0,0,0,0.8);
-    background-color: $color-yellow;
+    background-color: $color-warning;
   }
 }

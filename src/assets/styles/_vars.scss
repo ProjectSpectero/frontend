@@ -1,22 +1,49 @@
-// Colors
+/**
+ * GLOBAL VARIABLES
+ */
 
-$color-main:    #18FF6D;
-$color-dark:    #0F1327;
-$color-red:     #FE0000;
-$color-yellow:  #FFA630;
-$color-blue:    #0077FF;
-$color-green:   #4FBE00;
+// COLORS
+$color-main:    #101418;
+$color-brand:   #18FF6D;
 
-// B&W shades
 
-$white: #fff;
+$color-light:   #C5D0E1;
+$color-border:  #DFE2E5;
+
+$color-success: #35AC45;
+$color-info:    #356ADD;
+$color-danger:  #FE0000;
+$color-warning: #FFDD57;
+
+$color-white:   #FFFFFF;
+$color-smoke:   #F5F5F5;
+$color-dark:    #363636;
+
+$colors: (
+  "success":    $color-success,
+  "info":       $color-info,
+  "danger":     $color-danger,
+  "warning":    $color-warning
+);
+
+@each $name, $color in $colors {
+  .text-#{$name} {
+    color: $color;
+  }
+  .bg-#{$name} {
+    background: $color;
+  }
+}
+
+// B&W SHADES
+$white: #FFFFFF;
 $dark: rgba(255, 255, 255, 0.3);
 $darker: rgba(0,0,0,0.2);
 
-
-// Typography
-
+// GLOBAL FONT VARIABLES
 $font-main: 'Proxima Nova', Helvetica, Arial, sans-serif;
+
+$font-size-main: 14px;
 
 $font-size-small: 0.9rem;
 $font-size-normal: 1rem;
@@ -25,5 +52,8 @@ $font-size-larger: 1.5rem;
 $font-size-largest: 2rem;
 
 $font-weight-normal: 400;
-$font-weight-semi: 500;
-$font-weight-strong: 600;
+$font-weight-semi: 600;
+$font-weight-strong: 700;
+
+// PADDING
+$pad: 20px;
