@@ -17,14 +17,14 @@ a {
 
 // MESSAGES
 .message {
-  color: #fff;
+  color: $white;
   background-color: $color-info;
-  padding: 16px;
+  padding: 14px;
   border-radius: 4px;
   font-size: 16px;
-  line-height: 110%;
+  line-height: 120%;
   font-weight: 600;
-  margin-bottom: 20px;
+  margin-bottom: 12px;
   
   &.info {
     color: #fff;
@@ -41,5 +41,27 @@ a {
   &.warning {
     color: rgba(0,0,0,0.8);
     background-color: $color-warning;
+  }
+}
+
+// LOGO
+.logo {
+  width: 276px;
+  height: 40px;
+  display: inline-block;
+  background: url('./assets/img/logo.svg') no-repeat 0 0/276px 40px;
+
+  &.logo-dark {
+    background-image: url('./assets/img/logo-dark.svg');
+  }
+  &.logo-sm {
+    width: 138px;
+    height: 20px;
+    background-size: 138px 20px;
+  }
+  &.logo-md {
+    width: 175px;
+    height: 25px;
+    background-size: 175px 25px;
   }
 }

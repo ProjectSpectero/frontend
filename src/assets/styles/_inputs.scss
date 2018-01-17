@@ -61,7 +61,7 @@
   font-weight: $font-weight-normal;
   line-height: 100%;
   color: $color-main;
-  background: none;
+  background: $white;
   border-radius: 4px;
   border: 1px solid $color-border;
   transition: all 0.1s ease-out;
@@ -74,6 +74,14 @@
     color: $color-dark;
     background: $color-smoke;
     cursor: not-allowed;
+  }
+  &.input-error {
+    border: 1px solid $color-danger;
+    border-bottom-left-radius: 0;
+    border-bottom-right-radius: 0;
+  }
+  &.input-spaced {
+    margin-bottom: 12px;
   }
 }
 textarea.input {
@@ -94,4 +102,29 @@ textarea.input {
     line-height: 100%;
     cursor: pointer;
   }
+}
+
+// INPUT CONTAINER
+.input-container {
+  margin-bottom: 12px;
+
+  &.no-space {
+    margin-bottom: 0;
+  }
+}
+
+// INPUT ERRORS
+.input-error-msg {
+  padding: 10px;
+  display: block;
+  background: $color-danger;
+  color: $white;
+  font-weight: $font-weight-strong;
+  border-bottom-left-radius: 4px;
+  border-bottom-right-radius: 4px;
+
+  background: lighten($color-danger, 48%);
+  color: $color-danger;
+  border: 1px solid $color-danger;
+  border-top: none;
 }
