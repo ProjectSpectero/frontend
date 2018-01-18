@@ -2,11 +2,22 @@
   <form>
     <div class="message error" v-if="formError">{{ formError }}</div>
 
-    <div v-for="field in formFields" :key="field.name" class="input-container">
+    <div v-for="field in formFields" :key="field.model" class="input-container">
       <div class="label">
         <label :for="field.model">{{ field.label }}</label>
       </div>
-      <input :type="field.type" :id="field.model" class="input" v-model="form[field.model]" :disabled="formDisable" v-validate="rules[field.model]" :data-vv-as="field.as" :class="{'input-error': errors.has(field.model)}">
+
+      <input
+        :type="field.type"
+        :id="field.model"
+        class="input"
+        :name="field.model"
+        v-model="form[field.model]"
+        :disabled="formDisable"
+        v-validate="rules[field.model]"
+        :data-vv-as="field.model"
+        :class="{'input-error': errors.has(field.model)}">
+
       <span v-show="errors.has(field.model)" class="input-error-msg">
         {{ errors.first(field.model) }}
       </span>
@@ -47,8 +58,7 @@
       user: {
         type: Object,
         default: null
-      },
-      modalName: String
+      }
     },
     data () {
       return {
@@ -105,7 +115,6 @@
 
         if (this.action === 'create') {
           this.title = 'Add User'
-          this.modalName = 'addUser'
           this.rules = this.createRules
         }
         else {
@@ -115,10 +124,10 @@
 
         // Set up basic form fields to avoid code repetition
         this.formFields = [
-          { label: 'Username', type: 'text', model: 'authKey', name: 'username', as: 'username' },
-          { label: 'Password', type: 'password', model: 'password', name: 'password', as: 'password' },
-          { label: 'Email', type: 'email', model: 'emailAddress', name: 'emailAddress', as: 'emailAddress' },
-          { label: 'Display Name', type: 'text', model: 'fullName', name: 'fullName', as: 'display name' }
+          { label: 'Username', type: 'text', model: 'authKey' },
+          { label: 'Password', type: 'password', model: 'password' },
+          { label: 'Email', type: 'email', model: 'emailAddress' },
+          { label: 'Display Name', type: 'text', model: 'fullName' }
         ]
       },
       hide () {
@@ -130,36 +139,34 @@
 
         this.$validator.validateAll().then((result) => {
           if (!result) {
-            this.formError = this.$i18n.t(`errors.VALIDATION_FAILED`)
-            return
-          }
+            this.formError = this.$i18n.t('errors.VALIDATION_FAILED')
+          } else {
+            // Disable form while HTTP request being made
+            this.formDisable = true
 
-          // Disable form while HTTP request being made
-          this.formDisable = true
-
-          // Handle submission according to chosen action
-          if (this.action === 'create') {
-            this.create()
-          }
-          else {
-            this.update()
+            // Handle submission according to chosen action
+            if (this.action === 'create') {
+              console.log('action: create')
+              this.create()
+            } else {
+              this.update()
+            }
           }
         })
       },
       create () {
-        console.log('on create')
         userAPI.create({
           data: this.form,
           success: (response) => {
             this.dealWithSuccess(response)
           },
           fail: (err) => {
+            console.log(err)
             this.dealWithErrors(err)
           }
         })
       },
       update () {
-        console.log('update', this.currentUser.id, ' vs ', this.form.id)
         if (this.user) {
           userAPI.edit({
             data: this.form,
@@ -190,7 +197,7 @@
         this.formDisable = false
 
         // Get first error key to display main error msg
-        for (var errorKey in err.errors) {
+        for (let errorKey in err.errors) {
           if (err.errors.hasOwnProperty(errorKey)) {
             this.formError = this.$i18n.t(`errors.${errorKey}`)
             break // Only want the first element key
@@ -198,10 +205,11 @@
         }
 
         // Inject errors into form fields
-        for (var inputName in err.fields) {
+        for (let inputName in err.fields) {
           if (err.fields.hasOwnProperty(inputName)) {
             let inputErrors = err.fields[inputName]
-            for (var errorKey in inputErrors) {
+
+            for (let errorKey in inputErrors) {
               if (inputErrors.hasOwnProperty(errorKey)) {
                 this.$validator.errors.add(inputName, this.$i18n.t(`errors.${errorKey}`, null, { x: inputErrors[errorKey] }))
               }

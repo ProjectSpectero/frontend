@@ -8,7 +8,7 @@
       <h2>Add new user</h2>
     </div>
 
-    <user-form action="create" modalName="addUser" @closeModal="closeModal"></user-form>
+    <user-form action="create" @closeModal="closeModal"></user-form>
   </modal>
 </template>
 

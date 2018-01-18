@@ -22,7 +22,10 @@
               <a>Proxies</a>
             </router-link>
 
-            <li><a href="#">Users</a></li>
+            <router-link tag="li" :to="{ name: 'users' }">
+              <a>Users</a>
+            </router-link>
+
             <li><a href="#">Statistics</a></li>
           </ul>
         </li>

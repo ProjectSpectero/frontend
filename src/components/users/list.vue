@@ -6,8 +6,6 @@
       </router-link>
     </top>
 
-              <button class="button button-success" @click="addUser">Add User</button>
-
     <div class="datatable">
       <add-user-modal></add-user-modal>
 
@@ -121,9 +119,6 @@
       },
       modalName (modal) {
         return modal + '-' + this.selectedUser.id
-      },
-      addUser () {
-        this.$modal.show('addUser')
       },
       parseInitials (user) {
         const displayName = user.fullName || user.authKey
