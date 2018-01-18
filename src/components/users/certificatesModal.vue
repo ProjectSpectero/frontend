@@ -1,26 +1,26 @@
 <template>
   <modal :name="name" :adaptive="true" height="auto" width="500px" :scrollable="true" @before-open="beforeOpen">
-    <button class="modal-close" @click.prevent="closeModal"></button>
     <div class="modal-title">
-      <div class="modal-title-icon"><span class="icon icon-lock"></span></div>
-      <h2>View certificate</h2>
+      <h2>View Certificate</h2>
+      <button class="modal-close" @click.prevent="closeModal"></button>
     </div>
-
-    <form>
-      <div>
-        <label for="authKey">Username:</label>
-        <textarea id="authKey" v-model="authKey" readonly></textarea>
-      </div>
-      <div>
-        <label for="certificate">Certificate:</label>
-        <textarea id="certificate" v-model="cert" readonly></textarea>
-      </div>
-      <div>
-        <label for="key">Key:</label>
-        <textarea id="key" v-model="certKey" readonly></textarea>
-      </div>
-      <button class="alt light right" @click.prevent="closeModal">Close</button>
-    </form>
+    <div class="pad">
+      <form>
+        <div class="item">
+          <div class="label"><label for="authKey">Username:</label></div>
+          <textarea class="input font-mono" id="authKey" v-model="authKey" readonly></textarea>
+        </div>
+        <div class="item">
+          <div class="label"><label for="certificate">Certificate:</label></div>
+          <textarea class="input font-mono" id="certificate" v-model="cert" readonly></textarea>
+        </div>
+        <div class="item">
+          <div class="label"><label for="key">Key:</label></div>
+          <textarea class="input font-mono" id="key" v-model="certKey" readonly></textarea>
+        </div>
+        <button class="button" @click.prevent="closeModal">Close</button>
+      </form>
+    </div>
   </modal>
 </template>
 
@@ -57,17 +57,15 @@
 
 <style lang="scss" scoped>
   form {
-    div {
-      margin-bottom: 20px;
+    .item {
+      margin-bottom: 16px;
     }
     textarea {
-      font: 14px/18px monospace;
+      height: 108px;
+      min-height: auto;
     }
-    textarea#authKey {
+    #authKey {
       height: 44px;
-    }
-    textarea#key {
-      height: 88px;
     }
   }
 </style>

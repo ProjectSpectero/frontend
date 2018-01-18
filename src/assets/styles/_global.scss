@@ -6,6 +6,7 @@
 @import '_fonts.scss';
 @import '_components.scss';
 @import '_inputs.scss';
+@import '_tables.scss';
 @import '_modal.scss';
 
 * {
@@ -28,7 +29,7 @@ body {
   line-height: 100%;
   font-family: $font-main;
   font-weight: $font-weight-normal;
-  background: #F5F6F7;
+  background: $color-background;
   -webkit-font-smoothing: antialiased;
   -webkit-backface-visibility: hidden;
   -moz-osx-font-smoothing: grayscale;
@@ -52,9 +53,12 @@ body {
   width: 100%;
   display: block;
 }
+.inline {
+  display: inline-block;
+}
 
 .VueTables.VueTables--client {
-  margin: 2rem 0;
+  // margin: 2rem 0;
   overflow: hidden;
 
   > .row:first-child {
@@ -86,10 +90,6 @@ body {
   }
 
   .table-responsive {
-    width: auto;
-    overflow:hidden;
-    padding: 0 0 0 2rem;
-
     > .VueTables__table {
       width: 100%;
     }
@@ -178,10 +178,18 @@ body {
 
 .container {
   margin: $pad;
-  padding: $pad;
   background: $white;
   border: 1px solid $color-border;
   border-radius: 4px;
+  overflow: hidden;
+}
+.pad {
+  padding: $pad;
+}
+.content-bottom {
+  padding: $pad;
+  background: $color-white;
+  border-top: 1px solid $color-border;
 }
 
 $container-sizes: (20, 25, 50, 75, 80, 100);

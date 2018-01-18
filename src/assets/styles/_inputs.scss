@@ -1,6 +1,8 @@
 // Button background color mixin
 @mixin buttonBackgroundColor($color) {
   background-color: $color;
+  background-image: none;
+  border: 1px solid transparent;
 
   &:hover {
     background-color: darken($color, 4%);
@@ -14,15 +16,19 @@
 .button {
   display: inline-block;
   padding: 11px 18px;
-  font-size: 14px;
+  font-size: $font-size-main;
+  font-family: $font-main;
   font-weight: $font-weight-semi;
+  line-height: 100%;
   border-radius: 4px;
   color: $white;
   cursor: pointer;
-  border: 1px solid transparent;
   transition: all 0.1s ease-out;
   color: $color-dark;
-  @include buttonBackgroundColor($color-smoke);
+  background-image: linear-gradient(0deg, #F2F4F7 0%, #FFFFFF 100%);
+  border: 1px solid #CED0DA;
+  // @include buttonBackgroundColor($color-smoke);
+  // border: 1px solid transparent;
   
   &[disabled] {
     cursor: not-allowed;
@@ -49,6 +55,46 @@
   &.button-dark {
     color: $color-white;
     @include buttonBackgroundColor($color-dark);
+  }
+}
+
+// DROPDOWN BUTTONS
+.bp-dropdown__btn {
+  @extend .button;
+  padding: 11px 15px !important;
+  border: 1px solid #CED0DA !important;
+
+  .icon {
+    margin-left: 6px;
+  }
+}
+.bp-dropdown__body {
+  padding: 0 !important;
+  border: 1px solid $color-border;
+  border-radius: 4px;
+  overflow: hidden;
+  z-index: 10 !important;
+}
+.dropdown-items {
+  .item {
+    width: 100%;
+    display: block;
+    padding: 0 16px;
+    line-height: 42px;
+    border-bottom: 1px solid $color-border;
+    background: $white;
+    transition: all 0.1s ease-out;
+    cursor: pointer;
+
+    .icon {
+      margin-right: 4px;
+    }
+    &:hover {
+      background: #F7F7F7;
+    }
+    &:last-child {
+      border-bottom: none;
+    }
   }
 }
 
@@ -79,17 +125,17 @@
   }
   &.input-error {
     border: 1px solid $color-danger;
-    border-bottom-left-radius: 0;
-    border-bottom-right-radius: 0;
   }
   &.input-spaced {
     margin-bottom: 12px;
   }
 }
-textarea.input {
-  min-height: 100px;
-  line-height: 150%;
-  resize: vertical;
+textarea {
+  &.input {
+    min-height: 100px;
+    line-height: 150%;
+    resize: vertical;
+  }
 }
 
 // LABELS
@@ -117,13 +163,39 @@ textarea.input {
 
 // INPUT ERRORS
 .input-error-msg {
-  padding: 10px;
+  padding-top: 8px;
+  padding-bottom: 4px;
   display: block;
-  background: lighten($color-danger, 48%);
   color: $color-danger;
   font-weight: $font-weight-strong;
-  border: 1px solid $color-danger;
-  border-top: none;
-  border-bottom-left-radius: 4px;
-  border-bottom-right-radius: 4px;
+}
+
+// CHECKBOX CONTAINER
+.checkbox-container {
+  display: block;
+  border-radius: 4px;
+  border: 1px solid $color-border;
+
+  ul {
+    li {
+      display: block;
+      padding: 0 15px;
+      border-bottom: 1px solid $color-border;
+
+      &:last-child {
+        border-bottom: none;
+      }
+    }
+  }
+  label {
+    margin-left: 8px;
+    cursor: pointer;
+    line-height: 40px;
+
+    small {
+      margin-left: 3px;
+      color: #777777;
+      float: right;
+    }
+  }
 }

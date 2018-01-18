@@ -1,11 +1,11 @@
 <template>
   <div>
-    <top title="Add User"></top>
-    <div class="container">
-      <div class="container-800">
-        <user-form action="create"></user-form>
-      </div>
-    </div>
+    <top title="Add User">
+      <router-link :to="{ name: 'users' }" class="button">
+        Cancel
+      </router-link>
+    </top>
+    <user-form action="create"></user-form>
   </div>
 </template>
 
@@ -20,6 +20,13 @@
     },
     metaInfo: {
       title: 'Add User'
+    },
+    beforeRouteLeave (to, from, next) {
+      if (window.confirm(this.$i18n.t(`LEAVE_CONFIRM_DIALOG`))) {
+        next()
+      } else {
+        next(false)
+      }
     }
   }
 </script>

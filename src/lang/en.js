@@ -29,5 +29,6 @@ module.exports = {
     STORED_CONFIG_WAS_NULL: 'Unable to store service configuration.',
 
     CANNOT_DELETE_SELF: 'You can\'t delete yourself.'
-  }
+  },
+  LEAVE_CONFIRM_DIALOG: 'Are you sure you want to leave? Any unsaved changes will be lost.'
 }

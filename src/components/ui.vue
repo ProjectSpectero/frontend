@@ -19,6 +19,10 @@
       <div class="label"><label for="textarea-demo">Example Label</label></div>
       <textarea id="textarea-demo" class="input" style="width: 100%; max-width: 800px; height: 160px;">This is a textarea input.Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec viverra tristique ex rutrum egestas. Nunc porta ipsum vitae mi varius, ac porttitor massa placerat. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus lacinia efficitur tellus, ut scelerisque lacus. Suspendisse nec ipsum et lectus aliquam consequat at a augue. Duis quis feugiat justo, in facilisis ante. Proin sed dui quis arcu semper convallis.</textarea>
     </section>
+    <section>
+      <button class="button button-danger">Test</button>
+      <a class="button button-danger">Test</a>
+    </section>
   </div>
 </template>
 

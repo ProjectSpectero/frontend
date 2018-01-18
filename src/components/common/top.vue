@@ -1,6 +1,6 @@
 <template>
   <div class="title-bar">
-    <h1>{{ title }}</h1>
+    <h1 class="no-pad">{{ title }}</h1>
     <div>
       <slot></slot>
     </div>

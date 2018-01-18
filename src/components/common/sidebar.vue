@@ -96,6 +96,7 @@
   h5 {
     padding-left: $pad;
     padding-bottom: 8px;
+    margin-bottom: 0;
   }
   .logo {
     margin: $pad;

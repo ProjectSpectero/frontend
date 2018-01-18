@@ -1,0 +1,28 @@
+
+.table-responsive {
+  width: auto;
+  overflow: hidden;
+}
+.table-boxed {
+  border: 1px solid $color-border;
+  border-radius: 4px;
+
+  table tr:last-child td {
+    border-bottom: none;
+  }
+}
+.table {
+  text-align: left;
+  border-collapse: collapse;
+  
+  th, td {
+    padding: 16px 20px;
+    border-bottom: 1px solid $color-border;
+  }
+  th {
+    text-align: left;
+    font-size: $font-size-main;
+    font-weight: $font-weight-semi;
+    color: $color-table-header;
+  }
+}

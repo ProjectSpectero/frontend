@@ -1,29 +1,28 @@
 <template>
   <modal :name="name" :adaptive="true" height="auto" width="500px" :scrollable="true" @before-open="beforeOpen">
-    <button class="modal-close" @click.prevent="closeModal"></button>
     <div class="modal-title">
-      <div class="modal-title-icon red"><span class="icon icon-trash"></span></div>
-      <h2>Delete user</h2>
+      <h2>Delete User</h2>
+      <button class="modal-close" @click.prevent="closeModal"></button>
     </div>
-    <div v-if="isCurrentUser">
-      <form>
-        <div class="message error">{{ $t('errors.CANNOT_DELETE_SELF') }}</div>
-        <button class="alt light right" @click.prevent="hide">Close</button>
-      </form>
-    </div>
-    <div v-else>
-      <p>Are you sure you want to delete the user <strong>{{ username }}</strong>?</p>
-      <p><strong>WARNING:</strong> This action cannot be undone.</p>
-      <form id="deleteUserForm">
-        <div class="message error" v-if="formError">{{ formError }}</div>
-        <input type="text" v-model="confirmDelete" placeholder="Type 'DELETE' to proceed" class="confirmInput">
-
-        <button class="alt red" @click.prevent="submit" @keyup.enter="submit" :disabled="isDisabled">
-          {{ formDisable ? 'Please Wait' : 'Delete User' }}
-        </button>
-
-        <button class="alt light right" @click.prevent="closeModal">Cancel</button>
-      </form>
+    <div class="pad">
+      <div v-if="isCurrentUser">
+        <form>
+          <div class="message error">{{ $t('errors.CANNOT_DELETE_SELF') }}</div>
+          <button class="button" @click.prevent="closeModal">Close</button>
+        </form>
+      </div>
+      <div v-else>
+        <p>Are you sure you want to delete <strong>{{ username }}</strong>?</p>
+        <p><strong>WARNING:</strong> This action cannot be undone.</p>
+        <form class="delete-form">
+          <div class="message error" v-if="formError">{{ formError }}</div>
+          <input type="text" v-model="confirmDelete" placeholder="Type 'DELETE' to proceed" class="input input-confirm">
+          <button class="button button-danger" @click.prevent="submit" @keyup.enter="submit" :disabled="isDisabled">
+            {{ formDisable ? 'Please Wait' : 'Delete User' }}
+          </button>
+          <button class="button right" @click.prevent="closeModal">Cancel</button>
+        </form>
+      </div>
     </div>
   </modal>
 </template>
@@ -99,11 +98,10 @@
 </script>
 
 <style lang="scss">
-  #deleteUserForm {
+  .delete-form {
     padding-top: 16px;
-
-    .confirmInput {
-      margin-bottom: 20px;
-    }
+  }
+  .input-confirm {
+    margin-bottom: 20px;
   }
 </style>
