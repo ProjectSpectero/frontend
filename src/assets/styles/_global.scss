@@ -46,26 +46,26 @@ body {
 .left {
   float: left;
 }
+
 .right {
   float: right;
 }
+
 .full-width {
   width: 100%;
   display: block;
 }
+
 .inline {
   display: inline-block;
 }
 
 .VueTables.VueTables--client {
-  // margin: 2rem 0;
-  overflow: hidden;
-
-  > .row:first-child {
-    float: left;
-  }
-
   .VueTables__search {
+    padding: 1rem;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
   }
 
   .VuePagination {
@@ -98,76 +98,6 @@ body {
   > .VuePagination {
     overflow: hidden;
     clear: both;
-  }
-}
-
-.good-table {
-  .spectero-table {
-    width: 100%;
-    border: 0;
-    border-collapse: separate;
-    border-spacing: 0 5px;
-    font-size: $font-size-normal;
-
-    th {
-      font-weight: $font-weight-strong;
-      color: $dark;
-      padding: 0.5rem 0.75rem;
-    }
-
-    td {
-      border: 0;
-      background: $darker;
-      padding: 0.75rem 0;
-    }
-
-    .global-search-icon {
-      left: 1rem;
-    }
-
-    .global-search-input {
-      margin-left: 1.5rem;
-      border: 0;
-      background: transparent;
-      color: $white;
-      line-height: 34px;
-      font-size: $font-size-large;
-    }
-  }
-
-  > div {
-    > .table-footer {
-      border: 0;
-      color: $white;
-
-      select {
-        color: $white;
-
-        > option {
-          color: $color-dark;
-        }
-      }
-
-      > .pagination-controls {
-        .info {
-          color: $white;
-        }
-
-        a {
-          color: $white;
-        }
-
-        .chevron {
-          margin: 0 5px;
-
-          &::after {
-            border-left-color: $white;
-            margin-top: -10px;
-            border-right-color: $white;
-          }
-        }
-      }
-    }
   }
 }
 
