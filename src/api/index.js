@@ -46,12 +46,17 @@ export default function (method, path, data, success, failed) {
     url: path,
     data: data.data
   }).then(response => {
+    console.log('current response', response)
+    console.log('current success', success)
     Vue.prototype.$Progress.finish()
 
-    if (typeof success === 'function') { // Main api callback
+    // Main api callback
+    if (typeof success === 'function') {
       success(response)
     }
-    if (typeof data.success === 'function') { // Sub-wrapper callback
+
+    // Sub-wrapper callback
+    if (typeof data.success === 'function') {
       data.success(response)
     }
 
@@ -70,7 +75,6 @@ export default function (method, path, data, success, failed) {
     let err = new Err(error.data.errors)
 
     if (typeof failed === 'function') { // Main api callback
-
       failed(err)
     }
     if (typeof data.fail === 'function') { // Sub-wrapper callback

@@ -41,7 +41,6 @@
     },
     methods: {
       ...mapActions({
-        fetchServices: 'services/fetch'
       }),
       submit () {
         this.$validator.validateAll().then((result) => {
@@ -71,7 +70,7 @@
         })
       },
       async setup () {
-        await this.fetchServices()
+        // Add anything that needs preloading here
       },
       dealWithSuccess (msg) {
         this.formError = null
