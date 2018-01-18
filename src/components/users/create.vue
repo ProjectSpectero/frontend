@@ -1,8 +1,10 @@
 <template>
   <div>
     <top title="Add User"></top>
-    <div class="content-container">
-      <user-form action="create"></user-form>
+    <div class="container">
+      <div class="container-800">
+        <user-form action="create"></user-form>
+      </div>
     </div>
   </div>
 </template>

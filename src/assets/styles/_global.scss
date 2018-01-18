@@ -176,10 +176,24 @@ body {
   height: 100%;
 }
 
-.content-container {
+.container {
   margin: $pad;
   padding: $pad;
   background: $white;
   border: 1px solid $color-border;
   border-radius: 4px;
+}
+
+$container-sizes: (20, 25, 50, 75, 80, 100);
+@each $size in $container-sizes {
+  .container-#{$size}p {
+    width: percentage($size/100);
+  }
+}
+
+$container-sizes-fixed: (600, 800, 1000);
+@each $size in $container-sizes-fixed {
+  .container-#{$size} {
+    max-width: #{$size}px;
+  }
 }

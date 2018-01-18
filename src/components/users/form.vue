@@ -6,18 +6,18 @@
       <div class="label">
         <label :for="field.model">{{ field.label }}</label>
       </div>
-      <input :type="field.type" :id="field.model" class="input" v-model="form[field.model]" :disabled="formDisable" v-validate="rules[field.model]" :data-vv-as="field.as" :class="{'input-error': errors.has(field.model)}">
+      <input :type="field.type" :name="field.model" :id="field.model" class="input" v-model="form[field.model]" :disabled="formDisable" v-validate="rules[field.model]" :data-vv-as="field.as" :class="{'input-error': errors.has(field.model)}">
       <span v-show="errors.has(field.model)" class="input-error-msg">
         {{ errors.first(field.model) }}
       </span>
     </div>
 
-    <div class="input" :class="{'input-error': errors.has('permissions')}">
+    <div :class="{'input-error': errors.has('permissions')}">
       <span>Permissions</span>
       <div>
         <div class="checkbox" v-for="permission in permissions" :key="permission.id" :class="{ disabled: permission.disabled }">
           <label :for="permission.id">
-            <input type="checkbox" :value="permission.id" :disabled="permission.disabled" v-model="form.roles">
+            <input type="checkbox" :id="permission.id" :value="permission.id" :disabled="permission.disabled" v-model="form.roles">
             {{ permission.label }}
             <small v-if="permission.disabled">Can't set</small>
           </label>

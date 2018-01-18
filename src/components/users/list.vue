@@ -6,7 +6,7 @@
       </router-link>
     </top>
 
-              <button class="button button-success" @click="addUser">Add User</button>
+    <button class="button button-warning" @click="addUser">Add User (MODAL)</button>
 
     <div class="datatable">
       <add-user-modal></add-user-modal>
@@ -42,7 +42,7 @@
         </template>
 
         <template slot="actions" slot-scope="props">
-          <button v-for="(actionButton, index) in actionButtons" :key="index" @click="triggerActionModal(props.row, actionButton.key)">
+          <button class="button button-dark" v-for="(actionButton, index) in actionButtons" :key="index" @click="triggerActionModal(props.row, actionButton.key)">
             <span :class="['icon', actionButton.icon]"></span>
           </button>
         </template>
@@ -72,9 +72,9 @@
     created () {
       this.fetchUsers({ self: this })
       this.actionButtons = [
-        { key: 'edit', icon: 'icon-trash' },
-        { key: 'delete', icon: 'icon-lock' },
-        { key: 'certificates', icon: 'icon-pencil' }
+        { key: 'edit', icon: 'icon-edit' },
+        { key: 'delete', icon: 'icon-trash' },
+        { key: 'certificates', icon: 'icon-award' }
       ],
       this.columns = ['name', 'lastLoginDate', 'source', 'roles', 'actions']
       this.options = {
