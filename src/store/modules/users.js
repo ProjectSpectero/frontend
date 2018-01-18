@@ -35,7 +35,7 @@ const getters = {
 const actions = {
   fetch ({ commit }) {
     userAPI.list({
-      success: function (response) {
+      success: response => {
         const users = response.data.result
 
         for (let i = 0; i < users.length; i++) { // Inject temp fields into user objects
@@ -45,7 +45,7 @@ const actions = {
 
         commit('UPDATE_USERS', response.data.result)
       },
-      fail: function (error) {
+      fail: error => {
         console.log(error)
         // TODO: implement
       }

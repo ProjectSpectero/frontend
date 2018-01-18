@@ -8,21 +8,9 @@
 </template>
 
 <script>
-  import { getCookie, removeCookie } from 'tiny-cookie'
-
   export default {
     props: {
       title: String
-    },
-    methods: {
-      logout () {
-        try {
-          removeCookie('SPECTERO_AUTH')
-          this.$router.push({ name: 'login' })
-        } catch (err) {
-          throw new Error(this.$i18n.t('errors.UNABLE_TO_LOGOUT'))
-        }
-      }
     }
   }
 </script>

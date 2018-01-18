@@ -7,8 +7,6 @@
     </top>
 
     <div class="datatable">
-      <add-user-modal></add-user-modal>
-
       <div v-if="selectedUser">
         <remove :name="modalName('delete')"></remove>
         <edit :name="modalName('edit')"></edit>

@@ -45,10 +45,32 @@
         <li><a href="#"><span class="icon-life-buoy"></span> Documentation</a></li>
       </ul>
     </section>
+    <section class="nav-section">
+      <h5>Logout</h5>
+      <ul>
+        <li @click="logout">
+          <a href="#"><span class="icon-life-buoy"></span> Logout</a>
+        </li>
+      </ul>
+    </section>
   </div>
 </template>
 
 <script>
+  import { getCookie, removeCookie } from 'tiny-cookie'
+
+  export default {
+    methods: {
+      logout () {
+        try {
+          removeCookie('SPECTERO_AUTH')
+          this.$router.push({ name: 'login' })
+        } catch (err) {
+          throw new Error(this.$i18n.t('errors.UNABLE_TO_LOGOUT'))
+        }
+      }
+    }
+  }
 </script>
 
 <style lang="scss" scoped>

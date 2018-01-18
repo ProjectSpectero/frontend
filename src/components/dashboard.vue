@@ -3,8 +3,7 @@
 
 <script>
   export default {
-    created() {
-      // Temporary force redirect to /users
+    created () {
       this.$router.push({ name: 'users' })
     }
   }

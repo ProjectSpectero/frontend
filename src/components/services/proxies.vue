@@ -5,6 +5,7 @@
 </template>
 
 <script>
+  import { mapGetters, mapActions } from 'vuex'
   import Top from '../common/top'
 
   export default {
