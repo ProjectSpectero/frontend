@@ -16,7 +16,7 @@
 
         <v-client-table :data="tableData" :columns="columns" :options="options">
           <template slot="name" slot-scope="props">
-            <div class="mainInfo">
+            <div class="main-info">
               <div class="avatar">
                 {{ parseInitials(props.row) }}
               </div>
@@ -150,6 +150,10 @@
 <style lang="scss" scoped>
   @import '../../assets/styles/_vars.scss';
 
+  .main-info {
+    display: flex;
+    align-items: center;
+  }
   .avatar {
     width: 36px;
     height: 36px;
@@ -175,17 +179,5 @@
       line-height: 150%;
       color: #777777;
     }
-  }
-
-
-  
-
-  .mainInfo {
-    display: flex;
-    align-items: center;
-  }
-
-  .actions {
-    width: 220px;
   }
 </style>

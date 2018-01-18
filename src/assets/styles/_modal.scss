@@ -1,85 +1,59 @@
 // IMPORTANT: apply !imporant to all .v--modal styles to ensure CSS is overwritten by module styling
 .v--modal-box {
   box-shadow: none !important;
-  color: #000 !important;
-  background: #fff !important;
-  padding: 20px !important;
+  color: $color-main !important;
+  background: $white !important;
+  padding: 0 !important;
   border-radius: 4px !important;
 }
 .v--modal-overlay {
-  background: rgba(0,0,0,0.7) !important;
+  background: rgba(0,0,0,0.75) !important;
 }
 .modal-title {
   cursor: default;
-  margin-bottom: 20px;
   display: flex;
   flex-direction: row;
   flex-wrap: nowrap;
   align-items: center;
+  justify-content: space-between;
+  padding: $pad;
+  padding-bottom: 0;
+  background: $white;
 
   h2 {
     display: inline-block;
     margin-bottom: 0;
-    font-size: 22px;
-    font-weight: 600;
-    line-height: 40px;
+    font-size: 20px;
+    font-weight: $font-weight-semi;
+    line-height: 100%;
     color: rgba(0,0,0,0.8);
   }
 }
-.modal-title-icon {
-  width: 40px;
-  height: 40px;
-  margin-right: 12px;
-  display: flex;
-  flex-direction: row;
-  flex-wrap: nowrap;
-  align-items: center;
-  justify-content: center;
-  border-radius: 36px;
-  background: rgba(0,0,0,0.1);
-  color: rgba(0,0,0,0.8);
-  font-size: 20px;
-
-  &.green {
-    color: #1FC4AB;
-    background: #D2F4EF;
-  }
-  &.red {
-    color: #CC2664;
-    background: #F6E1E4;
-  }
-  .icon::before {
-    position: relative;
-  }
-  .icon-users::before {
-    top: -2px;
-  }
-  .icon-trash::before {
-    left: 1px;
-  }
-}
 .modal-close {
-  width: 26px;
-  height: 26px;
+  width: 30px;
+  height: 30px;
   display: block;
   position: absolute;
   top: 8px;
-  right: 8px;
+  right: 6px;
   padding: 0;
   background: none;
   border: none;
   color: rgba(0,0,0,0.25);
+  cursor: pointer;
+  transition: all 0.1s ease-out;
 
   &::before {
-    content: "\e92f";
-    font-family: 'linearicons' !important;
+    content: "\e9eb";
+    font-family: 'feather' !important;
     font-size: 18px;
+    line-height: 100%;
     position: relative;
-    top: 1px;
+    top: -1px;
     left: 1px;
   }
   &:hover {
-    color: rgba(0,0,0,0.6);
+    color: rgba(0,0,0,0.8);
     background: none;
   }
 }
