@@ -28,7 +28,7 @@ body {
   line-height: 100%;
   font-family: $font-main;
   font-weight: $font-weight-normal;
-  background: #F5F6F7;
+  background: $color-background;
   -webkit-font-smoothing: antialiased;
   -webkit-backface-visibility: hidden;
   -moz-osx-font-smoothing: grayscale;
@@ -51,6 +51,9 @@ body {
 .full-width {
   width: 100%;
   display: block;
+}
+.inline {
+  display: inline-block;
 }
 
 .VueTables.VueTables--client {
@@ -178,10 +181,18 @@ body {
 
 .container {
   margin: $pad;
-  padding: $pad;
   background: $white;
   border: 1px solid $color-border;
   border-radius: 4px;
+  overflow: hidden;
+}
+.pad {
+  padding: $pad;
+}
+.content-bottom {
+  padding: $pad;
+  background: $color-white;
+  border-top: 1px solid $color-border;
 }
 
 $container-sizes: (20, 25, 50, 75, 80, 100);

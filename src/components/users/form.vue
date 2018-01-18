@@ -1,47 +1,56 @@
 <template>
   <form>
-    <div class="message error" v-if="formError">{{ formError }}</div>
+    <div class="container container-600">
+      <div class="pad">
+        <h2>Basic Details</h2>
+        <div class="message error" v-if="formError">{{ formError }}</div>
 
-    <div v-for="field in formFields" :key="field.model" class="input-container">
-      <div class="label">
-        <label :for="field.model">{{ field.label }}</label>
-      </div>
+        <div v-for="field in formFields" :key="field.model" class="input-container">
+          <div class="label">
+            <label :for="field.model">{{ field.label }}</label>
+          </div>
 
-      <input
-        :type="field.type"
-        :id="field.model"
-        class="input"
-        :name="field.model"
-        v-model="form[field.model]"
-        :disabled="formDisable"
-        v-validate="rules[field.model]"
-        :data-vv-as="field.label.toLowerCase()"
-        :class="{'input-error': errors.has(field.model)}">
+          <input
+            :type="field.type"
+            :id="field.model"
+            class="input"
+            :name="field.model"
+            v-model="form[field.model]"
+            :disabled="formDisable"
+            v-validate="rules[field.model]"
+            :data-vv-as="field.label.toLowerCase()"
+            :class="{'input-error': errors.has(field.model)}">
 
-      <span v-show="errors.has(field.model)" class="input-error-msg">
-        {{ errors.first(field.model) }}
-      </span>
-    </div>
-
-    <div :class="{'input-error': errors.has('permissions')}">
-      <span>Permissions</span>
-      <div>
-        <div class="checkbox" v-for="permission in permissions" :key="permission.id" :class="{ disabled: permission.disabled }">
-          <label :for="permission.id">
-            <input type="checkbox" :id="permission.id" :value="permission.id" :disabled="permission.disabled" v-model="form.roles">
-            {{ permission.label }}
-            <small v-if="permission.disabled">Can't set</small>
-          </label>
+          <span v-show="errors.has(field.model)" class="input-error-msg">
+            {{ errors.first(field.model) }}
+          </span>
         </div>
       </div>
     </div>
-
-    <button class="button button-info" @click.prevent="submit" @keyup.enter="submit" :disabled="formDisable">
-      {{ formDisable ? 'Please wait...' : title }}
-    </button>
-    <button class="button button-light right" @click.prevent="hide">
-      Cancel
-    </button>
+    <div class="container container-600">
+      <div class="pad">
+        <h2>Permissions</h2>
+        <div class="checkbox-container">
+          <ul>
+            <li v-for="permission in permissions" :key="permission.id" :class="{ disabled: permission.disabled }">
+              <input type="checkbox" :id="permission.id" :value="permission.id" :disabled="permission.disabled" v-model="form.roles">
+              <label :for="permission.id">
+                {{ permission.label }}
+                <small v-if="permission.disabled">You don't have permission to set this.</small>
+              </label>
+            </li>
+          </ul>
+        </div>
+      </div>
+      <div class="content-bottom">
+        <button class="button button-info" @click.prevent="submit" @keyup.enter="submit" :disabled="formDisable">
+          {{ formDisable ? 'Please wait...' : title }}
+        </button>
+        <router-link :to="{ name: 'users' }" class="button button-light right" @click.prevent="cancel">
+          Cancel
+        </router-link>
+      </div>
+    </div>
   </form>
 </template>
 
@@ -129,9 +138,6 @@
           { label: 'Email', type: 'email', model: 'emailAddress' },
           { label: 'Display Name', type: 'text', model: 'fullName' }
         ]
-      },
-      hide () {
-        this.$emit('closeModal')
       },
       submit () {
         this.formError = null
