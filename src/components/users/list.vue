@@ -53,7 +53,6 @@
   import Vue from 'vue'
   import { mapGetters, mapActions } from 'vuex'
   import Top from '../common/top'
-  import addUserModal from './addUserModal'
   import edit from './editModal'
   import remove from './deleteModal'
   import certificates from './certificatesModal'
@@ -131,7 +130,6 @@
     },
     components: {
       Top,
-      addUserModal,
       edit,
       remove,
       certificates
