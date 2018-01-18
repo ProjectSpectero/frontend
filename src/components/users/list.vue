@@ -36,9 +36,17 @@
           </template>
 
           <template slot="actions" slot-scope="props">
-            <button class="button button-dark" v-for="(actionButton, index) in actionButtons" :key="index" @click="triggerActionModal(props.row, actionButton.key)">
-              <span :class="['icon', actionButton.icon]"></span>
-            </button>
+            <dropdown>
+              <template slot="btn">Manage</template>
+              <template slot="icon"><span class="icon icon-chevron-down"></span></template>
+              <template slot="body">
+                <div class="dropdown-items">
+                  <span class="item" v-for="(actionButton, index) in actionButtons" :key="index" @click="triggerActionModal(props.row, actionButton.key)">
+                    <span :class="['icon', actionButton.icon]"></span> {{ actionButton.text }}
+                  </span>
+                </div>
+              </template>
+            </dropdown>
           </template>
         </v-client-table>
       </div>
@@ -53,6 +61,7 @@
   import edit from './editModal'
   import remove from './deleteModal'
   import certificates from './certificatesModal'
+  import Dropdown from 'bp-vuejs-dropdown'
 
   export default {
     data () {
@@ -66,9 +75,9 @@
     created () {
       this.fetchUsers({ self: this })
       this.actionButtons = [
-        { key: 'edit', icon: 'icon-edit' },
-        { key: 'delete', icon: 'icon-trash' },
-        { key: 'certificates', icon: 'icon-award' }
+        { key: 'edit', text: 'Edit User', icon: 'icon-edit' },
+        { key: 'delete', text: 'Delete User', icon: 'icon-trash' },
+        { key: 'certificates', text: 'View Certificate', icon: 'icon-award' }
       ],
       this.columns = ['name', 'lastLoginDate', 'source', 'roles', 'actions']
       this.options = {
@@ -129,7 +138,8 @@
       Top,
       edit,
       remove,
-      certificates
+      certificates,
+      Dropdown
     },
     metaInfo: {
       title: 'Users'

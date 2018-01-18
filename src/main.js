@@ -11,6 +11,7 @@ import VueMoment from 'vue-moment'
 import VeeValidate from 'vee-validate'
 import VueProgressBar from 'vue-progressbar'
 import { ClientTable } from 'vue-tables-2'
+import Dropdown from 'bp-vuejs-dropdown'
 
 Vue.use(VueI18n)
 Vue.use(VueCookie)
@@ -26,6 +27,7 @@ Vue.use(VueProgressBar, {
   failedColor: 'red',
   thickness: '5px'
 })
+Vue.use(Dropdown)
 
 const messages = {
   en: require('./lang/en.js')
