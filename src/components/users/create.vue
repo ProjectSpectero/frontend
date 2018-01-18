@@ -26,6 +26,4 @@
 
 <style lang="scss" scoped>
   @import '../../assets/styles/_vars.scss';
-
-
 </style>

@@ -8,6 +8,7 @@ import auth from '../api/auth.js'
 // Routes
 import authRoutes from './auth'
 import userRoutes from './user'
+import servicesRoutes from './services'
 import defaultRoutes from './default'
 
 Vue.use(Router)
@@ -22,6 +23,7 @@ const router = new Router({
   routes: [
     ...authRoutes,
     ...userRoutes,
+    ...servicesRoutes,
     ...defaultRoutes
   ]
 })

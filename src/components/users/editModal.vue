@@ -6,7 +6,7 @@
       <h2>Edit user</h2>
     </div>
 
-    <user-form action="edit" modalName="editUser" :user="user" @closeModal="closeModal"></user-form>
+    <user-form action="edit" :user="user" @closeModal="closeModal"></user-form>
   </modal>
 </template>
 
