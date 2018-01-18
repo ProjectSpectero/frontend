@@ -2,47 +2,46 @@
   <div>
     <top title="Users">
       <router-link :to="{ name: 'usersCreate' }" class="button button-success">
-        Add New User
+        Add User
       </router-link>
     </top>
 
-    <div class="datatable">
-      <div v-if="selectedUser">
-        <remove :name="modalName('delete')"></remove>
-        <edit :name="modalName('edit')"></edit>
-        <certificates :name="modalName('certificates')"></certificates>
-      </div>
+    <div class="container">
+      <div class="datatable">
+        <div v-if="selectedUser">
+          <remove :name="modalName('delete')"></remove>
+          <edit :name="modalName('edit')"></edit>
+          <certificates :name="modalName('certificates')"></certificates>
+        </div>
 
-      <v-client-table :data="tableData" :columns="columns" :options="options">
-        <template slot="name" slot-scope="props">
-          <div class="mainInfo">
-            <div class="avatar">
-              {{ parseInitials(props.row) }}
-            </div>
-            <div class="name">
-              <div>
-                <h5>{{ props.row.fullName || props.row.authKey }}</h5>
+        <v-client-table :data="tableData" :columns="columns" :options="options">
+          <template slot="name" slot-scope="props">
+            <div class="mainInfo">
+              <div class="avatar">
+                {{ parseInitials(props.row) }}
               </div>
-
-              <h6 v-if="props.row.fullName">{{ props.row.authKey }}</h6>
+              <div class="name">
+                <h3 class="no-pad">{{ props.row.fullName || props.row.authKey }}</h3>
+                <span v-if="props.row.fullName">{{ props.row.authKey }}</span>
+              </div>
             </div>
-          </div>
-        </template>
+          </template>
 
-        <template slot="lastLoginDate" slot-scope="props">
-          {{ props.row.lastLoginDate | moment('from') }}
-        </template>
+          <template slot="lastLoginDate" slot-scope="props">
+            {{ props.row.lastLoginDate | moment('from') }}
+          </template>
 
-        <template slot="roles" slot-scope="props">
-          {{ parseRoles(props.row.roles) }}
-        </template>
+          <template slot="roles" slot-scope="props">
+            {{ parseRoles(props.row.roles) }}
+          </template>
 
-        <template slot="actions" slot-scope="props">
-          <button class="button button-dark" v-for="(actionButton, index) in actionButtons" :key="index" @click="triggerActionModal(props.row, actionButton.key)">
-            <span :class="['icon', actionButton.icon]"></span>
-          </button>
-        </template>
-      </v-client-table>
+          <template slot="actions" slot-scope="props">
+            <button class="button button-dark" v-for="(actionButton, index) in actionButtons" :key="index" @click="triggerActionModal(props.row, actionButton.key)">
+              <span :class="['icon', actionButton.icon]"></span>
+            </button>
+          </template>
+        </v-client-table>
+      </div>
     </div>
   </div>
 </template>
@@ -75,8 +74,8 @@
       this.options = {
         skin: '',
         headings: {
-          name: 'Name',
-          lastLoginDate: 'Last login',
+          name: 'User',
+          lastLoginDate: 'Last Active',
           source: 'Source',
           roles: 'Roles',
           actions: 'Actions'
@@ -141,42 +140,39 @@
 <style lang="scss" scoped>
   @import '../../assets/styles/_vars.scss';
 
+  .avatar {
+    width: 36px;
+    height: 36px;
+    margin-right: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: $white;
+    font-size: 16px;
+    font-weight: $font-weight-strong;
+    background-color: #6B47DB;
+    background-image: linear-gradient(-1deg, #6B47DB 2%, #8261E6 98%);
+    border-radius: 4px;
+  }
+  .name {
+    h3 {
+      font-size: $font-size-main;
+      line-height: 120%;
+      font-weight: $font-weight-semi;
+    }
+    span {
+      font-size: 12px;
+      line-height: 150%;
+      color: #777777;
+    }
+  }
+
+
+  
+
   .mainInfo {
     display: flex;
     align-items: center;
-
-    .avatar {
-      width: 40px;
-      height: 40px;
-      display: flex;
-      flex-wrap: nowrap;
-      align-items: center;
-      justify-content: center;
-      color: #fff;
-      font-weight: $font-weight-strong;
-      font-size: $font-size-normal;
-      text-align: center;
-      background: $color-info;
-      border-radius: 100%;
-      margin-right: 0.75rem;
-    }
-
-    .name {
-      > div {
-        &::after {
-          content: '';
-          width: 8px;
-          height: 8px;
-          display: inline-block;
-          margin-left: 4px;
-          border-radius: 4px;
-          position: relative;
-          top: -2px;
-          left: 2px;
-          background: $color-main;
-        }
-      }
-    }
   }
 
   .actions {

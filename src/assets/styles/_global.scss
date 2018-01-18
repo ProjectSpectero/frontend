@@ -6,6 +6,7 @@
 @import '_fonts.scss';
 @import '_components.scss';
 @import '_inputs.scss';
+@import '_tables.scss';
 @import '_modal.scss';
 
 * {
@@ -57,7 +58,7 @@ body {
 }
 
 .VueTables.VueTables--client {
-  margin: 2rem 0;
+  // margin: 2rem 0;
   overflow: hidden;
 
   > .row:first-child {
@@ -89,10 +90,6 @@ body {
   }
 
   .table-responsive {
-    width: auto;
-    overflow:hidden;
-    padding: 0 0 0 2rem;
-
     > .VueTables__table {
       width: 100%;
     }
