@@ -104,7 +104,7 @@
           defaultOption: 'Select {column}',
           columns: 'Columns'
         },
-        perPage: 10
+        perPage: 3
       }
     },
     computed: {
