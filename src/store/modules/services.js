@@ -23,8 +23,9 @@ const actions = {
     })
   },
   start: ({ dispatch }, service) => {
-    serviceAPI.manage({ name: service, action: 'start' }, {
-      // Not implemented yet
+    serviceAPI.manage({
+      name: service,
+      action: 'start',
       success: response => {
         dispatch('fetch')
       },
@@ -36,8 +37,9 @@ const actions = {
     setTimeout(() => { dispatch('fetch') }, 1000)
   },
   stop: ({ dispatch }, service) => {
-    serviceAPI.manage({ name: service, action: 'stop' }, {
-      // Not implemented yet
+    serviceAPI.manage({
+      name: service,
+      action: 'stop',
       success: response => {
         console.log('Stopped ', service, ' with response', response)
         dispatch('fetch')
