@@ -43,18 +43,17 @@
       ...mapActions({
         fetchServices: 'services/fetch',
         fetchIps: 'services/fetchIps',
-        startService: 'services/start',
-        stopService: 'services/stop',
+        toggleStatus: 'services/toggleStatus'
       }),
       async setup () {
         await this.fetchServices()
         await this.fetchIps()
       },
       start (service) {
-        this.startService(service)
+        this.toggleStatus({ service: service, action: 'start' })
       },
       stop (service) {
-        this.stopService(service)
+        this.toggleStatus({ service: service, action: 'stop' })
       }
     },
     components: {

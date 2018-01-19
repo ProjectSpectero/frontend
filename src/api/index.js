@@ -1,6 +1,5 @@
 import Vue from 'vue'
 import axios from 'axios'
-import ip from 'ip'
 import { getCookie, removeCookie } from 'tiny-cookie'
 import Err from '../modules/error.js'
 
@@ -46,8 +45,6 @@ export default function (method, path, data, success, failed) {
     url: path,
     data: data.data
   }).then(response => {
-    console.log('current response', response)
-    console.log('current success', success)
     Vue.prototype.$Progress.finish()
 
     // Main api callback

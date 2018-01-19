@@ -22,34 +22,18 @@ const actions = {
       }
     })
   },
-  start: ({ dispatch }, service) => {
+  toggleStatus: ({ dispatch }, options) => {
     serviceAPI.manage({
-      name: service,
-      action: 'start',
+      name: options.service,
+      action: options.action,
       success: response => {
+        console.log('yes')
         dispatch('fetch')
       },
       fail: error => {
         console.log(error)
       }
     })
-
-    setTimeout(() => { dispatch('fetch') }, 1000)
-  },
-  stop: ({ dispatch }, service) => {
-    serviceAPI.manage({
-      name: service,
-      action: 'stop',
-      success: response => {
-        console.log('Stopped ', service, ' with response', response)
-        dispatch('fetch')
-      },
-      fail: error => {
-        console.log(error)
-      }
-    })
-
-    setTimeout(() => { dispatch('fetch') }, 1000)
   },
   fetchIps: ({ commit }) => {
     serviceAPI.ips({
