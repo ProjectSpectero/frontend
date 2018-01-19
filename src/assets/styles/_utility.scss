@@ -70,3 +70,19 @@ $measures: (
         margin-bottom: $value;
     }
 }
+
+$container-sizes: (20, 25, 50, 75, 80, 100);
+
+@each $size in $container-sizes {
+  .container-#{$size}p {
+    width: percentage($size/100);
+  }
+}
+
+$container-sizes-fixed: (600, 800, 1000);
+
+@each $size in $container-sizes-fixed {
+  .container-#{$size} {
+    max-width: #{$size}px;
+  }
+}

@@ -6,50 +6,48 @@
       </router-link>
     </top>
 
-    <div class="container">
-      <div class="datatable">
-        <div v-if="selectedUser">
-          <remove :name="modalName('delete')"></remove>
-          <edit :name="modalName('edit')"></edit>
-          <certificates :name="modalName('certificates')"></certificates>
-        </div>
-
-        <v-client-table :data="tableData" :columns="columns" :options="options">
-          <template slot="name" slot-scope="props">
-            <div class="main-info">
-              <div class="avatar">
-                {{ parseInitials(props.row) }}
-              </div>
-              <div class="name">
-                <h3 class="no-pad">{{ props.row.fullName || props.row.authKey }}</h3>
-                <span v-if="props.row.fullName">{{ props.row.authKey }}</span>
-              </div>
+    <div class="datatable">
+      <v-client-table :data="tableData" :columns="columns" :options="options">
+        <template slot="name" slot-scope="props">
+          <div class="main-info">
+            <div class="avatar">
+              {{ parseInitials(props.row) }}
             </div>
-          </template>
+            <div class="name">
+              <h3 class="no-pad">{{ props.row.fullName || props.row.authKey }}</h3>
+              <span v-if="props.row.fullName">{{ props.row.authKey }}</span>
+            </div>
+          </div>
+        </template>
 
-          <template slot="lastLoginDate" slot-scope="props">
-            {{ props.row.lastLoginDate | moment('from') }}
-          </template>
+        <template slot="lastLoginDate" slot-scope="props">
+          {{ props.row.lastLoginDate | moment('from') }}
+        </template>
 
-          <template slot="roles" slot-scope="props">
-            {{ parseRoles(props.row.roles) }}
-          </template>
+        <template slot="roles" slot-scope="props">
+          {{ parseRoles(props.row.roles) }}
+        </template>
 
-          <template slot="actions" slot-scope="props">
-            <dropdown>
-              <template slot="btn">Manage</template>
-              <template slot="icon"><span class="icon icon-chevron-down"></span></template>
-              <template slot="body">
-                <div class="dropdown-items">
-                  <span class="item" v-for="(actionButton, index) in actionButtons" :key="index" @click="triggerActionModal(props.row, actionButton.key)">
-                    <span :class="['icon', actionButton.icon]"></span> {{ actionButton.text }}
-                  </span>
-                </div>
-              </template>
-            </dropdown>
-          </template>
-        </v-client-table>
-      </div>
+        <template slot="actions" slot-scope="props">
+          <dropdown>
+            <template slot="btn">Manage</template>
+            <template slot="icon"><span class="icon icon-chevron-down"></span></template>
+            <template slot="body">
+              <div class="dropdown-items">
+                <span class="item" v-for="(actionButton, index) in actionButtons" :key="index" @click="triggerActionModal(props.row, actionButton.key)">
+                  <span :class="['icon', actionButton.icon]"></span> {{ actionButton.text }}
+                </span>
+              </div>
+            </template>
+          </dropdown>
+        </template>
+      </v-client-table>
+
+      <template v-if="selectedUser">
+        <remove :name="modalName('delete')"></remove>
+        <edit :name="modalName('edit')"></edit>
+        <certificates :name="modalName('certificates')"></certificates>
+      </template>
     </div>
   </div>
 </template>
