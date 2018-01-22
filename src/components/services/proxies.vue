@@ -1,6 +1,6 @@
 <template>
   <div>
-    <top title="Proxy List"></top>
+    <top title="Proxies"></top>
   </div>
 </template>
 
@@ -11,6 +11,9 @@
   export default {
     components: {
       Top
+    },
+    metaInfo: {
+      title: 'Proxies'
     }
   }
 </script>
