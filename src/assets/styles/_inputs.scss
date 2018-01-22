@@ -56,6 +56,11 @@
     color: $color-white;
     @include buttonBackgroundColor($color-dark);
   }
+
+  // Button sizes
+  &.button-sm {
+    padding: 8px 12px;
+  }
 }
 
 // DROPDOWN BUTTONS
