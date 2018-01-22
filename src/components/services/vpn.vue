@@ -1,27 +1,16 @@
 <template>
   <div>
     <top title="VPN Server"></top>
-
-    <h2>Services:</h2>
-
-
-
-    <ul>
-      <li v-for="(status, service) in services" :key="service">
-        <strong>{{ service }}</strong>: {{ status }}
-
-        <button @click="start(service)">Start</button>
-        <button @click="stop(service)">Stop</button>
-      </li>
-    </ul>
-
-    <h2>IPs:</h2>
-
-    <ul>
-      <li v-for="(ip, index) in ips" :key="index">
-        <strong>{{ ip }}</strong>
-      </li>
-    </ul>
+    <div class="container container-600" v-for="(status, service) in services" :key="service">
+      <div class="pad">
+        <h2>{{ service }}</h2>
+        <p>Status: <strong>{{ status }}</strong></p>
+        <div class="buttonActions">
+          <button class="button" :class="{ 'button-success': status !== 'Running' }" @click="start(service)" :disabled="status === 'Running'">Start</button>
+          <button class="button" :class="{ 'button-danger': status === 'Running' }" @click="stop(service)" :disabled="status !== 'Running'">Stop</button>
+        </div>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -36,7 +25,7 @@
     computed: {
       ...mapGetters({
         services: 'services/services',
-        ips: 'services/ips'
+        // ips: 'services/ips'
       })
     },
     methods: {
@@ -47,7 +36,7 @@
       }),
       async setup () {
         await this.fetchServices()
-        await this.fetchIps()
+        // await this.fetchIps()
       },
       start (service) {
         this.toggleStatus({ service: service, action: 'start' })
@@ -62,6 +51,10 @@
   }
 </script>
 
-<style>
+<style lang="scss" scoped>
+  @import '../../assets/styles/_vars.scss';
 
+  .buttonActions {
+    margin-top: $pad;
+  }
 </style>
