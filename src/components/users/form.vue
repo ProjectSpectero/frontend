@@ -46,9 +46,7 @@
         <button class="button button-info" @click.prevent="submit" @keyup.enter="submit" :disabled="formDisable">
           {{ formDisable ? 'Please wait...' : title }}
         </button>
-        <router-link :to="{ name: 'users' }" class="button button-light right" @click.prevent="cancel">
-          Cancel
-        </router-link>
+        <button class="button button-light right" @click.prevent="cancel">Cancel</button>
       </div>
     </div>
   </form>
@@ -152,7 +150,6 @@
 
             // Handle submission according to chosen action
             if (this.action === 'create') {
-              console.log('action: create')
               this.create()
             } else {
               this.update()
@@ -192,11 +189,14 @@
           throw new ReferenceError(this.$i18n.t('errors.USER_OBJECT_NOT_FOUND'))
         }
       },
+      cancel () {
+        this.$emit('onCancel')
+      },
       dealWithSuccess (response) {
         this.formError = null
-        this.fetchUsers({ self: this })
-        this.hide()
+        this.fetchUsers()
         this.reset()
+        this.$router.push({ name: 'users' })
       },
       dealWithErrors (err) {
         // Here otherwise $validator won't allow you to act on disabled inputs
