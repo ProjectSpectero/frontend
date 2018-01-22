@@ -1,11 +1,9 @@
 <template>
   <div>
     <top title="Add User">
-      <router-link :to="{ name: 'users' }" class="button">
-        Cancel
-      </router-link>
+      <button @click="askBeforeExiting" class="button">Cancel</button>
     </top>
-    <user-form action="create"></user-form>
+    <user-form action="create" @onCancel="askBeforeExiting"></user-form>
   </div>
 </template>
 
@@ -14,6 +12,13 @@
   import userForm from './form'
 
   export default {
+    methods: {
+      askBeforeExiting () {
+        if (confirm(this.$i18n.t('LEAVE_CONFIRM_DIALOG'))) {
+          this.$router.push({ name: 'users' })
+        }
+      }
+    },
     components: {
       Top,
       userForm
@@ -21,13 +26,6 @@
     metaInfo: {
       title: 'Add User'
     },
-    beforeRouteLeave (to, from, next) {
-      if (window.confirm(this.$i18n.t(`LEAVE_CONFIRM_DIALOG`))) {
-        next()
-      } else {
-        next(false)
-      }
-    }
   }
 </script>
 
