@@ -1,7 +1,7 @@
 <template>
   <div>
     <top title="Users">
-      <router-link :to="{ name: 'usersCreate' }" class="button button-success">
+      <router-link :to="{ name: 'userCreate' }" class="button button-success">
         Add User
       </router-link>
     </top>
@@ -34,7 +34,7 @@
             <template slot="icon"><span class="icon icon-chevron-down"></span></template>
             <template slot="body">
               <div class="dropdown-items">
-                <span class="item" v-for="(actionButton, index) in actionButtons" :key="index" @click="triggerActionModal(props.row, actionButton.key)">
+                <span class="item" v-for="(actionButton, index) in actionButtons" :key="index" @click="triggerAction(props.row, actionButton.key)">
                   <span :class="['icon', actionButton.icon]"></span> {{ actionButton.text }}
                 </span>
               </div>
@@ -45,7 +45,6 @@
 
       <template v-if="selectedUser">
         <remove :name="modalName('delete')"></remove>
-        <edit :name="modalName('edit')"></edit>
         <certificates :name="modalName('certificates')"></certificates>
       </template>
     </div>
@@ -55,11 +54,10 @@
 <script>
   import Vue from 'vue'
   import { mapGetters, mapActions } from 'vuex'
-  import Top from '../common/top'
-  import edit from './editModal'
+  import top from '../common/top'
   import remove from './deleteModal'
   import certificates from './certificatesModal'
-  import Dropdown from 'bp-vuejs-dropdown'
+  import dropdown from 'bp-vuejs-dropdown'
 
   export default {
     data () {
@@ -71,7 +69,7 @@
       }
     },
     created () {
-      this.fetchUsers({ self: this })
+      this.fetchUsers()
       this.actionButtons = [
         { key: 'edit', text: 'Edit User', icon: 'icon-edit' },
         { key: 'delete', text: 'Delete User', icon: 'icon-trash' },
@@ -114,11 +112,16 @@
       ...mapActions({
         fetchUsers: 'users/fetch'
       }),
-      triggerActionModal (user, action) {
+      triggerAction (user, action) {
         this.selectedUser = user
-        Vue.nextTick().then(() => {
-          this.$modal.show(this.modalName(action), { user: user })
-        })
+
+        if (action === 'edit') {
+          this.$router.push({ name: 'userEdit', params: { id: user.id } })
+        } else {
+          Vue.nextTick().then(() => {
+            this.$modal.show(this.modalName(action), { user: user })
+          })
+        }
       },
       modalName (modal) {
         return modal + '-' + this.selectedUser.id
@@ -133,11 +136,10 @@
       }
     },
     components: {
-      Top,
-      edit,
+      top,
       remove,
       certificates,
-      Dropdown
+      dropdown
     },
     metaInfo: {
       title: 'Users'

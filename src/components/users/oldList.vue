@@ -56,7 +56,7 @@
       }
     },
     created () {
-      this.fetchUsers({ self: this })
+      this.fetchUsers()
     },
     computed: {
       ...mapGetters({

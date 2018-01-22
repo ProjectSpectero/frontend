@@ -76,7 +76,7 @@
             this.formError = null
 
             // Re-fetch users store to reflect new user (additionally live updates /users page data)
-            this.fetchUsers({ self: this })
+            this.fetchUsers()
 
             this.$modal.hide(this.name)
             this.reset()
