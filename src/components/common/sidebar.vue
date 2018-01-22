@@ -14,8 +14,8 @@
           <ul>
             <li><a href="#">Overview</a></li>
 
-            <router-link tag="li" :to="{ name: 'vpn' }">
-              <a>VPN Server</a>
+            <router-link tag="li" :to="{ name: 'services' }">
+              <a>Services</a>
             </router-link>
 
             <router-link tag="li" :to="{ name: 'proxies' }">

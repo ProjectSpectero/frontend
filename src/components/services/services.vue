@@ -1,6 +1,6 @@
 <template>
   <div>
-    <top title="VPN Server"></top>
+    <top title="Services"></top>
     <div class="container container-600" v-for="(status, service) in services" :key="service">
       <div class="pad">
         <h2>{{ service }}</h2>
@@ -8,6 +8,7 @@
         <div class="buttonActions">
           <button class="button" :class="{ 'button-success': status !== 'Running' }" @click="start(service)" :disabled="status === 'Running'">Start</button>
           <button class="button" :class="{ 'button-danger': status === 'Running' }" @click="stop(service)" :disabled="status !== 'Running'">Stop</button>
+          <button class="button right">Configure</button>
         </div>
       </div>
     </div>
@@ -47,6 +48,9 @@
     },
     components: {
       Top
+    },
+    metaInfo: {
+      title: 'Services'
     }
   }
 </script>
