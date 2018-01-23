@@ -8,7 +8,8 @@
         <div class="buttonActions">
           <button class="button" :class="{ 'button-success': status !== 'Running' }" @click="start(service)" :disabled="status === 'Running'">Start</button>
           <button class="button" :class="{ 'button-danger': status === 'Running' }" @click="stop(service)" :disabled="status !== 'Running'">Stop</button>
-          <button class="button right">Configure</button>
+
+          <router-link :to="{ name: service }" class="button right">Configure</router-link>
         </div>
       </div>
     </div>
