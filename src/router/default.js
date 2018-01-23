@@ -1,9 +1,9 @@
 // Default routes: error pages, catch-all ...
 
-import notFound from '@/components/notFound'
+import error404 from '@/components/errors/404'
 import ui from '@/components/ui'
 
 export default [
-  { path: '*', name: 'notFound', component: notFound },
-  { path: '/ui', name: 'ui', component: ui },
+  { path: '*', name: 'error404', component: error404, meta: { layout: 'error' } },
+  { path: '/ui', name: 'ui', component: ui }
 ]

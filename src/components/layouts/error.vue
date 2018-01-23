@@ -11,5 +11,8 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-
+  .error {
+    padding: 3rem;
+    text-align: center;
+  }
 </style>

@@ -29,20 +29,15 @@
         },
         fail: error => {
           console.log(error)
-          this.backToList()
+          this.$router.push({ name: 'error404' })
         }
       })
     },
     methods: {
       askBeforeExiting () {
         if (confirm(this.$i18n.t('LEAVE_CONFIRM_DIALOG'))) {
-          this.backToList()
-        } else {
-
+          this.$router.push({ name: 'users' })
         }
-      },
-      backToList () {
-        this.$router.push({ name: 'users' })
       }
     },
     components: {
