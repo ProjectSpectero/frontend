@@ -14,7 +14,6 @@ const actions = {
   fetch: ({ commit }) => {
     serviceAPI.list({
       success: response => {
-        console.log('Fetched list')
         commit('UPDATE_SERVICES_LIST', response.data.result)
       },
       fail: error => {
@@ -27,7 +26,6 @@ const actions = {
       name: options.service,
       action: options.action,
       success: response => {
-        console.log('yes')
         dispatch('fetch')
       },
       fail: error => {

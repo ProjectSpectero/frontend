@@ -25,7 +25,4 @@
     flex-direction: row;
     flex-wrap: nowrap;
   }
-  .content {
-    flex: 1;
-  }
 </style>
