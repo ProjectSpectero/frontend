@@ -7,8 +7,9 @@
       <div class="container container-600">
         <div class="pad">
           <h2>Proxy Mode</h2>
-          <select>
-            <option>Normal</option>
+          <select v-model="proxyMode">
+            <option value="Normal">Normal</option>
+            <option value="ExclusiveAllow">ExclusiveAllow</option>
           </select>
         </div>
       </div>
@@ -56,27 +57,30 @@
       <div class="container container-600">
         <div class="pad">
           <h2>Allowed Domains</h2>
-          <div class="list-add-item">
+          <div class="list-add-item" v-if="proxyMode === 'ExclusiveAllow'">
             <input type="text" class="input" placeholder="Enter new domain">
             <button class="button button-success right">Add Domain</button>
+          </div>
+          <div v-else class="cannot-edit-message">
+            Proxy Mode must be set to <strong>ExclusiveAllow</strong> to edit allowed domains.
           </div>
           <ul>
             <li class="list-item">
               <span class="title"><strong>google.com</strong></span>
               <div class="listener-actions">
-                <button class="button button-sm">Remove</button>
+                <button class="button button-sm" :disabled="proxyMode !== 'ExclusiveAllow'">Remove</button>
               </div>
             </li>
             <li class="list-item">
               <span class="title"><strong>spectero.com</strong></span>
               <div class="listener-actions">
-                <button class="button button-sm">Remove</button>
+                <button class="button button-sm" :disabled="proxyMode !== 'ExclusiveAllow'">Remove</button>
               </div>
             </li>
             <li class="list-item">
               <span class="title"><strong>stackoverflow.com</strong></span>
               <div class="listener-actions">
-                <button class="button button-sm">Remove</button>
+                <button class="button button-sm" :disabled="proxyMode !== 'ExclusiveAllow'">Remove</button>
               </div>
             </li>
           </ul>
@@ -85,21 +89,24 @@
       <div class="container container-600">
         <div class="pad">
           <h2>Banned Domains</h2>
-          <div class="list-add-item">
+          <div class="list-add-item" v-if="proxyMode === 'Normal'">
             <input type="text" class="input" placeholder="Enter new domain">
             <button class="button button-success right">Add Domain</button>
+          </div>
+          <div v-else class="cannot-edit-message">
+            Proxy Mode must be set to <strong>Normal</strong> to edit banned domains.
           </div>
           <ul>
             <li class="list-item">
               <span class="title"><strong>twitter.com</strong></span>
               <div class="listener-actions">
-                <button class="button button-sm">Remove</button>
+                <button class="button button-sm" :disabled="proxyMode !== 'Normal'">Remove</button>
               </div>
             </li>
             <li class="list-item">
               <span class="title"><strong>facebook.com</strong></span>
               <div class="listener-actions">
-                <button class="button button-sm">Remove</button>
+                <button class="button button-sm" :disabled="proxyMode !== 'Normal'">Remove</button>
               </div>
             </li>
           </ul>
@@ -124,6 +131,11 @@
   export default {
     components: {
       Top
+    },
+    data () {
+      return {
+        proxyMode: 'Normal'
+      }
     },
     metaInfo: {
       title: 'Edit Service'
@@ -153,5 +165,9 @@
       flex: 1;
       margin-right: 12px;
     }
+  }
+  .cannot-edit-message {
+    margin-bottom: $pad;
+    color: $color-dark;
   }
 </style>
