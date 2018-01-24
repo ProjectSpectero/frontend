@@ -3,38 +3,21 @@
     <div class="pad">
       <h2>Listeners</h2>
       <div class="list-add-item">
-        <input type="text" class="input" placeholder="Enter new listener">
-        <button class="button button-success right">Add Listener</button>
+        <input v-model="ip" type="text" class="input" placeholder="IP address">
+        <input v-model="port" type="number" class="input" placeholder="Port">
+
+        <button @click="addListener" class="button button-success right">Add Listener</button>
       </div>
+
       <ul>
-        <li class="list-item">
-          <span class="title"><strong>0.0.0.0</strong>:8800</span>
+        <li v-for="(listener, index) in list" :key="index" class="list-item">
+          <span class="title">
+            <strong>{{ listener.item1 }}</strong>:{{ listener.item2 }}
+          </span>
           <div class="listener-actions">
-            <button class="button button-sm">Remove</button>
-          </div>
-        </li>
-        <li class="list-item">
-          <span class="title"><strong>0.0.0.0</strong>:8800</span>
-          <div class="listener-actions">
-            <button class="button button-sm">Remove</button>
-          </div>
-        </li>
-        <li class="list-item">
-          <span class="title"><strong>0.0.0.0</strong>:8800</span>
-          <div class="listener-actions">
-            <button class="button button-sm">Remove</button>
-          </div>
-        </li>
-        <li class="list-item">
-          <span class="title"><strong>0.0.0.0</strong>:8800</span>
-          <div class="listener-actions">
-            <button class="button button-sm">Remove</button>
-          </div>
-        </li>
-        <li class="list-item">
-          <span class="title"><strong>0.0.0.0</strong>:8800</span>
-          <div class="listener-actions">
-            <button class="button button-sm">Remove</button>
+            <button @click="removeListener(index)" class="button button-sm">
+              Remove
+            </button>
           </div>
         </li>
       </ul>
@@ -47,18 +30,39 @@
     props: {
       listeners: Array
     },
+    data () {
+      return {
+        list: [],
+        ip: null,
+        port: null
+      }
+    },
     created () {
-      console.log(this.listeners)
       this.list = JSON.parse(JSON.stringify(this.listeners))
     },
     methods: {
-      updateListeners () {
-        this.$emit('updateListeners', this.list)
+      removeListener (index) {
+        this.list.splice(index, 1)
+        this.update()
+      },
+      addListener () {
+        if (this.ip && this.port) {
+          this.list.push({
+            item1: this.ip,
+            item2: this.port
+          })
+
+          this.reset()
+          this.update()
+        }
+      },
+      update () {
+        this.$emit('update', this.list)
+      },
+      reset () {
+        this.ip = null
+        this.port = null
       }
     }
   }
 </script>
-
-<style>
-
-</style>

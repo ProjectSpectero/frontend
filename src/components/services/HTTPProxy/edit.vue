@@ -3,7 +3,7 @@
     <top title="Edit Service">
       <button @click="askBeforeExiting" class="button">Cancel</button>
     </top>
-    <form v-if="config">
+    <form v-if="config" @submit.prevent.stop="">
       <div class="container container-600">
         <div class="pad">
           <h2>Proxy Mode</h2>
@@ -15,11 +15,25 @@
         </div>
       </div>
 
-      <listeners @updateListeners="updateListeners" :listeners="config.listeners"></listeners>
+      <listeners :listeners="config.listeners" @update="updateListeners"></listeners>
 
-      <allowed-domains :proxyMode="proxy"></allowed-domains>
+      <domains
+        :proxy="proxy"
+        title="Allowed domains"
+        forbiddenMessageKey="UNABLE_TO_DISPLAY_ALLOWED_DOMAINS"
+        :enabled="proxy === 'ExclusiveAllow'"
+        :domains="config.allowedDomains"
+        @update="updateAllowedDomains">
+      </domains>
 
-      <banned-domains :proxyMode="proxy"></banned-domains>
+      <domains
+        :proxy="proxy"
+        title="Banned domains"
+        forbiddenMessageKey="UNABLE_TO_DISPLAY_BANNED_DOMAINS"
+        :enabled="proxy === 'Normal'"
+        :domains="config.bannedDomains"
+        @update="updateBannedDomains">
+      </domains>
 
       <div class="container container-600">
         <div class="pad">
@@ -37,31 +51,27 @@
   import serviceAPI from '../../../api/service.js'
   import top from '../../common/top'
   import listeners from './listeners'
-  import allowedDomains from './allowedDomains'
-  import bannedDomains from './bannedDomains'
+  import domains from './domains'
 
   export default {
     data () {
       return {
-        config: {
-          listeners: []
-        },
+        config: null,
         proxyTypes: ['Normal', 'ExclusiveAllow'],
         proxy: null,
         formDisable: false
       }
     },
-    created () {
-      this.setup()
-      this.proxy = this.proxyTypes[0];
-      console.log('Loaded config', this.config)
+    async created () {
+      await this.setup()
     },
     methods: {
-      async setup () {
-        await serviceAPI.get({
+      setup () {
+        serviceAPI.get({
           name: 'HTTPProxy',
           success: response => {
             this.config = response.data.result[0]
+            this.proxy = this.proxyTypes[0];
           },
           fail: error => {
             console.log(error)
@@ -75,17 +85,29 @@
         }
       },
       updateListeners (listeners) {
-        console.log('updated listeners', listeners)
+        this.$set(this.config, 'listeners', listeners)
+        this.update()
+      },
+      updateAllowedDomains (allowedDomains) {
+        this.$set(this.config, 'allowedDomains', allowedDomains)
+        this.update()
+      },
+      updateBannedDomains (bannedDomains) {
+        this.$set(this.config, 'bannedDomains', bannedDomains)
+        this.update()
       },
       proxyChanged () {
-        console.log('proxy changed', this.proxy)
+        this.$set(this.config, 'bannedDomains', this.proxy)
+        this.update()
+      },
+      update () {
+        console.log('updated api', this.config)
       }
     },
     components: {
       top,
       listeners,
-      allowedDomains,
-      bannedDomains
+      domains
     },
     metaInfo: {
       title: 'Edit Service'
