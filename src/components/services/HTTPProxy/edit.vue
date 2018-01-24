@@ -3,7 +3,8 @@
     <top title="Edit Service">
       <button @click="askBeforeExiting" class="button">Cancel</button>
     </top>
-    <form v-if="config" @submit.prevent.stop="">
+
+    <form v-if="config" @submit.prevent.stop="update">
       <div class="container container-600">
         <div class="pad">
           <h2>Proxy Mode</h2>
@@ -37,10 +38,11 @@
 
       <div class="container container-600">
         <div class="pad">
-          <button class="button button-info" @click.prevent="submit" @keyup.enter="submit" :disabled="formDisable">
+          <button type="submit" class="button button-info" :disabled="formDisable">
             {{ formDisable ? 'Please wait...' : 'Update Configuration' }}
           </button>
-          <button class="button button-light right" @click.prevent="cancel">Cancel</button>
+
+          <button class="button button-light right" @click.prevent="askBeforeExiting">Cancel</button>
         </div>
       </div>
     </form>
@@ -86,21 +88,29 @@
       },
       updateListeners (listeners) {
         this.$set(this.config, 'listeners', listeners)
-        this.update()
       },
       updateAllowedDomains (allowedDomains) {
         this.$set(this.config, 'allowedDomains', allowedDomains)
-        this.update()
       },
       updateBannedDomains (bannedDomains) {
         this.$set(this.config, 'bannedDomains', bannedDomains)
-        this.update()
       },
       proxyChanged () {
-        this.$set(this.config, 'bannedDomains', this.proxy)
-        this.update()
+        this.$set(this.config, 'proxyMode', this.proxy)
       },
       update () {
+        serviceAPI.update({
+          name: 'HTTPProxy',
+          data: this.config,
+          success: response => {
+            console.log('Success')
+          },
+          fail: error => {
+            console.log(error)
+            this.$router.push({ name: 'error404' })
+          }
+        })
+
         console.log('updated api', this.config)
       }
     },
