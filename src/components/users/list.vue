@@ -91,7 +91,7 @@
         texts: {
           count:"Showing {from} to {to} of {count} records|{count} records|One record",
           filter: '',
-          filterPlaceholder: 'Search users ...',
+          filterPlaceholder: 'Search users',
           limit: 'Records:',
           page: 'Page:',
           noResults: 'No matching records',

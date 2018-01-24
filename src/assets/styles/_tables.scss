@@ -11,6 +11,7 @@
     font-size: $font-size-main;
     font-weight: $font-weight-semi;
     color: $color-table-header;
+    background-image: linear-gradient(0deg, #F2F4F7 0%, #FFFFFF 100%);
   }
 }
 
@@ -86,5 +87,30 @@
     border-width: 0 1px 1px 1px;
     border-bottom-left-radius: 4px;
     border-bottom-right-radius: 4px;
+  }
+
+  .VueTables__heading {
+    cursor: default;
+  }
+  .VueTables__sortable .VueTables__heading {
+    cursor: pointer;
+  }
+  .VueTables__sort-icon {
+    @extend [class^="icon-"];
+
+    margin-left: 5px;
+    position: relative;
+    top: 1px;
+
+    &.glyphicon-sort:before {
+      @extend .icon-menu:before;
+      opacity: 0.5;
+    }
+    &.glyphicon-chevron-down:before {
+      @extend .icon-chevron-down:before;
+    }
+    &.glyphicon-chevron-up:before {
+      @extend .icon-chevron-up:before;
+    }
   }
 }
