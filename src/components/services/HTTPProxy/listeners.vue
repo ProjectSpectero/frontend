@@ -67,7 +67,8 @@
         port: null,
         rules: {
           port: {
-            max: 5
+            min_value: 1024,
+            max_value: 65535
           },
           ip: {
             regex: /^(?!0)(?!.*\.$)((1?\d?\d|25[0-5]|2[0-4]\d)(\.|$)){4}$/
