@@ -35,8 +35,7 @@ export default {
    * @param {String} proxyMode
    */
   update (options) {
-    console.log('service will put', options)
-    return api('PUT', `/service/${options.name}/config`, options.data)
+    return api('PUT', `/service/${options.name}/config`, options)
   },
 
   /**
