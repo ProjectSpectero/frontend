@@ -8,7 +8,7 @@
       <div class="container container-600">
         <div class="pad">
           <h2>Proxy Mode</h2>
-          <select v-model="proxy" @change="proxyChanged">
+          <select v-model="proxy" @change="proxyChanged" required>
             <option v-for="option in proxyTypes" :value="option" :key="option">
               {{ option }}
             </option>
@@ -58,6 +58,7 @@
   export default {
     data () {
       return {
+        name: 'HTTPProxy',
         config: null,
         proxyTypes: ['Normal', 'ExclusiveAllow'],
         proxy: null,
@@ -70,10 +71,10 @@
     methods: {
       setup () {
         serviceAPI.get({
-          name: 'HTTPProxy',
+          name: this.name,
           success: response => {
             this.config = response.data.result[0]
-            this.proxy = this.proxyTypes[0];
+            this.proxy = this.config.proxyMode;
           },
           fail: error => {
             console.log(error)
@@ -100,14 +101,13 @@
       },
       update () {
         serviceAPI.update({
-          name: 'HTTPProxy',
+          name: this.name,
           data: this.config,
           success: response => {
-            console.log('Success')
+            this.$toasted.show(this.$i18n.t('errors.SERVICE_UPDATE_SUCCESS'))
           },
           fail: error => {
-            console.log(error)
-            this.$router.push({ name: 'error404' })
+            this.$toasted.error(this.$i18n.t('errors.SERVICE_UPDATE_ERROR'))
           }
         })
 

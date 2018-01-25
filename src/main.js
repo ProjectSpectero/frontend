@@ -10,6 +10,7 @@ import VueModal from 'vue-js-modal'
 import VueMoment from 'vue-moment'
 import VeeValidate from 'vee-validate'
 import VueProgressBar from 'vue-progressbar'
+import Toasted from 'vue-toasted'
 import { ClientTable } from 'vue-tables-2'
 import Dropdown from 'bp-vuejs-dropdown'
 
@@ -28,6 +29,12 @@ Vue.use(VueProgressBar, {
   thickness: '5px'
 })
 Vue.use(Dropdown)
+Vue.use(Toasted, {
+  className: 'toast',
+  position: 'bottom-right',
+  duration: 3000,
+  singleton: true
+})
 
 const messages = {
   en: require('./lang/en.js')

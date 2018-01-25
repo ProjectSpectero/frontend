@@ -3,8 +3,22 @@
     <div class="pad">
       <h2>{{ title }}</h2>
       <div class="list-add-item" v-if="enabled">
-        <input v-model="domain" type="text" class="input" placeholder="Enter new domain">
+        <input
+          id="domain"
+          name="domain"
+          type="text"
+          class="input"
+          placeholder="Enter new domain"
+          v-model="domain"
+          v-validate="'url'"
+          :class="{ 'input-error': errors.has('domain') }"
+          @keyup.enter="add">
+
         <button @click.prevent="add" class="button button-success right">Add Domain</button>
+
+        <span v-show="errors.has('domain')" class="input-error-msg">
+          {{ errors.first('domain') }}
+        </span>
       </div>
       <div v-else class="cannot-edit-message">
         {{ forbiddenMessage }}

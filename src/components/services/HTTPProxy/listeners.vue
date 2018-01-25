@@ -5,11 +5,38 @@
 
       <div class="add">
         <div class="inputs">
-          <input v-model="ip" type="text" class="input" placeholder="IP address">
-          <input v-model="port" type="number" class="input" placeholder="Port">
+          <input
+            id="ip"
+            name="ip"
+            type="text"
+            class="input"
+            placeholder="IP address"
+            v-model="ip"
+            v-validate="rules.ip"
+            :class="{ 'input-error': errors.has('ip') }"
+            @keyup.enter="add">
+
+          <input
+            id="port"
+            name="port"
+            type="number"
+            class="input"
+            placeholder="Port"
+            v-model="port"
+            v-validate="rules.port"
+            :class="{ 'input-error': errors.has('port') }"
+            @keyup.enter="add">
         </div>
 
-        <button @click.prevent="addListener" class="button button-success right">Add Listener</button>
+        <button @click.prevent="add" class="button button-success right">Add Listener</button>
+
+        <span v-show="errors.has('ip')" class="input-error-msg">
+          {{ errors.first('ip') }}
+        </span>
+
+        <span v-show="errors.has('port')" class="input-error-msg">
+          {{ errors.first('port') }}
+        </span>
       </div>
 
       <ul>
@@ -18,7 +45,7 @@
             <strong>{{ listener.item1 }}</strong>:{{ listener.item2 }}
           </span>
           <div class="listener-actions">
-            <button @click.prevent="removeListener(index)" class="button button-sm">
+            <button @click.prevent="remove(index)" class="button button-sm">
               Remove
             </button>
           </div>
@@ -37,18 +64,26 @@
       return {
         list: [],
         ip: null,
-        port: null
+        port: null,
+        rules: {
+          port: {
+            max: 5
+          },
+          ip: {
+            regex: /^(?!0)(?!.*\.$)((1?\d?\d|25[0-5]|2[0-4]\d)(\.|$)){4}$/
+          }
+        }
       }
     },
     created () {
       this.list = JSON.parse(JSON.stringify(this.listeners))
     },
     methods: {
-      removeListener (index) {
+      remove (index) {
         this.list.splice(index, 1)
         this.update()
       },
-      addListener () {
+      add () {
         if (this.ip && this.port) {
           this.list.push({
             item1: this.ip,
