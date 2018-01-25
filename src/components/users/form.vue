@@ -164,7 +164,7 @@
             this.dealWithSuccess(response)
           },
           fail: (err) => {
-            console.log(err)
+            this.$toasted.error(this.$i18n.t('USER_UPDATE_ERROR'))
             this.dealWithErrors(err)
           }
         })
@@ -182,6 +182,7 @@
               this.dealWithSuccess(response)
             },
             fail: (err) => {
+              this.$toasted.error(this.$i18n.t('USER_UPDATE_ERROR'))
               this.dealWithErrors(err)
             }
           })
@@ -190,9 +191,10 @@
         }
       },
       cancel () {
-        this.$emit('onCancel')
+        this.$emit('canceled')
       },
       dealWithSuccess (response) {
+        this.$emit('success')
         this.formError = null
         this.fetchUsers()
         this.reset()

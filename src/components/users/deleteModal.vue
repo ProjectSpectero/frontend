@@ -66,23 +66,23 @@
         this.user = event.params.user
       },
       submit () {
-        this.formDisable = true // Disable form while HTTP request being made
+        this.formDisable = true
 
         user.delete({
           data: {
             id: this.user.id
           },
-          success: (msg) => {
+          success: response => {
             this.formError = null
-
-            // Re-fetch users store to reflect new user (additionally live updates /users page data)
             this.fetchUsers()
-
             this.$modal.hide(this.name)
+            this.$toasted.show(this.$i18n.t('USER_DELETE_SUCCESS'))
             this.reset()
           },
-          fail: (err) => {
-            this.formError = err.data.errors[0]
+          fail: error => {
+            this.$modal.hide(this.name)
+            this.$toasted.error(this.$i18n.t('USER_DELETE_ERROR'))
+            this.formError = error.data.errors[0]
             this.formDisable = false
           }
         })

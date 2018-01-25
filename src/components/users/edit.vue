@@ -4,7 +4,7 @@
       <button @click="askBeforeExiting" class="button">Cancel</button>
     </top>
 
-    <user-form v-if="selectedUser" action="edit" :user="selectedUser" @onCancel="askBeforeExiting"></user-form>
+    <user-form v-if="selectedUser" action="edit" :user="selectedUser" @canceled="askBeforeExiting" @success="showSuccessMessage"></user-form>
   </div>
 </template>
 
@@ -38,6 +38,9 @@
         if (confirm(this.$i18n.t('LEAVE_CONFIRM_DIALOG'))) {
           this.$router.push({ name: 'users' })
         }
+      },
+      showSuccessMessage () {
+        this.$toasted.show(this.$i18n.t('USER_UPDATE_SUCCESS'))
       }
     },
     components: {
