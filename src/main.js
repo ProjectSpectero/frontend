@@ -33,7 +33,7 @@ Vue.use(Toasted, {
   className: 'toast',
   position: 'bottom-right',
   duration: 3000,
-  singleton: true
+  singleton: false
 })
 
 const messages = {

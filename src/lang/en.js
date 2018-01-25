@@ -30,8 +30,13 @@ module.exports = {
     CANNOT_DELETE_SELF: 'You can\'t delete yourself.'
   },
 
-  SERVICE_UPDATE_SUCCESS: 'Service updated!',
-  SERVICE_UPDATE_ERROR: 'Something went wrong. Please try again!',
+  services: {
+    UPDATE_SUCCESS: 'Service updated!',
+    UPDATE_ERROR: 'Something went wrong. Please try again!',
+    RESTART_SUCCESS: 'Server restarted successfully!',
+    RESTART_ERROR: 'There was an error while trying to restart your server. Please try again later.'
+  },
+
   USER_CREATE_SUCCESS: 'User created!',
   USER_UPDATE_SUCCESS: 'User saved!',
   USER_UPDATE_ERROR: 'Something went wrong. Please try again!',

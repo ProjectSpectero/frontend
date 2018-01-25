@@ -104,10 +104,24 @@
           name: this.name,
           data: this.config,
           success: response => {
-            this.$toasted.show(this.$i18n.t('SERVICE_UPDATE_SUCCESS'))
+            this.$toasted.show(this.$i18n.t('services.UPDATE_SUCCESS'))
+
+            // Restart server if needed
+            if (response.data.message && response.data.message === 'SERVICE_RESTART_NEEDED') {
+              serviceAPI.manage({
+                name: this.name,
+                action: 'restart',
+                success: response => {
+                  this.$toasted.show(this.$i18n.t('services.RESTART_SUCCESS'))
+                },
+                fail: error => {
+                  this.$toasted.error(this.$i18n.t('services.RESTART_ERROR'))
+                }
+              })
+            }
           },
           fail: error => {
-            this.$toasted.error(this.$i18n.t('SERVICE_UPDATE_ERROR'))
+            this.$toasted.error(this.$i18n.t('services.UPDATE_ERROR'))
           }
         })
       }
